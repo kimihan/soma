@@ -1,5 +1,5 @@
 <!-- CSS -->
-<link href="public/img/app_cliente/index.css" rel="stylesheet" type="text/css"/>
+<link href="public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <!--JS -->
 <script src="public/js/app_cliente/index.js" type="text/javascript"></script>
@@ -10,46 +10,17 @@
         <div class="row">
             <div class="col-12 mb-5">
                 <h1 class="text-center font-italic">
-                    APP Cliente
+                    <?= NOME_APP_CLIENTE ?>
                 </h1>
             </div>
         </div>
         <form>
+            <?php $this->load->view('app_cliente/cadastro/campos_cadastro_cliente'); ?>
             <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="Nome completo">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="RG">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="CPF">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="email" class="form-control" id="id" name="id" value="" required placeholder="E-mail">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="Telefone">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="Data de nascimento">
-                </div>
-            </div>
-            <div class="form-row justify-content-center align-self-center">
-                <div class="col-6">
+                <div class="col-12">
                     <button class="btn btn-outline-secondary btn-block" type="submit">Proximo</button>
                 </div>
             </div>
-        </form>  
+        </form>
     </div>
 </div>
