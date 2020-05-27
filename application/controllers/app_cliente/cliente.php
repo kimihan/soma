@@ -20,6 +20,6 @@ class Cliente extends MY_Controller {
      */
     function index()
     {
-		
+		$this->load->view("app_cliente/index");
 	} 
 }
