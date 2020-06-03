@@ -5,6 +5,6 @@ class Welcome extends CI_Controller {
 	
 	public function index()
 	{
-		$this->template->load('app_vendedor/template', 'app_vendedor/venda/venda_criada');
+		$this->template->load('app_vendedor/template', 'app_vendedor/index');
 	}
 }
