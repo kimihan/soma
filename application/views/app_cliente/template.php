@@ -4,12 +4,12 @@
         <title>Bem-vindo ao Soma</title>
 
         <!-- CSS -->
-        <link href="public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://localhost/soma/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
         <!-- JS -->
-        <script src="public/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-        <script src="public/js/popper.min.js" type="text/javascript"></script>
-        <script src="public/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="http://localhost/soma/public/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script src="http://localhost/soma/public/js/popper.min.js" type="text/javascript"></script>
+        <script src="http://localhost/soma/public/js/bootstrap.min.js" type="text/javascript"></script>
 
 
     </head>

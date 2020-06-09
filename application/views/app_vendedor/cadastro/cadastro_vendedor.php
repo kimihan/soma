@@ -1,5 +1,5 @@
 <!-- CSS -->
-<link href="public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
@@ -10,7 +10,7 @@
                 </h1>
             </div>
         </div>
-        <form>
+        <form action="cadastro/cadastro_endereco" method="POST">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
                     <input type="text" class="form-control"  value="" required placeholder="Nome completo">
@@ -44,7 +44,7 @@
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control"  value="" required placeholder="Nome da banca">
+                    <input type="text" class="form-control"  value="" placeholder="Nome da banca">
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">

@@ -1,8 +1,8 @@
 <!-- CSS -->
-<link href="public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <!--JS -->
-<script src="public/js/app_cliente/index.js" type="text/javascript"></script>
+<script src="http://localhost/soma/public/js/app_cliente/index.js" type="text/javascript"></script>
 
 
 <div class="jumbotron d-flex align-items-center">
@@ -15,10 +15,10 @@
             </div>
         </div>
 
-        <form>
+        <form action="cadastro" method="POST">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" id="id" name="id" value="" required placeholder="Preencher ID">
+                    <input type="number" class="form-control" id="id" name="id" value="" required placeholder="Preencher ID">
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">

@@ -20,6 +20,20 @@ class Cadastro extends MY_Controller {
      */
     function index()
     {
-		
-	} 
+		return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_vendedor");
+    } 
+    
+    function cadastro_endereco()
+    {
+        return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_endereco_vendedor");
+    }
+
+    function salvar()
+    {
+        $dadosPost = $this->input->post();
+
+        var_dump($dadosPost);
+
+        return true;
+    }
 }

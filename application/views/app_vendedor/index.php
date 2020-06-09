@@ -1,5 +1,5 @@
 <!-- CSS -->
-<link href="public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
@@ -13,13 +13,13 @@
 
         <div class="row justify-content-center align-self-center">
             <div class="col-12 mb-3">
-                <button class="btn btn-outline-secondary btn-block" type="submit">Já sou cadastrador</button>
+                <a href="http://localhost/soma/app_vendedor/venda" class="btn btn-outline-secondary btn-block" >Já sou cadastrado</a>
             </div>            
         </div>
 
         <div class="row justify-content-center align-self-center">
             <div class="col-12">
-                <button class="btn btn-outline-secondary btn-block" type="submit">Cadastrar</button>
+                <a href="http://localhost/soma/app_vendedor/cadastro" class="btn btn-outline-secondary btn-block">Cadastrar</a>
             </div>
         </div>
     </div>

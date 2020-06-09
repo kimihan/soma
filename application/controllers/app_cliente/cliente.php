@@ -20,6 +20,26 @@ class Cliente extends MY_Controller {
      */
     function index()
     {
-		$this->load->view("app_cliente/index");
-	} 
+		return $this->template->load("app_cliente/template", "app_cliente/index");
+    } 
+    
+    function cadastro()
+    {
+        return $this->template->load("app_cliente/template", "app_cliente/cadastro/cadastro_cliente");        
+    }
+
+    function cadastro_endereco()
+    {
+        return $this->template->load("app_cliente/template", "app_cliente/cadastro/cadastro_endereco_cliente");        
+    }
+
+    function cadastro_pagamento()
+    {
+        return $this->template->load("app_cliente/template", "app_cliente/cadastro/cadastro_pagamento_cliente");        
+    }
+
+    function salvar()
+    {
+
+    }
 }
