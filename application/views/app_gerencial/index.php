@@ -33,7 +33,7 @@
 				</div>
 				<!--end::Aside-->
 				<!--begin::Wrapper-->
-				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" style="padding-top: 66px;">
 					<!--begin::Header-->
 					<div id="kt_header" class="header header-fixed">
 						<!--begin::Container-->
@@ -73,12 +73,12 @@
 					</div>
 					<!--end::Header-->
 					<!--begin::Content-->
-					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="padding: 0;">
 						<!--begin::Entry-->
 						<div class="d-flex flex-column-fluid">
 							<!--begin::Container-->
-							<div class="container">
-
+							<div class="container" style="padding: 0px; max-width: 100%; margin: 0;">
+                                <?=$view;?>
 							</div>
 							<!--end::Container-->
 						</div>
@@ -110,6 +110,13 @@
 		<!--begin::Page Scripts(used by this page)-->
 		<script src="<?=base_url()?>public/metronic/js/pages/widgets.js?v=7.0.3"></script>
 		<!--end::Page Scripts-->
+        <!--end::Global Theme Bundle-->
+        <!--begin::Page Vendors(used by this page)-->
+        <script src="<?=base_url()?>public/metronic/plugins/custom/datatables/datatables.bundle.js?v=7.0.3"></script>
+        <!--end::Page Vendors-->
+        <!--begin::Page Scripts(used by this page)-->
+        <script src="<?=base_url()?>public/metronic/js/pages/crud/datatables/basic/paginations.js?v=7.0.3"></script>
+        <!--end::Page Scripts-->
 	</body>
 	<!--end::Body-->
 </html>

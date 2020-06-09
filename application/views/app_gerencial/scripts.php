@@ -20,3 +20,6 @@
 <link href="<?=base_url()?>public/metronic/css/themes/layout/aside/dark.css?v=7.0.3" rel="stylesheet" type="text/css" />
 <!--end::Layout Themes-->
 <link rel="shortcut icon" href="<?=base_url()?>public/metronic/media/logos/favicon.ico" />
+
+<!--begin::Page Vendors Styles(used by this page)-->
+<link href="<?=base_url()?>public/metronic/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />

@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Index extends MY_Controller {
+class Financeiro extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -20,12 +20,7 @@ class Index extends MY_Controller {
      */
     function index()
     {
-		$this->load->view("app_gerencial/index");
-	}
-
-    function listagem()
-    {
         $param["view"] = "app_gerencial/listagem";
         $this->load->view("app_gerencial/index", $param);
-    }
+	} 
 }
