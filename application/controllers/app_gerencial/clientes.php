@@ -37,9 +37,26 @@ class Clientes extends MY_Controller {
         $this->load->view("app_gerencial/index", $param);
 	}
 
-    function inserir()
+    function ver()
     {
-        $param["view"] = "app_gerencial/cliente/inserir_cliente";
+        $param["view"] = $this->load->view("app_gerencial/cliente/ver_cliente", array(), TRUE);
         $this->load->view("app_gerencial/index", $param);
+    }
+
+    function editar($idCliente)
+    {
+        $param["view"] = $this->load->view("app_gerencial/cliente/inserir_cliente", array(), TRUE);
+        $this->load->view("app_gerencial/index", $param);
+    }
+
+    function ajax_salvar()
+    {
+        $this->load->model("app_gerencial/manupula_cliente_model");
+
+
+        $dadosPost = $this->post_all();
+
+        $this->manupula_cliente_model->insereEditaCliente($dadosPost);
+        die();
     }
 }

@@ -45,5 +45,11 @@ class Endereco_model extends MY_Model {
                     "rules"=>"max_length[2]")
 
     );
+
+    function __construct()
+    {
+        parent::__construct(array($this->name));
+    }
+
 }
                

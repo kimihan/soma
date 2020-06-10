@@ -23,3 +23,5 @@
 
 <!--begin::Page Vendors Styles(used by this page)-->
 <link href="<?=base_url()?>public/metronic/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
+
+<script src="<?=base_url()?>public/js/jquery-3.4.1.min.js"></script>
