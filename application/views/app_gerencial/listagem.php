@@ -1,3 +1,6 @@
+<script>
+    var idRegistroExcluir = 0;
+</script>
 <!--begin::Card-->
 <div class="card card-custom">
     <div class="card-header flex-wrap py-5">
@@ -54,9 +57,9 @@
                         <td><?=$valueRow[$value["field"]]?></td>
                     <?php endforeach;?>
                     <td>
-                        <a href="<?=base_url()?>app_gerencial/clientes/ver"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
+                        <a href="<?=base_url()?>app_gerencial/clientes/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
                         <a href="<?=base_url()?>app_gerencial/clientes/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
-                        <button type="button" class="btn btn-danger" style="margin: 0 5px;">Excluir</button>
+                        <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -66,9 +69,54 @@
 </div>
 <!--end::Card-->
 
+
+<!-- Modal-->
+<div class="modal fade" id="modalConfirmacaoExclusao" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir esse registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-danger btnExecutaExclusao" data-dismiss="modal">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .listagemGeral
     {
         padding: 0 0 0 25px;
     }
 </style>
+
+
+<script>
+    function excluiRegistro(){
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>app_gerencial/<?=$deleteMethod?>",
+            data: {idRegistro: idRegistroExcluir},
+            success : function(text){
+                location.reload();
+            }
+        });
+    }
+    jQuery(function() {
+        $(".btnExcluir").click(function(event){
+            idRegistroExcluir = $(this).attr("data-id");
+        });
+
+        $(".btnExecutaExclusao").on("click", function(event){
+            excluiRegistro(idRegistroExcluir);
+        });
+    });
+</script>

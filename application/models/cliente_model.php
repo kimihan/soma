@@ -50,7 +50,7 @@ class Cliente_model extends MY_Model {
 
     function getDadosCliente($idCliente)
     {
-        
+
     }
 
 }

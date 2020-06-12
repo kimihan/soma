@@ -320,15 +320,16 @@ class MY_Model {
 	{
 		return $this->alterar($data, $where, $filtra_campos);
 	}
+
 	function alterar($data, $where = NULL, $filtra_campos = TRUE)
 	{
-
 		if ($filtra_campos == TRUE)
 		{
 			$data = $this->filtra_campos($data);
 		}
-		$var = $this->db->update($this->name, $data, $where);
-		//echo $this->db->last_query();
+
+		$var = $this->CI->db->update($this->name, $data, $where);
+
 		return $var;
 	}
 
@@ -366,7 +367,7 @@ class MY_Model {
 	}
 	function excluir($where)
 	{
-		return $this->db->delete($this->name, $where);
+		return $this->CI->db->delete($this->name, $where);
 	}
 
 	/**
@@ -378,9 +379,9 @@ class MY_Model {
 	function buscar($where = NULL, $linha_inicio = NULL, $quantidade_registros = NULL)
 	{
 		if (empty($where)) {
-			$query = $this->db->get($this->name, $linha_inicio, $quantidade_registros);
+			$query = $this->CI->db->get($this->name, $linha_inicio, $quantidade_registros);
 		} else {
-			$query = $this->db->get_where($this->name, $where, $linha_inicio, $quantidade_registros);
+			$query = $this->CI->db->get_where($this->name, $where, $linha_inicio, $quantidade_registros);
 		}
 		return $query->result();
 	}

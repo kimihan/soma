@@ -11,6 +11,8 @@
                 <label  class="col-2 col-form-label">Nome</label>
                 <div class="col-10">
                     <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idCliente)?$dadosCliente->idCliente:NULL?>" name="idCliente" id="idCliente"/>
+                    <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idUsuario)?$dadosCliente->idUsuario:NULL?>" name="idUsuario" id="idUsuario"/>
+                    <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idEndereco)?$dadosCliente->idEndereco:NULL?>" name="idEndereco" id="idEndereco"/>
                     <input class="form-control" type="text" value="<?=!empty($dadosCliente->descNome)?$dadosCliente->descNome:NULL?>" name="descNome" id="descNome"/>
                 </div>
             </div>
@@ -124,8 +126,8 @@
                 <div class="col-2">
                 </div>
                 <div class="col-10">
-                    <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-success mr-2">Salvar</button>
+                    <a href="<?=base_url()?>app_gerencial/clientes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                 </div>
             </div>
         </div>
@@ -139,9 +141,7 @@
             url: "<?=base_url()?>app_gerencial/clientes/ajax_salvar",
             data: $("#formCliente").serializeArray(),
             success : function(text){
-                if (text == "success"){
-                    formSuccess();
-                }
+                alert("Registro salvo com sucesso!");
             }
         });
     }

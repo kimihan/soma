@@ -16,16 +16,28 @@ class Manupula_cliente_model  {
     function __construct()
     {
         $this->CI = &get_instance();
+
+        $this->CI->load->model("cliente_model");
+        $this->CI->load->model("usuario_model");
+        $this->CI->load->model("endereco_model");
     }
 
     function insereEditaCliente($dadosCliente)
     {
-        $this->CI->load->model("cliente_model");
-        $this->CI->load->model("usuario_model");
-        $this->CI->load->model("endereco_model");
-
         if(!empty($dadosCliente["idCliente"])) {
-            $acao = "editar";
+            $arrayWhere = array();
+            $arrayWhere["idEndereco"] = $dadosCliente["idEndereco"];
+            $this->CI->endereco_model->update($dadosCliente, $arrayWhere);
+
+            $arrayWhere = array();
+            $arrayWhere["idUsuario"] = $dadosCliente["idUsuario"];
+            $this->CI->usuario_model->update($dadosCliente, $arrayWhere);
+
+            /*
+            $arrayWhere = array();
+            $arrayWhere["idCliente"] = $dadosCliente["idCliente"];
+            $this->CI->cliente_model->update($dadosCliente, $arrayWhere);
+            */
         } else {
             unset($dadosCliente["idCliente"]);
 
@@ -36,34 +48,49 @@ class Manupula_cliente_model  {
 
             $dadosCliente["Usuario_idUsuario"] = $idUsuario;
             $idCliente = $this->CI->cliente_model->insert($dadosCliente);
-            /*
-            $dadosEndereco["numCep"] = $dadosCliente["numCep"];
-            $dadosEndereco["descLogradouro"] = $dadosCliente["descLogradouro"];
-            $dadosEndereco["numLocal"] = $dadosCliente["numLocal"];
-            $dadosEndereco["descComplemento"] = $dadosCliente["descComplemento"];
-            $dadosEndereco["descBairro"] = $dadosCliente["descBairro"];
-            $dadosEndereco["descCidade"] = $dadosCliente["descCidade"];
-            $dadosEndereco["siglaUf"] = $dadosCliente["siglaUf"];
-            $idEndereco = $this->CI->db->insert("endereco", $dadosEndereco);
 
-            $dadosUsuario["descNome"] = $dadosCliente["descNome"];
-            $dadosUsuario["descEmail"] = $dadosCliente["descEmail"];
-            $dadosUsuario["descSenha"] = $dadosCliente["descSenha"];
-            $dadosUsuario["descRg"] = $dadosCliente["descRg"];
-            $dadosUsuario["dataNascimento"] = $dadosCliente["dataNascimento"];
-            $dadosUsuario["flgSexo"] = $dadosCliente["flgSexo"];
-            $dadosUsuario["flgTipoPessoa"] = $dadosCliente["flgTipoPessoa"];
-            $dadosUsuario["numCpf"] = $dadosCliente["numCpf"];
-            $dadosUsuario["numTelefone"] = $dadosCliente["numTelefone"];
-            $dadosUsuario["numWhatsapp"] = $dadosCliente["numWhatsapp"];
-            $dadosUsuario["Endereco_idEndereco"] = $idEndereco;
-            $idUsuario = $this->CI->db->insert_id("usuario", $dadosUsuario);
 
-            $dadosClienteInserir["Usuario_idUsuario"] = $idUsuario;
-            $idCliente = $this->CI->db->insert_id("cliente", $dadosClienteInserir);
-
-            var_dump($idUsuario);
-            */
         }
+    }
+
+    function retornaDadosCliente($idCliente = NULL)
+    {
+        $query = $this->CI->db->select("c.*, u.*, e.*")
+            ->from("{$this->CI->cliente_model} c")
+            ->join("{$this->CI->usuario_model} u", "c.Usuario_idUsuario = u.idUsuario")
+            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco");
+
+        if(!empty($idCliente)) {
+            $this->CI->db->where(array("c.idCliente" => $idCliente));
+
+            $result = $this->CI->db->get()->row();
+        } else {
+            $result = $this->CI->db->get()->result();
+        }
+
+        return $result;
+    }
+
+    function excluiCliente($idCliente)
+    {
+        $query = $this->CI->db->select("c.idCliente, u.idUsuario, e.idEndereco")
+            ->from("{$this->CI->cliente_model} c")
+            ->join("{$this->CI->usuario_model} u", "c.Usuario_idUsuario = u.idUsuario")
+            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco")
+            ->where(array("c.idCliente" => $idCliente));
+
+        $result = $this->CI->db->get()->row();
+
+        $arrayExclusao = array();
+        $arrayExclusao["idCliente"] = $result->idCliente;
+        $this->CI->cliente_model->excluir($arrayExclusao);
+
+        $arrayExclusao = array();
+        $arrayExclusao["idUsuario"] = $result->idUsuario;
+        $this->CI->usuario_model->excluir($arrayExclusao);
+
+        $arrayExclusao = array();
+        $arrayExclusao["idEndereco"] = $result->idEndereco;
+        $this->CI->endereco_model->excluir($arrayExclusao);
     }
 }

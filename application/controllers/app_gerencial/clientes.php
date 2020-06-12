@@ -11,6 +11,8 @@ class Clientes extends MY_Controller {
     function __construct() 
     {
         parent::__construct();
+
+        $this->load->model("app_gerencial/manupula_cliente_model");
     }
 
     /**
@@ -18,45 +20,58 @@ class Clientes extends MY_Controller {
      *
      * @access public
      */
-    function index()
+    function index($flgInserido = NULL)
     {
+        $param["deleteMethod"] = "clientes/ajax_excluir";
         $param["fields"] = array(
-            array("name" => "ID", "field" => "id"),
-            array("name" => "Nome", "field" => "desc_nome"),
-            array("name" => "Email", "field" => "desc_email"),
-            array("name" => "Telefone", "field" => "desc_telefone")
+            array("name" => "ID", "field" => "idCliente"),
+            array("name" => "Nome", "field" => "descNome"),
+            array("name" => "Email", "field" => "descEmail"),
+            array("name" => "Telefone", "field" => "numTelefone")
         );
 
-        $param["values"] = array(
-            array("id" => "1", "desc_nome" => "Cliente 1", "desc_email" => "cliente1@gmail.com",  "desc_telefone" => "(99) 99999-9999"),
-            array("id" => "2", "desc_nome" => "Cliente 2", "desc_email" => "cliente2@gmail.com",  "desc_telefone" => "(99) 99999-9999"),
-            array("id" => "3", "desc_nome" => "Cliente 3", "desc_email" => "cliente3@gmail.com",  "desc_telefone" => "(99) 99999-9999")
-        );
+        $dadosClientes = $this->manupula_cliente_model->retornaDadosCliente();
+        $param["values"] = $this->objectToArray($dadosClientes);
+        $param["registroInserido"] = $flgInserido;
 
         $param["view"] = $this->load->view("app_gerencial/listagem", $param, TRUE);
         $this->load->view("app_gerencial/index", $param);
 	}
 
-    function ver()
+    function ver($idCliente)
     {
-        $param["view"] = $this->load->view("app_gerencial/cliente/ver_cliente", array(), TRUE);
+        $dadosCliente = $this->manupula_cliente_model->retornaDadosCliente($idCliente);
+
+        $param["view"] = $this->load->view("app_gerencial/cliente/ver_cliente", array("dadosCliente" => $dadosCliente), TRUE);
         $this->load->view("app_gerencial/index", $param);
     }
 
-    function editar($idCliente)
+    function editar($idCliente = NULL)
     {
-        $param["view"] = $this->load->view("app_gerencial/cliente/inserir_cliente", array(), TRUE);
+        $dadosCliente = NULL;
+        if(!empty($idCliente)) {
+            $dadosCliente = $this->manupula_cliente_model->retornaDadosCliente($idCliente);
+        }
+
+        $param["view"] = $this->load->view("app_gerencial/cliente/inserir_cliente", array("dadosCliente" => $dadosCliente), TRUE);
         $this->load->view("app_gerencial/index", $param);
     }
 
     function ajax_salvar()
     {
-        $this->load->model("app_gerencial/manupula_cliente_model");
-
-
         $dadosPost = $this->post_all();
 
-        $this->manupula_cliente_model->insereEditaCliente($dadosPost);
-        die();
+        $insert = $this->manupula_cliente_model->insereEditaCliente($dadosPost);
+
+        echo "success";
+    }
+
+    function ajax_excluir()
+    {
+        $dadosPost = $this->post_all();
+
+        $idCliente = $dadosPost["idRegistro"];
+
+        $this->manupula_cliente_model->excluiCliente($idCliente);
     }
 }
