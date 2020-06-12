@@ -5,41 +5,27 @@
 <div class="card card-custom">
     <div class="card-header flex-wrap py-5">
         <div class="card-title">
-            <h3 class="card-label">Clientes
+            <h3 class="card-label"><?=$listName?>
         </div>
     </div>
     <div class="listagemGeral">
         <div class="controllers row">
-            <div class="col-2">
-                <div class="col-4"><label class="col-form-label">Id</label></div>
-                <div class="col-8">
-                    <input class="form-control" type="text" value="" id="example-text-input"/>
+            <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial/".$searchMethod?>" style="width: 100%;">
+                <?php foreach($fields as $key => $value):?>
+                    <div class="col-2">
+                        <div class="col-4"><label class="col-form-label"><?=$value["name"]?></label></div>
+                        <div class="col-8">
+                            <input class="form-control" type="text" value="<?=!empty($value["search"])?$value["search"]:NULL?>" name="<?=$value["field"]?>" id="<?=$value["field"]?>"/>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+                <div class="col-2">
+                    <div class="col-4"><label class="col-form-label"></label></div>
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-success mr-2">Buscar</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="col-4"><label class="col-form-label">Nome</label></div>
-                <div class="col-8">
-                    <input class="form-control" type="text" value="" id="example-text-input"/>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="col-4"><label class="col-form-label">E-mail</label></div>
-                <div class="col-8">
-                    <input class="form-control" type="text" value="" id="example-text-input"/>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="col-4"><label class="col-form-label">Telefone</label></div>
-                <div class="col-8">
-                    <input class="form-control" type="text" value="" id="example-text-input"/>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="col-4"><label class="col-form-label"></label></div>
-                <div class="col-8">
-                    <button type="button" class="btn btn-success mr-2">Submit</button>
-                </div>
-            </div>
+            </form>
         </div>
         <table class="table">
             <thead>

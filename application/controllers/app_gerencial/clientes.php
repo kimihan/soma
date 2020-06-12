@@ -22,7 +22,10 @@ class Clientes extends MY_Controller {
      */
     function index($flgInserido = NULL)
     {
+        $dadosBusca = $_GET;
         $param["deleteMethod"] = "clientes/ajax_excluir";
+        $param["searchMethod"] = "clientes/index";
+        $param["listName"] = "Clientes";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idCliente"),
             array("name" => "Nome", "field" => "descNome"),
@@ -30,7 +33,14 @@ class Clientes extends MY_Controller {
             array("name" => "Telefone", "field" => "numTelefone")
         );
 
-        $dadosClientes = $this->manupula_cliente_model->retornaDadosCliente();
+        foreach($param["fields"] as $key => $value) {
+            if(!empty($dadosBusca[$value["field"]])) {
+                $param["fields"][$key]["search"] = $dadosBusca[$value["field"]];
+            }
+        }
+
+        $dadosClientes = $this->manupula_cliente_model->retornaDadosCliente(NULL, $dadosBusca);
+
         $param["values"] = $this->objectToArray($dadosClientes);
         $param["registroInserido"] = $flgInserido;
 
@@ -74,4 +84,5 @@ class Clientes extends MY_Controller {
 
         $this->manupula_cliente_model->excluiCliente($idCliente);
     }
+
 }

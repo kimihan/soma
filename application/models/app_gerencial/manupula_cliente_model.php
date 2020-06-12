@@ -53,12 +53,20 @@ class Manupula_cliente_model  {
         }
     }
 
-    function retornaDadosCliente($idCliente = NULL)
+    function retornaDadosCliente($idCliente = NULL, $arrayWhere = NULL)
     {
         $query = $this->CI->db->select("c.*, u.*, e.*")
             ->from("{$this->CI->cliente_model} c")
             ->join("{$this->CI->usuario_model} u", "c.Usuario_idUsuario = u.idUsuario")
             ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco");
+
+        if(!empty($arrayWhere)) {
+            foreach ($arrayWhere as $key => $value) {
+                if(!empty($value)) {
+                    $this->CI->db->like($key, $value);
+                }
+            }
+        }
 
         if(!empty($idCliente)) {
             $this->CI->db->where(array("c.idCliente" => $idCliente));
@@ -67,6 +75,7 @@ class Manupula_cliente_model  {
         } else {
             $result = $this->CI->db->get()->result();
         }
+
 
         return $result;
     }
