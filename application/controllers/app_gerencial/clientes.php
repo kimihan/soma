@@ -48,6 +48,13 @@ class Clientes extends MY_Controller {
         $this->load->view("app_gerencial/index", $param);
 	}
 
+	function listagem_ligar($flgInserido = NULL)
+    {
+        $this->db->where(array("c.flgLigacao" => 1));
+
+        $this->index($flgInserido);
+    }
+
     function ver($idCliente)
     {
         $dadosCliente = $this->manupula_cliente_model->retornaDadosCliente($idCliente);
