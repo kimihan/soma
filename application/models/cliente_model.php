@@ -47,11 +47,5 @@ class Cliente_model extends MY_Model {
     {
         parent::__construct(array($this->name));
     }
-
-    function getDadosCliente($idCliente)
-    {
-
-    }
-
 }
                
