@@ -25,6 +25,7 @@ class Clientes extends MY_Controller {
         $dadosBusca = $_GET;
         $param["deleteMethod"] = "clientes/ajax_excluir";
         $param["searchMethod"] = "clientes/index";
+        $param["referenceModel"] = "clientes";
         $param["listName"] = "Clientes";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idCliente"),

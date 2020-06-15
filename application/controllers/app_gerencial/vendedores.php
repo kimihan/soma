@@ -26,6 +26,7 @@ class Vendedores extends MY_Controller {
         $param["deleteMethod"] = "vendedores/ajax_excluir";
         $param["searchMethod"] = "vendedores/index";
         $param["listName"] = "Vendedores";
+        $param["referenceModel"] = "vendedores";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idVendedor"),
             array("name" => "Nome", "field" => "descNome"),
