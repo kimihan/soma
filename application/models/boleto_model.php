@@ -36,5 +36,10 @@ class Boleto_model extends MY_Model {
                     "rules"=>"required|integer")
 
     );
+
+    function __construct()
+    {
+        parent::__construct(array($this->name));
+    }
 }
                

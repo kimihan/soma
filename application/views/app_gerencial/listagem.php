@@ -12,12 +12,14 @@
         <div class="controllers row">
             <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial/".$searchMethod?>" style="width: 100%;">
                 <?php foreach($fields as $key => $value):?>
-                    <div class="col-2">
-                        <div class="col-4"><label class="col-form-label"><?=$value["name"]?></label></div>
-                        <div class="col-8">
-                            <input class="form-control" type="text" value="<?=!empty($value["search"])?$value["search"]:NULL?>" name="<?=$value["field"]?>" id="<?=$value["field"]?>"/>
+                    <?php if(empty($value["removeFilter"])):?>
+                        <div class="col-2">
+                            <div class="col-4"><label class="col-form-label"><?=$value["name"]?></label></div>
+                            <div class="col-8">
+                                <input class="form-control" type="text" value="<?=!empty($value["search"])?$value["search"]:NULL?>" name="<?=$value["field"]?>" id="<?=$value["field"]?>"/>
+                            </div>
                         </div>
-                    </div>
+                        <?php endif?>
                 <?php endforeach;?>
                 <div class="col-2">
                     <div class="col-4"><label class="col-form-label"></label></div>
@@ -45,7 +47,9 @@
                     <td>
                         <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
                         <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
-                        <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
+                        <?php if(!empty($deleteMethod)):?>
+                            <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
+                        <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -85,24 +89,26 @@
 </style>
 
 
-<script>
-    function excluiRegistro(){
-        $.ajax({
-            type: "POST",
-            url: "<?=base_url()?>app_gerencial/<?=$deleteMethod?>",
-            data: {idRegistro: idRegistroExcluir},
-            success : function(text){
-                location.reload();
-            }
-        });
-    }
-    jQuery(function() {
-        $(".btnExcluir").click(function(event){
-            idRegistroExcluir = $(this).attr("data-id");
-        });
+<?php if(!empty($deleteMethod)):?>
+    <script>
+        function excluiRegistro(){
+            $.ajax({
+                type: "POST",
+                url: "<?=base_url()?>app_gerencial/<?=$deleteMethod?>",
+                data: {idRegistro: idRegistroExcluir},
+                success : function(text){
+                    location.reload();
+                }
+            });
+        }
+        jQuery(function() {
+            $(".btnExcluir").click(function(event){
+                idRegistroExcluir = $(this).attr("data-id");
+            });
 
-        $(".btnExecutaExclusao").on("click", function(event){
-            excluiRegistro(idRegistroExcluir);
+            $(".btnExecutaExclusao").on("click", function(event){
+                excluiRegistro(idRegistroExcluir);
+            });
         });
-    });
-</script>
+    </script>
+<?php endif;?>
