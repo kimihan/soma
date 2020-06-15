@@ -59,7 +59,7 @@ class Produtos extends MY_Controller {
     function editar($idProduto = NULL)
     {
         $dados = NULL;
-        if(!empty($idCliente)) {
+        if(!empty($idProduto)) {
             $dados = $this->manipula_produto_model->retornaDados($idProduto);
         }
 
@@ -86,9 +86,9 @@ class Produtos extends MY_Controller {
     {
         $dadosPost = $this->post_all();
 
-        $idCliente = $dadosPost["idRegistro"];
+        $idProduto = $dadosPost["idRegistro"];
 
-        $this->manipula_produto_model->excluiCliente($idCliente);
+        $this->manipula_produto_model->exclui($idProduto);
     }
 
 }
