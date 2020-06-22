@@ -20,6 +20,8 @@ class Manupula_cliente_model  {
         $this->CI->load->model("cliente_model");
         $this->CI->load->model("usuario_model");
         $this->CI->load->model("endereco_model");
+        $this->CI->load->model("servico_model");
+        $this->CI->load->model("produto_model");
     }
 
     function insereEditaCliente($dadosCliente)
@@ -102,4 +104,16 @@ class Manupula_cliente_model  {
         $arrayExclusao["idEndereco"] = $result->idEndereco;
         $this->CI->endereco_model->excluir($arrayExclusao);
     }
+
+    function retornaProdutosCliente()
+    {
+        $query = $this->CI->db->select("p.*, s.*")
+            ->from("{$this->CI->produto_model} p")
+            ->join("{$this->CI->servico_model} s", "c.Usuario_idUsuario = u.idUsuario")
+            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco")
+            ->where(array("c.idCliente" => $idCliente));
+
+        $result = $this->CI->db->get()->row();
+    }
+
 }
