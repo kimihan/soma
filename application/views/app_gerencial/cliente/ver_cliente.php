@@ -173,16 +173,46 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Produto A</td>
-                            <td>Produto B</td>
-                            <td>Produto C</td>
+                            <?php foreach($produtosCliente as $key => $produto):?>
+                                <td><?=$produto->descNome?></td>
+                                <td><?=$produto->dataVenda?></td>
+                                <td>R$ <?=number_format($produto->vrPreco, 2, ",", ".")?></td>
+                            <?php endforeach?>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">Tab content 3</div>
+    <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">
+        <div class="card card-custom">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Histórico de pagamentos
+                </h3>
+            </div>
+            <div style="padding: 0 0 0 25px;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Data do pagamento</th>
+                        <th>Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php foreach($pagamentosCliente as $key => $pagamento):?>
+                                <td><?=$pagamento->descNome?></td>
+                                <td><?=$pagamento->dataPagamento?></td>
+                                <td>R$ <?=number_format($pagamento->vrPreco, 2, ",", ".")?></td>
+                            <?php endforeach?>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     function submitForm(){

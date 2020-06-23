@@ -59,8 +59,13 @@ class Clientes extends MY_Controller {
     function ver($idCliente)
     {
         $dadosCliente = $this->manupula_cliente_model->retornaDadosCliente($idCliente);
+        $produtosCliente = $this->manupula_cliente_model->retornaProdutosCliente($idCliente);
+        $pagamentosCliente = $this->manupula_cliente_model->retornaPagamentosCliente($idCliente);
 
-        $param["view"] = $this->load->view("app_gerencial/cliente/ver_cliente", array("dadosCliente" => $dadosCliente), TRUE);
+        $paramView["dadosCliente"] = $dadosCliente;
+        $paramView["produtosCliente"] = $produtosCliente;
+        $paramView["pagamentosCliente"] = $pagamentosCliente;
+        $param["view"] = $this->load->view("app_gerencial/cliente/ver_cliente", $paramView, TRUE);
         $this->load->view("app_gerencial/index", $param);
     }
 

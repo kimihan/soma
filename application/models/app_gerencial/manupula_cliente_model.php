@@ -22,6 +22,7 @@ class Manupula_cliente_model  {
         $this->CI->load->model("endereco_model");
         $this->CI->load->model("servico_model");
         $this->CI->load->model("produto_model");
+        $this->CI->load->model("cobranca_model");
     }
 
     function insereEditaCliente($dadosCliente)
@@ -105,15 +106,29 @@ class Manupula_cliente_model  {
         $this->CI->endereco_model->excluir($arrayExclusao);
     }
 
-    function retornaProdutosCliente()
+    function retornaProdutosCliente($idCliente)
     {
         $query = $this->CI->db->select("p.*, s.*")
             ->from("{$this->CI->produto_model} p")
-            ->join("{$this->CI->servico_model} s", "c.Usuario_idUsuario = u.idUsuario")
-            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco")
-            ->where(array("c.idCliente" => $idCliente));
+            ->join("{$this->CI->servico_model} s", "s.Produto_idProduto = p.idProduto")
+            ->where(array("s.Cliente_idCliente" => $idCliente));
 
-        $result = $this->CI->db->get()->row();
+        $result = $this->CI->db->get()->result();
+
+        return  $result;
     }
+
+    function retornaPagamentosCliente($idCliente)
+    {
+        $query = $this->CI->db->select("c.*, p.*")
+            ->from("{$this->CI->cobranca_model} c")
+            ->join("{$this->CI->servico_model} s", "c.Servico_idServico = s.idServico")
+            ->join("{$this->CI->produto_model} p", "s.Produto_idProduto = p.idProduto")
+            ->where(array("c.Cliente_idCliente" => $idCliente, "c.flgPago" => 1));
+
+        $result = $this->CI->db->get()->result();
+
+        return  $result;
+    }    
 
 }
