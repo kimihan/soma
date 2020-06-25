@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Cliente extends MY_Controller {
+class Venda extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -20,6 +20,6 @@ class Cliente extends MY_Controller {
      */
     function index()
     {
-		
+        return $this->template->load("app_vendedor/template", "app_vendedor/login");
 	} 
 }

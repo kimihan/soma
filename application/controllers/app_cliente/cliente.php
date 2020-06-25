@@ -42,4 +42,27 @@ class Cliente extends MY_Controller {
     {
 
     }
+
+    function buscarCliente() 
+    {
+        $dados = $this->input->post();
+
+        if(!empty($dados["id"])) {
+            $this->CI = &get_instance();
+            $this->CI->load->model("cliente_model");
+
+            $query = $this->CI->db->select("*")
+            ->from("{$this->CI->cliente_model} c")
+            ->where(array("c.idCliente" => $dados["id"]));
+
+            $result = $this->CI->db->get()->row();
+
+            echo (count($result) > 0) ? json_encode($result) : json_encode(["erro" => "Cliente não encontrado"]);
+
+            return $result;
+        } else {
+            echo json_encode(["erro" => "Cliente não encontrado"]);
+            return false;
+        }
+    }
 }

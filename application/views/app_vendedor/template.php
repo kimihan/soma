@@ -17,6 +17,8 @@
     <body>
         <main id="contents">
             <?= $contents ?>
+
+            <?php $this->load->view('errors/modals/erro_modal'); ?>
         </main>
         <footer>
             <nav class="navbar fixed-bottom navbar-light bg-light">

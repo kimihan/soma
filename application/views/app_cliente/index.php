@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <form action="cadastro" method="POST">
+        <form action="cliente/cadastro" method="POST" id="fmrIdCliente">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
                     <input type="number" class="form-control" id="id" name="id" value="" required placeholder="Preencher ID">

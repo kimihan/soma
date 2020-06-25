@@ -23,3 +23,9 @@ $(() => {
         return false;
     });
 });
+
+function showModalErro(msg) {
+    $("#msgErroModal").text(msg);
+
+    $("#erroModal").modal("show");
+}

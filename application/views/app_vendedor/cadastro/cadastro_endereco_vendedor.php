@@ -2,7 +2,7 @@
 <link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <!--JS -->
-<script src="http://localhost/soma/public/js/app_cliente/index.js" type="text/javascript"></script>
+<script src="http://localhost/soma/public/js/app_vendedor/index.js" type="text/javascript"></script>
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">

@@ -20,11 +20,23 @@ class Cadastro extends MY_Controller {
      */
     function index()
     {
+        
 		return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_vendedor");
     } 
     
     function cadastro_endereco()
     {
+        $cookie= array(
+
+            'name'   => 'remember_me',
+            'value'  => 'test',                            
+            'expire' => '300',                                                                                   
+            'secure' => TRUE
+ 
+        );
+ 
+        $this->input->set_cookie($cookie);
+
         return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_endereco_vendedor");
     }
 
