@@ -11,6 +11,10 @@ class Cadastro extends MY_Controller {
     function __construct() 
     {
         parent::__construct();
+
+        $this->load->model("usuario_model");
+        $this->load->model("endereco_model");
+        $this->load->model("vendedor_model");
     }
 
     /**
@@ -20,32 +24,46 @@ class Cadastro extends MY_Controller {
      */
     function index()
     {
-        
 		return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_vendedor");
     } 
     
     function cadastro_endereco()
     {
-        $cookie= array(
-
-            'name'   => 'remember_me',
-            'value'  => 'test',                            
-            'expire' => '300',                                                                                   
-            'secure' => TRUE
- 
-        );
- 
-        $this->input->set_cookie($cookie);
-
         return $this->template->load("app_vendedor/template", "app_vendedor/cadastro/cadastro_endereco_vendedor");
     }
 
     function salvar()
     {
-        $dadosPost = $this->input->post();
+        try {
+            $dadosVendedor = [];
+            $dadosVendedorEndereco = [];
+            parse_str($this->input->post()["dadosVendedor"], $dadosVendedor);
+            parse_str($this->input->post()["dadosVendedorEndereco"], $dadosVendedorEndereco);
 
-        var_dump($dadosPost);
+            $idEndereco = $this->endereco_model->insert($dadosVendedorEndereco);
 
-        return true;
+            if($idEndereco) {
+                $dadosVendedor["Endereco_idEndereco"] = $idEndereco;
+                $dadosVendedor["numCpf"] = preg_replace('/[^0-9]/', '', $dadosVendedor["numCpf"]);
+                $dadosVendedor["numTelefone"] = preg_replace('/[^0-9]/', '', $dadosVendedor["numTelefone"]);
+                $dadosVendedor["numWhatsapp"] = preg_replace('/[^0-9]/', '', $dadosVendedor["numWhatsapp"]);
+                $idUsuario = $this->usuario_model->insert($dadosVendedor);
+
+                if($idUsuario) {
+                    $dadosVendedor["Usuario_idUsuario"] = $idUsuario;
+                    $dadosVendedor["flgBanca"] = ($dadosVendedor["flgBanca"] == "on") ? 1 : 0;
+                    $idVendedor = $this->vendedor_model->insert($dadosVendedor);
+                }
+            }
+        
+            echo ($idVendedor) ? "sucesso" : "error";
+
+            return $idVendedor;
+        } catch (\Exception $e) {
+            echo "error";
+
+            return false;
+        }
     }
 }
+

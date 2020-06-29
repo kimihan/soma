@@ -1,8 +1,11 @@
 <!-- CSS -->
-<link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="<?=base_url()?>public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <!--JS -->
-<script src="http://localhost/soma/public/js/app_vendedor/index.js" type="text/javascript"></script>
+<script src="<?=base_url()?>public/js/app_vendedor/index.js" type="text/javascript"></script>
+<script src="<?=base_url()?>public/js/app_vendedor/cadastro.js" type="text/javascript"></script>
+<script src="<?=base_url()?>public/js/cookie.js" type="text/javascript"></script>
+<script src="<?=base_url()?>public/js/jquery.mask.js" type="text/javascript"></script>
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
@@ -13,40 +16,46 @@
                 </h1>
             </div>
         </div>
-        <form action="salvar" method="POST">
+        <form action="<?=base_url()?>app_vendedor/cadastro/salvar" method="POST" id="fmrCadastroVendedorEndereco">
             <div class="form-row justify-content-center align-self-center">
-                <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="cep" value="" required placeholder="CEP">
+                <div class="col-12 mb-2" id="divCep">
+                    <input type="text" class="form-control" name="numCep" value="" required placeholder="CEP" id="cep" maxlength="10" autocomplete="nofill">
+                </div>
+                <div class="col-2 mb-2" style="display: none;" id="divCarregandoCep">
+                    <button class="btn btn-outline-secondary btn-block" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
+                    </button>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="log" value="" required placeholder="Logradouro">
+                    <input type="text" class="form-control" name="descLogradouro" id="logradouro" value="" required placeholder="Logradouro" readonly>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="number" class="form-control" name="num" value="" required placeholder="Numero">
+                    <input type="number" class="form-control" name="numLocal" value="" placeholder="Numero" readonly required>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="complemento" value="" required placeholder="Complemento">
+                    <input type="text" class="form-control" name="descComplemento" value="" placeholder="Complemento" readonly autocomplete="off" required>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="bairro" value="" required placeholder="Bairro">
+                    <input type="text" class="form-control" name="descBairro" id="bairro" value="" required placeholder="Bairro" readonly>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="cidade" value="" required placeholder="Cidade">
+                    <input type="text" class="form-control" name="descCidade" id="localidade" value="" required placeholder="Cidade" readonly>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
-                    <input type="text" class="form-control" name="estado" value="" required placeholder="Estado">
+                    <input type="text" class="form-control" name="siglaUf" id="uf" value="" required placeholder="Estado" maxlength="2" readonly>
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">

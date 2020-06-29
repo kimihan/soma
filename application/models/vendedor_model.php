@@ -28,6 +28,9 @@ class Vendedor_model extends MY_Model {
                     array("field"=>"flgBanca",
                     "label"=>"Flgbanca",
                     "rules"=>"required|integer"),
+                    array("field"=>"descNomeBanca",
+                    "label"=>"DescNomeBanca",
+                    "rules"=>"required|max_length[255]"),
                     array("field"=>"Usuario_idUsuario",
                     "label"=>"Usuario idusuario",
                     "rules"=>"required|integer")
