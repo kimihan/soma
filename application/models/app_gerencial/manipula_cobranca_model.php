@@ -71,4 +71,125 @@ class Manipula_cobranca_model  {
 
         $this->CI->boleto_model->excluir($arrayExclusao);
     }
+
+    function retornaCobrancasPagas($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_cobrancas")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 1");
+            
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+
+        return  $this->CI->db->get()->row()->num_cobrancas;
+    }
+
+    function retornaCobrancasAVencer($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_cobrancas")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 0")
+            ->where("co.dataVencimento >= now()");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+            
+        return  $this->CI->db->get()->row()->num_cobrancas;
+    }
+
+    function retornaCobrancasVencidas($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_cobrancas")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 0")
+            ->where("co.dataVencimento < now()");
+            
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+
+        return  $this->CI->db->get()->row()->num_cobrancas;
+    }
+
+    function retornaValorRecebido($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("sum(vrPreco) as valor")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 1");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+
+        return  $this->CI->db->get()->row()->valor;
+    }
+
+    function retornaValorAReceber($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("sum(vrPreco) as valor")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 0")
+            ->where("co.dataVencimento >= now()");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+
+        return  $this->CI->db->get()->row()->valor;
+    }
+
+    function retornaValorVencido($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("sum(vrPreco) as valor")
+            ->from("{$this->CI->cobranca_model} co")
+            ->where("flgPago = 0")
+            ->where("co.dataVencimento < now()");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+
+        return  $this->CI->db->get()->row()->valor;
+    }
+
+    function retornaValorTotal()
+    {
+        $query = $this->CI->db->select("sum(vrPreco) as valor")
+            ->from("{$this->CI->cobranca_model} co");
+            
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("co.dataVencimento >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("co.dataVencimento <=", $dataFinal);
+        }
+        return  $this->CI->db->get()->row()->valor;
+    }
 }
