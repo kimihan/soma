@@ -1,7 +1,7 @@
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">
-            Inserir produto
+            Produto <?=!empty($dadosProduto->descNome)?$dadosProduto->descNome:NULL?>
         </h3>
     </div>
     <!--begin::Form-->
