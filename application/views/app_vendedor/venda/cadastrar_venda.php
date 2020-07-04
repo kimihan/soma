@@ -1,5 +1,5 @@
 <!-- CSS -->
-<link href="public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="<?=base_url()?>public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">

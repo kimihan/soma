@@ -29,12 +29,16 @@ $(() => {
             type: "POST",
             url: handler.attr("action"),
             data: { "dadosVendedor": dadosVendedor, "dadosVendedorEndereco": handler.serialize() },
-            success: function (resp) {
-                if(resp == "sucesso") {
-                    setCookie("dadosVendedor", null);
+            success: function(resp) {
+                if (resp == "sucesso") {
+                    setCookie("dadosVendedor", "");
+                    $("#modalSucessoCadastroVendedor").modal("show");
                 } else {
                     showModalErro("Erro ao tentar cadastrar!");
                 }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                showModalErro("Erro ao tentar cadastrar, e-mail já utilizado!");
             }
         });
 
@@ -76,7 +80,7 @@ $(() => {
             $("#divCarregandoCep").show("fast");
 
             //Consulta o webservice viacep.com.br/
-            $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+            $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
                 if (!("erro" in dados)) {
                     //Atualiza os campos com os valores da consulta.
                     $("#logradouro").val(dados.logradouro);
@@ -90,6 +94,7 @@ $(() => {
 
                 $("#divCarregandoCep").hide("fast", () => {
                     $("#fmrCadastroVendedorEndereco").find("input").each((k, e) => $(e).removeAttr('readonly'));
+                    $("#divFormEndereco").show("fast");
                 });
             });
         }
@@ -106,7 +111,7 @@ $(() => {
     });
 
     var options = {
-        onKeyPress: function (cpf, ev, el, op) {
+        onKeyPress: function(cpf, ev, el, op) {
             var masks = ['000.000.000-000', '00.000.000/0000-00'];
             $('#cpfOuCnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
         }

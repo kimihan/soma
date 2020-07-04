@@ -25,12 +25,12 @@
             color: white;
             border-top: #DEDE1F 3px solid;
         }
-        .btn {
+        .btn:not(#btnCarregando) {
             background-color: #3049FF !important;
             color: white;
             border: #DEDE1F 1px solid;
         }
-        .btn:hover {
+        .btn:hover:not(#btnCarregando) {
             background-color: #DEDE1F !important;
             color: white;
             border: #3049FF 1px solid;

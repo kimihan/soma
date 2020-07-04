@@ -13,7 +13,7 @@
 
         <div class="row justify-content-center align-self-center">
             <div class="col-12 mb-3">
-                <a href="http://localhost/soma/app_vendedor/venda" class="btn btn-outline-secondary btn-block" >Já sou cadastrado</a>
+                <a href="http://localhost/soma/app_vendedor/login/login" class="btn btn-outline-secondary btn-block" >Já sou cadastrado</a>
             </div>            
         </div>
 

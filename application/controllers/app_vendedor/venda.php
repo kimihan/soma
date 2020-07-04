@@ -11,6 +11,11 @@ class Venda extends MY_Controller {
     function __construct() 
     {
         parent::__construct();
+        
+        if(parent::verificarLoginVendedor()) {
+            $this->load->helper('url');
+            redirect('app_vendedor/login', 'refresh');
+        }
     }
 
     /**
@@ -20,6 +25,6 @@ class Venda extends MY_Controller {
      */
     function index()
     {
-        return $this->template->load("app_vendedor/template", "app_vendedor/login");
-	} 
+        return $this->template->load("app_vendedor/template", "app_vendedor/venda/cadastrar_venda");
+    }
 }

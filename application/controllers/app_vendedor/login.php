@@ -11,6 +11,13 @@ class Login extends MY_Controller {
     function __construct() 
     {
         parent::__construct();
+
+        if(!parent::verificarLoginVendedor()) {
+            $this->load->helper('url');
+            redirect('app_vendedor/venda', 'refresh');
+        }
+
+        $this->load->model("login_model");
     }
 
     /**
@@ -22,9 +29,18 @@ class Login extends MY_Controller {
     {
 		return $this->template->load("app_vendedor/template", "app_vendedor/index");
     }
+
+    function login() {
+        return $this->template->load("app_vendedor/template", "app_vendedor/login");
+    }
     
     function logar()
     {
-        return $this->template->load("app_vendedor/template", "app_vendedor/login");
+        $dadosLogin = [];
+        parse_str($this->input->post()["dadosLogin"], $dadosLogin);
+
+        $login = $this->login_model->logarVendendor($dadosLogin);
+
+        echo ($login) ? "sucesso" : "error";
     }
 }
