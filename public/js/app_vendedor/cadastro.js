@@ -73,7 +73,6 @@ $(() => {
 
         if (tam === 10) {
             handler.attr("readonly", true);
-            $("#divCep").removeClass("col-12 mb-2").addClass("col-10 mb-2");
             $("#divCarregandoCep").show("fast");
 
             //Consulta o webservice viacep.com.br/
@@ -90,7 +89,6 @@ $(() => {
                 }
 
                 $("#divCarregandoCep").hide("fast", () => {
-                    $("#divCep").removeClass("col-10 mb-2").addClass("col-12 mb-2");
                     $("#fmrCadastroVendedorEndereco").find("input").each((k, e) => $(e).removeAttr('readonly'));
                 });
             });

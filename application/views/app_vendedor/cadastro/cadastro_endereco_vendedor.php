@@ -21,7 +21,7 @@
                 <div class="col-12 mb-2" id="divCep">
                     <input type="text" class="form-control" name="numCep" value="" required placeholder="CEP" id="cep" maxlength="10" autocomplete="nofill">
                 </div>
-                <div class="col-2 mb-2" style="display: none;" id="divCarregandoCep">
+                <div class="col-12 mb-2" style="display: none;" id="divCarregandoCep">
                     <button class="btn btn-outline-secondary btn-block" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Carregando...
