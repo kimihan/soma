@@ -272,3 +272,7 @@ CREATE INDEX `fk_Boleto_Cobranca1_idx` ON `soma`.`Boleto` (`Cobranca_idCobranca`
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do vendedor ao vender o produto';

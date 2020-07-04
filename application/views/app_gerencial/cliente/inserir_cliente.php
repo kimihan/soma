@@ -1,7 +1,7 @@
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">
-            Inserir cliente
+            Cliente <?=!empty($dadosCliente->descNome)?$dadosCliente->descNome:NULL?>
         </h3>
     </div>
     <!--begin::Form-->
@@ -116,7 +116,33 @@
                 <label for="example-date-input" class="col-2 col-form-label">Estado</label>
                 <div class="col-10">
                     <select class="form-control form-control-lg" name="siglaUf" id="siglaUf">
-                        <option>MG</option>
+                        <option value="AC" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "AC"?"selected":NULL?>>Acre</option>
+                        <option value="AL" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "AL"?"selected":NULL?>>Alagoas</option>
+                        <option value="AP" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "AP"?"selected":NULL?>>Amapá</option>
+                        <option value="AM" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "AM"?"selected":NULL?>>Amazonas</option>
+                        <option value="BA" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "BA"?"selected":NULL?>>Bahia</option>
+                        <option value="CE" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "CE"?"selected":NULL?>>Ceará</option>
+                        <option value="DF" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "DF"?"selected":NULL?>>Distrito Federal</option>
+                        <option value="ES" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "ES"?"selected":NULL?>>Espírito Santo</option>
+                        <option value="GO" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "GO"?"selected":NULL?>>Goiás</option>
+                        <option value="MA" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "MA"?"selected":NULL?>>Maranhão</option>
+                        <option value="MT" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "MT"?"selected":NULL?>>Mato Grosso</option>
+                        <option value="MS" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "MS"?"selected":NULL?>>Mato Grosso do Sul</option>
+                        <option value="MG" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "MG"?"selected":NULL?>>Minas Gerais</option>
+                        <option value="PA" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "PA"?"selected":NULL?>>Pará</option>
+                        <option value="PB" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "PB"?"selected":NULL?>>Paraíba</option>
+                        <option value="PR" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "PR"?"selected":NULL?>>Paraná</option>
+                        <option value="PE" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "PE"?"selected":NULL?>>Pernambuco</option>
+                        <option value="PI" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "PI"?"selected":NULL?>>Piauí</option>
+                        <option value="RJ" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "RJ"?"selected":NULL?>>Rio de Janeiro</option>
+                        <option value="RN" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "RN"?"selected":NULL?>>Rio Grande do Norte</option>
+                        <option value="RS" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "RS"?"selected":NULL?>>Rio Grande do Sul</option>
+                        <option value="RO" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "RO"?"selected":NULL?>>Rondônia</option>
+                        <option value="RR" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "RR"?"selected":NULL?>>Roraima</option>
+                        <option value="SC" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "SC"?"selected":NULL?>>Santa Catarina</option>
+                        <option value="SP" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "SP"?"selected":NULL?>>São Paulo</option>
+                        <option value="SE" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "SE"?"selected":NULL?>>Sergipe</option>
+                        <option value="TO" <?=!empty($dadosCliente->siglaUf) && $dadosCliente->siglaUf == "TO"?"selected":NULL?>>Tocantins</option>
                     </select>
                 </div>
             </div>
@@ -146,6 +172,21 @@
         });
     }
 
+    function retornaCEP(cep){
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>app_gerencial/geral/consulta_cep/"+cep,
+            data: $("#formCliente").serializeArray(),
+            dataType: "json",
+            success : function(resp){
+                jQuery("#descLogradouro").val(resp.logradouro);
+                jQuery("#descBairro").val(resp.bairro);
+                jQuery("#descCidade").val(resp.localidade);
+                jQuery("#siglaUf").val(resp.uf);
+            }
+        });
+    }
+
     function formSuccess(){
         $( "#msgSubmit" ).removeClass( "hidden" );
     }
@@ -154,6 +195,10 @@
         $("#formCliente").submit(function(event){
             event.preventDefault();
             submitForm();
+        });
+
+        $("#numCep").blur(function(event){
+            retornaCEP($(this).val());
         });
     });
 </script>

@@ -33,45 +33,7 @@
 				</div>
 				<!--end::Aside-->
 				<!--begin::Wrapper-->
-				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" style="padding-top: 66px;">
-					<!--begin::Header-->
-					<div id="kt_header" class="header header-fixed">
-						<!--begin::Container-->
-						<div class="container-fluid d-flex align-items-stretch justify-content-between">
-							<!--begin::Header Menu Wrapper-->
-							<div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
-								<!--begin::Header Menu-->
-								<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
-									<!--begin::Header Nav-->
-									<ul class="menu-nav">
-										<li class="menu-item menu-item-submenu menu-item-rel menu-item-active" data-menu-toggle="click" aria-haspopup="true">
-											<a href="javascript:;" class="menu-link menu-toggle">
-												<span class="menu-text">Pages</span>
-												<i class="menu-arrow"></i>
-											</a>
-										</li>
-										<li class="menu-item menu-item-submenu" data-menu-toggle="click" aria-haspopup="true">
-											<a href="javascript:;" class="menu-link menu-toggle">
-												<span class="menu-text">Features</span>
-												<i class="menu-arrow"></i>
-											</a>
-										</li>
-										<li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
-											<a href="javascript:;" class="menu-link menu-toggle">
-												<span class="menu-text">Apps</span>
-												<i class="menu-arrow"></i>
-											</a>
-										</li>
-									</ul>
-									<!--end::Header Nav-->
-								</div>
-								<!--end::Header Menu-->
-							</div>
-							<!--end::Header Menu Wrapper-->
-						</div>
-						<!--end::Container-->
-					</div>
-					<!--end::Header-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" style="padding-top: 0px !important;">
 					<!--begin::Content-->
 					<div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="padding: 0;">
 						<!--begin::Entry-->

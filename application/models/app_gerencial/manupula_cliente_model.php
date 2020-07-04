@@ -131,4 +131,56 @@ class Manupula_cliente_model  {
         return  $result;
     }    
 
+    function retornaClientesAdimplentes($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_clientes")
+            ->from("{$this->CI->cliente_model} c")
+            ->join("{$this->CI->servico_model} s", "s.Cliente_idCliente = c.idCliente", "left")
+            ->where("s.dataVencimento >= now()");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("c.dataCadastro >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("c.dataCadastro <=", $dataFinal);
+        }
+
+        return $this->CI->db->get()->row()->num_clientes;
+    }
+
+    function retornaClientesInadimplentes($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_clientes")
+            ->from("{$this->CI->cliente_model} c")
+            ->join("{$this->CI->servico_model} s", "s.Cliente_idCliente = c.idCliente", "left")
+            ->where("s.dataVencimento < now()");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("c.dataCadastro >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("c.dataCadastro <=", $dataFinal);
+        }
+
+        return $this->CI->db->get()->row()->num_clientes;
+    }
+
+    function retornaTotalClientes($dataInicial = NULL, $dataFinal = NULL)
+    {
+        $query = $this->CI->db->select("count(1) as num_clientes")
+            ->from("{$this->CI->cliente_model} c")
+            ->join("{$this->CI->servico_model} s", "s.Cliente_idCliente = c.idCliente", "left");
+
+        if(!empty($dataInicial)) {
+            $this->CI->db->where("c.dataCadastro >=", $dataInicial);
+        }
+
+        if(!empty($dataFinal)) {
+            $this->CI->db->where("c.dataCadastro <=", $dataFinal);
+        }
+
+        return $this->CI->db->get()->row()->num_clientes;
+    }
 }
