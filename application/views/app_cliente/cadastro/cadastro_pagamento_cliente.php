@@ -1,14 +1,14 @@
 <!-- CSS -->
-<link href="http://localhost/soma/public/css/index.css" rel="stylesheet" type="text/css"/>
+<link href="<?=base_url()?>public/css/index.css" rel="stylesheet" type="text/css"/>
 
 <!--JS -->
-<script src="http://localhost/soma/public/js/app_cliente/index.js" type="text/javascript"></script>
+<script src="<?=base_url()?>public/js/app_cliente/index.js" type="text/javascript"></script>
 
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
         <div class="row">
-            <div class="col-12 mb-5">
+            <div class="col-12 mb-3">
                 <h1 class="text-center font-italic">
                 <?=NOME_APP_CLIENTE?>
                 </h1>

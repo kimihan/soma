@@ -1,15 +1,17 @@
 <html lang="pt">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bem-vindo ao Soma</title>
 
         <!-- CSS -->
-        <link href="http://localhost/soma/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<?=base_url()?>public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
         <!-- JS -->
-        <script src="http://localhost/soma/public/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-        <script src="http://localhost/soma/public/js/popper.min.js" type="text/javascript"></script>
-        <script src="http://localhost/soma/public/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?=base_url()?>public/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script src="<?=base_url()?>public/js/popper.min.js" type="text/javascript"></script>
+        <script src="<?=base_url()?>public/js/bootstrap.min.js" type="text/javascript"></script>
 
 
     <style>

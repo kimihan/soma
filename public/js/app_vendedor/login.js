@@ -18,7 +18,7 @@ $(() => {
                 data: { "dadosLogin": handler.serialize() },
                 success: function(resp) {
                     if (resp == "sucesso") {
-                        window.location.href = "http://localhost/soma/app_vendedor/venda";
+                        window.location.href = base_url + "app_vendedor/venda";
                     } else {
                         showModalErro("Erro ao tentar realizar o login!");
                     }

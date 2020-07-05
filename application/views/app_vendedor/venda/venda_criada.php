@@ -4,7 +4,7 @@
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
         <div class="row">
-            <div class="col-12 mb-5">
+            <div class="col-12 mb-3">
                 <h1 class="text-center font-italic">
                     <?= NOME_APP_VENDEDOR ?>
                 </h1>

@@ -276,3 +276,11 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do vendedor ao vender o produto';
+
+
+ALTER TABLE Usuario
+ADD CONSTRAINT uc_Email UNIQUE (descEmail)
+
+ALTER TABLE `ProdutoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
+/*
+tabela "ProdutoVendedor" removi a chave primaria da coluna "Produto_idProduto"*/

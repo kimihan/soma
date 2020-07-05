@@ -10,7 +10,7 @@
 <script>
     $(() => {
         if(getCookie("dadosVendedor") == "") {
-            window.location.href = "http://localhost/soma/app_vendedor/cadastro";
+            window.location.href = "<?=base_url()?>app_vendedor/cadastro";
         }
     });
 </script>
@@ -18,7 +18,7 @@
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
         <div class="row">
-            <div class="col-12 mb-5">
+            <div class="col-12 mb-3">
                 <h1 class="text-center font-italic">
                 <?=NOME_APP_VENDEDOR?>
                 </h1>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
-            <div class="col-6">
+                <div class="col-6">
                     <button class="btn btn-outline-secondary btn-block" type="button" id="btnFormVoltar">Voltar</button>
                 </div>
                 <div class="col-6">
@@ -92,7 +92,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <a href="http://localhost/soma/app_vendedor/venda" class="btn btn-outline-secondary btn-block" >Ir para o login</a>
+        <a href="<?=base_url()?>app_vendedor/venda" class="btn btn-outline-secondary btn-block" >Ir para o login</a>
       </div>
     </div>
   </div>

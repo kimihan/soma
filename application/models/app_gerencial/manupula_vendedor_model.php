@@ -20,6 +20,7 @@ class Manupula_vendedor_model  {
         $this->CI->load->model("vendedor_model");
         $this->CI->load->model("usuario_model");
         $this->CI->load->model("endereco_model");
+        $this->CI->load->model("produto_model");
     }
 
     function insereEditaVendedor($dadosVendedor)
@@ -72,6 +73,28 @@ class Manupula_vendedor_model  {
         }
 
         return $result;
+    }
+
+    function retornaProdutoVendedor($idVendedor = NULL, $arrayWhere = NULL)
+    {
+        $query = $this->CI->db->select("v.idVendedor, u.vrPreco, e.*")
+            ->from("{$this->CI->vendedor_model} v")
+            ->join("produtoVendedor u", "v.idVendedor = u.Vendedor_idVendedor")
+            ->join("{$this->CI->produto_model} e", "u.Produto_idProduto = e.idProduto");
+
+        if(!empty($arrayWhere)) {
+            foreach ($arrayWhere as $key => $value) {
+                if(!empty($value)) {
+                    $this->CI->db->like($key, $value);
+                }
+            }
+        }
+
+        if(!empty($idVendedor)) {
+            $this->CI->db->where(array("v.idVendedor" => $idVendedor));
+        }
+
+        return $this->CI->db->get()->result();
     }
 
     function excluiVemdedor($idVendedor)

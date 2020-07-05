@@ -12,6 +12,11 @@ class Cadastro extends MY_Controller {
     {
         parent::__construct();
 
+        if(!parent::verificarLoginVendedor()) {
+            $this->load->helper('url');
+            redirect('app_vendedor/venda', 'refresh');
+        }
+
         $this->load->model("usuario_model");
         $this->load->model("endereco_model");
         $this->load->model("vendedor_model");
