@@ -77,7 +77,7 @@ class Manupula_vendedor_model  {
 
     function retornaProdutoVendedor($idVendedor = NULL, $arrayWhere = NULL)
     {
-        $query = $this->CI->db->select("v.idVendedor, u.vrPreco, e.*")
+        $query = $this->CI->db->select("v.idVendedor, FORMAT(u.vrPreco, 2, 'de_DE') as vrPreco, e.*")
             ->from("{$this->CI->vendedor_model} v")
             ->join("produtoVendedor u", "v.idVendedor = u.Vendedor_idVendedor")
             ->join("{$this->CI->produto_model} e", "u.Produto_idProduto = e.idProduto");

@@ -274,7 +274,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-
+/*luan*/
 ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do vendedor ao vender o produto';
 
 
@@ -284,3 +284,8 @@ ADD CONSTRAINT uc_Email UNIQUE (descEmail)
 ALTER TABLE `ProdutoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 /*
 tabela "ProdutoVendedor" removi a chave primaria da coluna "Produto_idProduto"*/
+
+ALTER TABLE `Cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagamento` TINYINT(1) NULL DEFAULT '1' COMMENT '1 - Mensal2 - Anual';
+ALTER TABLE `Cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
+ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
+/*luan*/

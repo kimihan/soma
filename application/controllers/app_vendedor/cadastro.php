@@ -54,9 +54,12 @@ class Cadastro extends MY_Controller {
                 $dadosVendedor["numWhatsapp"] = preg_replace('/[^0-9]/', '', $dadosVendedor["numWhatsapp"]);
                 $idUsuario = $this->usuario_model->insert($dadosVendedor);
 
+                if(!empty($dadosVendedor["flgBanca"])) {
+                    $dadosVendedor["flgBanca"] = ($dadosVendedor["flgBanca"] == "on") ? 1 : 0;
+                }
+
                 if($idUsuario) {
                     $dadosVendedor["Usuario_idUsuario"] = $idUsuario;
-                    $dadosVendedor["flgBanca"] = ($dadosVendedor["flgBanca"] == "on") ? 1 : 0;
                     $idVendedor = $this->vendedor_model->insert($dadosVendedor);
                 }
             }

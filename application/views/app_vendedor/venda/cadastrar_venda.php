@@ -9,14 +9,6 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                    <?= NOME_APP_VENDEDOR ?>
-                </h1>
-            </div>
-        </div>
-
         <form action="<?=base_url()?>app_vendedor/venda/cadastrar_venda_endereco" method="POST" id="fmrCadastroVenda">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
@@ -24,7 +16,7 @@
                         <option selected value="">Selecione o produto</option>"
                         <?php
                             foreach ($dadosProdutos as $key => $value) {
-                                echo "<option value='{$value->idProduto}'>{$value->descNome}</option>";
+                                echo "<option value='{$value->idProduto}-{$value->vrPreco}'>{$value->descNome} - R$ {$value->vrPreco}</option>";
                             }
                         ?>
                     </select>

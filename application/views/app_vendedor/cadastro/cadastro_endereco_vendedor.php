@@ -17,13 +17,6 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                <?=NOME_APP_VENDEDOR?>
-                </h1>
-            </div>
-        </div>
         <form action="<?=base_url()?>app_vendedor/cadastro/salvar" method="POST" id="fmrCadastroVendedorEndereco">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2" id="divCep">
@@ -84,11 +77,11 @@
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cadastro criado com sucesso!</h5>
+        <h5 class="modal-title">Cadastro criado com sucesso!</h5>
       </div>
       <div class="modal-body">
         <p>
-            Parabéns vocë finalizou seu cadastro no nosso aplicativo, agora vocë já pode iniciar suas vendas!
+            Parabéns você finalizou seu cadastro no nosso aplicativo, agora já pode iniciar suas vendas!
         </p>
       </div>
       <div class="modal-footer">

@@ -10,13 +10,6 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                    <?= NOME_APP_VENDEDOR ?>
-                </h1>
-            </div>
-        </div>
         <form action="<?=base_url()?>app_vendedor/cadastro/cadastro_endereco" method="POST" id="fmrCadastroVendedor">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">

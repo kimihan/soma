@@ -16,6 +16,11 @@ class Venda extends MY_Controller {
             $this->load->helper('url');
             redirect('app_vendedor/login', 'refresh');
         }
+
+        $this->load->model("cliente_model");
+        $this->load->model("usuario_model");
+        $this->load->model("endereco_model");
+        $this->load->model("servico_model");
     }
 
     /**
@@ -37,5 +42,73 @@ class Venda extends MY_Controller {
     function cadastrar_venda_endereco()
     {
         return $this->template->load("app_vendedor/template", "app_vendedor/venda/cadastrar_endereco_venda");
+    }
+
+    function salvar()
+    {   ignore_user_abort(true);
+        $now = date("Y-m-d H:i:s");
+
+        $dadosVenda = [];
+        $dadosVendaEndereco = [];
+        parse_str($this->input->post()["dadosVenda"], $dadosVenda);
+        parse_str($this->input->post()["dadosVendaEndereco"], $dadosVendaEndereco);
+
+        $dadosVendaEndereco["flgLigacao"] = (!empty($dadosVendaEndereco["flgLigacao"]) && $dadosVendaEndereco["flgLigacao"] == "on") ? 1 : 0;
+
+        $idEndereco = ($dadosVendaEndereco["flgLigacao"] === 1) ? NULL : $this->endereco_model->insert($dadosVendaEndereco);
+
+        $dateNascimento = explode("/", $dadosVenda["dataNascimento"]);
+
+        $dadosVenda["Endereco_idEndereco"] = $idEndereco;
+        $dadosVenda["numCpf"] = preg_replace('/[^0-9]/', '', $dadosVenda["numCpf"]);
+        $dadosVenda["numTelefone"] = preg_replace('/[^0-9]/', '', $dadosVenda["numTelefone"]);
+        $dadosVenda["numWhatsapp"] = preg_replace('/[^0-9]/', '', $dadosVenda["numWhatsapp"]);
+        $dadosVenda["dataNascimento"] = $dateNascimento[2] . "-" . $dateNascimento[1] . "-" . $dateNascimento[0];
+        $idUsuario = $this->usuario_model->insert($dadosVenda);
+
+        if($idUsuario) {
+            $dadosCliente = ["flgLigacao" => $dadosVendaEndereco["flgLigacao"], "Usuario_idUsuario" => $idUsuario];
+
+            $idCliente = $this->cliente_model->insert($dadosCliente);
+
+            if($idCliente) {
+                $produto = explode("-", $dadosVenda["produto"]);
+                $vrPreco = str_replace(".", "", $produto[1]);
+                $dadosServico = ["dataVenda" => $now, "vrPreco" => str_replace(",", ".", $vrPreco), "Produto_idProduto" => $produto[0],
+                                    "Cliente_idCliente" => $idCliente];
+
+                $idServico = $this->servico_model->insert($dadosServico);
+            }
+
+            if($idServico) {
+                $aux = 0;
+                if (!file_exists(PATH_UPLOAD . "/{$idServico}")) {
+                    mkdir(PATH_UPLOAD . "/{$idServico}", 0777, true);
+                }
+                $config['upload_path']          = PATH_UPLOAD . "/{$idServico}";
+                $config['allowed_types'] = 'gif|jpg|png|txt|pdf';
+                $config['max_size'] = 1024 * 15;
+                $this->load->library('upload', $config);
+            
+                foreach($_FILES as $key => $val) {
+                    $explode = explode(".", $val["name"]);
+                    $ext = "." . $explode[count($explode) - 1];
+
+                    if ($this->upload->do_upload($key)) {
+                        $aux = $aux + 1;
+                    } else {
+                        echo $this->upload->display_errors();
+                        echo json_encode($config);
+                    }
+                }
+
+                echo ($aux === count($_FILES)) ? json_encode(["sucesso" => "sucesso", "idServico" => $idServico]) : json_encode(["sucesso" => "error"]);
+
+                return true;
+            }
+        }
+
+        echo "error";
+        return false;
     }
 }

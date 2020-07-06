@@ -12,14 +12,6 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                <?=NOME_APP_VENDEDOR?>
-                </h1>
-            </div>
-        </div>
-        
         <form action="<?=base_url()?>app_vendedor/login/logar" method="POST" id="fmrLoginVendedor">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
@@ -32,11 +24,17 @@
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
-                <div class="col-6">
+                <div class="col-6" name="divInputLogin">
                     <a href="<?=base_url()?>app_vendedor/login" class="btn btn-outline-secondary btn-block" >Voltar</a>
                 </div>
-                <div class="col-6">
+                <div class="col-6" name="divInputLogin">
                     <button class="btn btn-outline-secondary btn-block" type="submit">Logar</button>
+                </div>
+                <div class="col-12" id="divCarregandoLogin" style="display: none;">
+                    <button class="btn btn-primary btn-block" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Carregando...
+                    </button>
                 </div>
             </div>
         </form>

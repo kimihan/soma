@@ -31,5 +31,12 @@ class login_model extends MY_Model {
         
     }
 
+    public function logoutVendendor() {
+        $CI =& get_instance();
+        $CI->load->library('session');
+
+        return $CI->session->unset_userdata('sVendedor');
+    }
+
 }
                

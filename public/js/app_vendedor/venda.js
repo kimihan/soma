@@ -1,4 +1,5 @@
 let FileList = [];
+let formData = new FormData();
 $(() => {
     let dadosVenda;
     let CPF;
@@ -16,32 +17,71 @@ $(() => {
     });
 
     $("#fmrCadastroVendaEndereco").submit((e) => {
-        let handler = $(e.currentTarget);
-        dadosVenda = getCookie("dadosVenda");
-        $("#cep").val($("#cep").val().replace(/\D/g, ''));
+        try {
+            $("[name=divCadastrarVenda]").hide("fast", () => {
+                $("button, #isCall, input").attr("disabled", true);
+                $("#divCarregandoVenda").show("fast");
+            });
 
-        $.ajax({
-            type: "POST",
-            url: handler.attr("action"),
-            data: { "dadosVenda": dadosVenda, "dadosVendaEndereco": handler.serialize() },
-            success: function(resp) {
-                if (resp == "sucesso") {
-                    setCookie("dadosVenda", "");
-                    //$("#modalSucessoCadastroVendedor").modal("show");
-                } else {
-                    showModalErro("Erro ao tentar cadastrar!");
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                showModalErro("Erro ao tentar cadastrar, e-mail já utilizado!");
+            let handler = $(e.currentTarget);
+            dadosVenda = getCookie("dadosVenda");
+            $("#cep").val($("#cep").val().replace(/\D/g, ''));
+
+            if (FileList.length === 0) {
+                showModalErro("Favor anexar foto da proposta!");
+                return false;
             }
-        });
 
-        return false;
+            FileList.forEach((value, key) => {
+                formData.append(`file_${key}`, value);
+            });
+
+            formData.append('dadosVenda', dadosVenda);
+            formData.append('dadosVendaEndereco', $("#fmrCadastroVendaEndereco").serialize());
+
+            $.ajax({
+                url: handler.attr("action"),
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function(resp) {
+                    let retorno = JSON.parse(resp);
+                    if (retorno["sucesso"] == "sucesso") {
+                        setCookie("dadosVenda", "");
+                        $("#spanIdVenda").text(retorno["idServico"]);
+                        $("#modalSucessoCadastroVenda").modal("show");
+                    } else {
+                        showModalErro("Falha ao tentar cadastrar!");
+                        escondeCarregando();
+                    }
+                },
+                xhr: function() { // Custom XMLHttpRequest
+                    let myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+                        myXhr.upload.addEventListener('progress', function() {
+                            //console.log(myXhr);
+                        }, false);
+                    }
+                    return myXhr;
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showModalErro("Falha ao tentar cadastrar!");
+                    escondeCarregando();
+                }
+            });
+
+            return false;
+        } catch (error) {
+            showModalErro("Falha ao tentar cadastrar!");
+            escondeCarregando();
+
+            return false;
+        }
     });
 
     $("#btnUpload").click(() => {
-        $("[name=inpFoto]").click();
+        $("#inpFoto").click();
     });
 
     $("#cpfOuCnpj").keyup((e) => {
@@ -62,8 +102,13 @@ $(() => {
 
         if (element[0].checked) {
             $("#divCall").hide("fast");
+
+            $("#divCamposCadastroEnderecoCliente").find("input").removeAttr("required");
+
         } else {
             $("#divCall").show("fast");
+
+            $("#divCamposCadastroEnderecoCliente").find("input").attr("required", true);
         }
     });
 
@@ -84,6 +129,8 @@ $(() => {
                     $("#bairro").val(dados.bairro);
                     $("#localidade").val(dados.localidade);
                     $("#uf").val(dados.uf);
+
+                    $("#isCall").attr("disabled", true);
                 } else {
                     //CEP pesquisado não foi encontrado.
                     showModalErro("CEP não encontrado!");
@@ -94,6 +141,14 @@ $(() => {
                     $("#divFormEndereco").show("fast");
                 });
             });
+        }
+
+        if (cep == "") {
+            $("#isCall").removeAttr("disabled", true);
+            $("#logradouro").val("");
+            $("#bairro").val("");
+            $("#localidade").val("");
+            $("#uf").val("");
         }
     });
 
@@ -153,7 +208,7 @@ $(() => {
         return true;
     }
 
-    $("[name=inpFoto]").change((e) => {
+    $("#inpFoto").change((e) => {
         let handler = $(e.currentTarget);
         let files = handler.get(0).files;
         let ui = $("#listUploadFotos");
@@ -192,15 +247,25 @@ $(() => {
 });
 
 function removeUpload(key) {
-    if (FileList.length > 1) {
-        FileList.splice(key, 1);
-    } else {
-        FileList.splice(-1, 1)
-    }
-
     $(`#liUpload${key}`).hide("fast", () => {
         $(`#liUpload${key}`).remove();
     });
 
-    return (FileList.length === 0) ? $("#divArquivosUpload").hide("fast") : false;
+    if (FileList.length > 1) {
+        FileList.splice(key, 1);
+    } else {
+        FileList.splice(-1, 1);
+        $("#divArquivosUpload").hide("fast", () => {
+            $("#inpFoto").val("");
+        });
+    }
+
+    return FileList;
+}
+
+function escondeCarregando() {
+    $("[name=divCadastrarVenda]").show("fast", () => {
+        $("button, #isCall, input").attr("disabled", false);
+        $("#divCarregandoVenda").hide("fast");
+    });
 }
