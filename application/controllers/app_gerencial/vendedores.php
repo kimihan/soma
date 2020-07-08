@@ -51,9 +51,17 @@ class Vendedores extends MY_Controller {
 
     function ver($idVendedor)
     {
-        $dadosVendedor = $this->manupula_vendedor_model->retornaDadosVendedor($idVendedor);
+        
+        $this->load->model("app_gerencial/manipula_produto_model");
 
-        $param["view"] = $this->load->view("app_gerencial/vendedor/ver_vendedor", array("dadosVendedor" => $dadosVendedor), TRUE);
+        $dadosVendedor = $this->manupula_vendedor_model->retornaDadosVendedor($idVendedor);
+        $dadosProdutosVendedor = $this->manupula_vendedor_model->retornaProdutoVendedor($idVendedor);
+        $dadosProdutos = $this->manipula_produto_model->retornaDados();
+
+        $param["view"] = $this->load->view(
+            "app_gerencial/vendedor/ver_vendedor", 
+            array("dadosVendedor" => $dadosVendedor, "dadosProdutosVendedor" => $dadosProdutosVendedor, "dadosProdutos" => $dadosProdutos), 
+            TRUE);
         $this->load->view("app_gerencial/index", $param);
     }
 

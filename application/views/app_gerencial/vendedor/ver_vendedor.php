@@ -157,26 +157,32 @@
                 </h3>
             </div>
             <div style="padding: 0 0 0 25px;">
-                <table  id="listaProdutos">
-                    <tr>
-                        <th>Produto</th>
-                        <th>Preço de venda</th>
-                        <th>% comissão</th>
-                    </tr>
-                    <tr style="margin-top: 10px">
-                        <td style="width: 200px;">
-                            <select style="height: 40px; width: 180px;">
-                                <option>Produto A</option>
-                            </select>
-                        </td>
-                        <td style="    width: 200px;">
-                            <input class="form-control" type="text" value="" name="vrPreco" id="vrPreco" style="width: 180px;"/>
-                        </td>
-                        <td style="    width: 200px;">
-                            <input class="form-control" type="text" value="" name="vrComissao" id="vrComissao" style="width: 180px;"/>
-                        </td>
-                    </tr>
-                </table>
+                <form id="formProdutosVendedor" method="post" role="form">
+                    <table  id="listaProdutos">
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço de venda</th>
+                            <th>% comissão</th>
+                        </tr>
+                        <?php foreach($dadosProdutosVendedor as $key => $produto):?>
+                            <tr style="margin-top: 10px">
+                            <td style="width: 200px;">
+                                <select style="height: 40px; width: 180px;">
+                                    <?php foreach($dadosProdutos as $key => $produtoBD):?>
+                                        <option value="<?=$produtoBD->idProduto?>" <?=$produtoBD->idProduto == $produto->idProduto?"selected":NULL?>><?=$produtoBD->descNome?></option>
+                                    <?php endforeach?>
+                                </select>
+                            </td>
+                            <td style="    width: 200px;">
+                                <input class="form-control" type="text" value="<?=$produto->precoVenda?>" name="vrPreco" id="vrPreco" style="width: 180px;"/>
+                            </td>
+                            <td style="    width: 200px;">
+                                <input class="form-control" type="text" value="<?=$produto->vrComissao?>" name="vrComissao" id="vrComissao" style="width: 180px;"/>
+                            </td>
+                        </tr>
+                        <?php endforeach?>
+                    </table>
+                </form>
 
                 <div style="width: 600px; margin-top: 20px">
                     <button type="button" class="btn btn-primary btn-lg btn-block" id="botaoAdicionar">Adicionar</button>
@@ -198,7 +204,20 @@
         $.ajax({
             type: "POST",
             url: "<?=base_url()?>app_gerencial/vendedores/ajax_salvar",
-            data: $("#formCliente").serializeArray(),
+            data: $("#formVendedor").serializeArray(),
+            success : function(text){
+                if (text == "success"){
+                    formSuccess();
+                }
+            }
+        });
+    }
+
+    function submitFormProdutos(){
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>app_gerencial/vendedores/ajax_salvar_produtos",
+            data: $("#formProdutosVendedor").serializeArray(),
             success : function(text){
                 if (text == "success"){
                     formSuccess();
