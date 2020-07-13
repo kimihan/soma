@@ -21,6 +21,7 @@ class Manupula_vendedor_model  {
         $this->CI->load->model("usuario_model");
         $this->CI->load->model("endereco_model");
         $this->CI->load->model("produto_model");
+        $this->CI->load->model("produtovendedor_model");
     }
 
     function insereEditaVendedor($dadosVendedor)
@@ -118,5 +119,22 @@ class Manupula_vendedor_model  {
         $arrayExclusao = array();
         $arrayExclusao["idEndereco"] = $result->idEndereco;
         $this->CI->endereco_model->excluir($arrayExclusao);
+    }
+
+    function insereEditaProdutosVendedor($idVendedor, $arrayProdutos)
+    {
+        $arrayExclusao = array();
+        $arrayExclusao["Vendedor_idVendedor"] = $idVendedor;
+        $this->CI->produtovendedor_model->excluir($arrayExclusao);
+
+        foreach($arrayProdutos as $key => $value) {
+            $arrayInserir["Vendedor_idVendedor"] = $idVendedor;
+            $arrayInserir["Produto_idProduto"] = $value["idProduto"];
+            $arrayInserir["vrComissao"] = $value["vrComissao"];
+            $arrayInserir["vrPreco"] = $value["vrPreco"];
+            $this->CI->produtovendedor_model->inserir($arrayInserir);
+
+            $arrayInserir = array();
+        }
     }
 }

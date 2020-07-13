@@ -69,7 +69,7 @@ class Vendedores extends MY_Controller {
     {
         $dadosVendedor = NULL;
         if(!empty($idVendedor)) {
-            $dadosVendedor = $this->manupula_vendedor_model->retornaDadosCliente($idVendedor);
+            $dadosVendedor = $this->manupula_vendedor_model->retornaDadosVendedor($idVendedor);
         }
 
         $param["view"] = $this->load->view("app_gerencial/vendedor/inserir_vendedor", array("dadosVendedor" => $dadosVendedor), TRUE);
@@ -94,4 +94,29 @@ class Vendedores extends MY_Controller {
         $this->manupula_vendedor_model->excluiVendedor($idVendedor);
     }
 
+    
+    function ajax_salvar_produtos()
+    {
+        $dadosPost = $this->post_all();
+
+        $i = 0;
+        $key = 0;
+        $arrayInsert = array();
+
+        while ($i < 1) {
+            if(!empty($dadosPost["idProduto".$key])) {
+                $arrayInsert[$key]["idProduto"] = $dadosPost["idProduto".$key];
+                $arrayInsert[$key]["vrPreco"] = $dadosPost["vrPreco".$key];
+                $arrayInsert[$key]["vrComissao"] = $dadosPost["vrComissao".$key];
+
+                $key++;
+            } else {
+                $i = 1;
+            }
+        }
+
+        $insert = $this->manupula_vendedor_model->insereEditaProdutosVendedor($dadosPost["idVendedor"], $arrayInsert);
+
+        echo "success";
+    }
 }

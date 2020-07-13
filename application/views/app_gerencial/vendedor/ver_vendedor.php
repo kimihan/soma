@@ -30,7 +30,7 @@
                     <div class="form-group row">
                         <label  class="col-2 col-form-label">ID</label>
                         <div class="col-10">
-                            <?=!empty($dadosVendedor->idCliente)?$dadosVendedor->idCliente:NULL?>
+                            <?=!empty($dadosVendedor->idVendedor)?$dadosVendedor->idVendedor:NULL?>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -150,56 +150,57 @@
         </div>
     </div>
     <div class="tab-pane fade" id="produtos" role="tabpanel" aria-labelledby="produtos-tab">
-        <div class="card card-custom">
-            <div class="card-header">
-                <h3 class="card-title">
-                    Produtos do vendedor
-                </h3>
-            </div>
-            <div style="padding: 0 0 0 25px;">
-                <form id="formProdutosVendedor" method="post" role="form">
-                    <table  id="listaProdutos">
-                        <tr>
-                            <th>Produto</th>
-                            <th>Preço de venda</th>
-                            <th>% comissão</th>
-                        </tr>
-                        <?php foreach($dadosProdutosVendedor as $key => $produto):?>
-                            <tr style="margin-top: 10px">
-                            <td style="width: 200px;">
-                                <select style="height: 40px; width: 180px;">
-                                    <?php foreach($dadosProdutos as $key => $produtoBD):?>
-                                        <option value="<?=$produtoBD->idProduto?>" <?=$produtoBD->idProduto == $produto->idProduto?"selected":NULL?>><?=$produtoBD->descNome?></option>
-                                    <?php endforeach?>
-                                </select>
-                            </td>
-                            <td style="    width: 200px;">
-                                <input class="form-control" type="text" value="<?=$produto->precoVenda?>" name="vrPreco" id="vrPreco" style="width: 180px;"/>
-                            </td>
-                            <td style="    width: 200px;">
-                                <input class="form-control" type="text" value="<?=$produto->vrComissao?>" name="vrComissao" id="vrComissao" style="width: 180px;"/>
-                            </td>
-                        </tr>
-                        <?php endforeach?>
-                    </table>
-                </form>
-
-                <div style="width: 600px; margin-top: 20px">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" id="botaoAdicionar">Adicionar</button>
+        <form id="formProdutosVendedor" method="post" role="form">
+            <input type="hidden" value="<?=!empty($dadosVendedor->idVendedor)?$dadosVendedor->idVendedor:NULL?>" name="idVendedor" id="idVendedor"/>
+            <div class="card card-custom">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Produtos do vendedor
+                    </h3>
+                </div>
+                <div style="padding: 0 0 0 25px;">
+                        <table  id="listaProdutos">
+                            <tr>
+                                <th>Produto</th>
+                                <th>Preço de venda</th>
+                                <th>% comissão</th>
+                            </tr>
+                            <?php foreach($dadosProdutosVendedor as $key => $produto):?>
+                                <tr style="margin-top: 10px">
+                                <td style="width: 200px;">
+                                    <select style="height: 40px; width: 180px;" name="idProduto<?=$key?>" id="idProduto<?=$key?>">
+                                        <?php foreach($dadosProdutos as $key => $produtoBD):?>
+                                            <option value="<?=$produtoBD->idProduto?>" <?=$produtoBD->idProduto == $produto->idProduto?"selected":NULL?>><?=$produtoBD->descNome?></option>
+                                        <?php endforeach?>
+                                    </select>
+                                </td>
+                                <td style="    width: 200px;">
+                                    <input class="form-control" type="text" value="<?=$produto->precoVenda?>" name="vrPreco<?=$key?>" id="vrPreco<?=$key?>" style="width: 180px;"/>
+                                </td>
+                                <td style="    width: 200px;">
+                                    <input class="form-control" type="text" value="<?=$produto->vrComissao?>" name="vrComissao<?=$key?>" id="vrComissao<?=$key?>" style="width: 180px;"/>
+                                </td>
+                            </tr>
+                            <?php endforeach?>
+                        </table>
+                    <div style="width: 600px; margin-top: 20px">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="botaoAdicionar">Adicionar</button>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-10">
+                        <button type="submit" class="btn btn-success mr-2">Salvar</button>
+                    </div>
                 </div>
             </div>
-            <div class="row" style="margin-top: 20px">
-                <div class="col-2">
-                </div>
-                <div class="col-10">
-                    <button type="submit" class="btn btn-success mr-2">Salvar</button>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
 <script>
+    var indiceProdutos = <?=count($dadosProdutosVendedor)?>;
     function submitForm(){
         $.ajax({
             type: "POST",
@@ -236,24 +237,31 @@
             submitForm();
         });
 
+        $("#formProdutosVendedor").submit(function(event){
+            event.preventDefault();
+            submitFormProdutos();
+        });
+
         $("#botaoAdicionar").click(function(event){
             jQuery("#listaProdutos").append(
                 '<tr style="margin-top: 10px">'+
                 '<td style="width: 200px;">'+
-                            '<select style="height: 40px; width: 180px;">'+
-                                '<option>Produto A</option>'+
+                            '<select style="height: 40px; width: 180px;" name="idProduto'+indiceProdutos+'" id="idProduto'+indiceProdutos+'">'+
+                                <?php foreach($dadosProdutos as $key => $produtoBD):?>
+                                    '<option value="<?=$produtoBD->idProduto?>"><?=$produtoBD->descNome?></option>'+
+                                <?php endforeach?>                               
                             '</select>'+
                         '</td>'+
                         '<td style="    width: 200px;">'+
-                            '<input class="form-control" type="text" value="" name="vrPreco" id="vrPreco" style="width: 180px;"/>'+
+                            '<input class="form-control" type="text" value="" name="vrPreco'+indiceProdutos+'" id="vrPreco'+indiceProdutos+'" style="width: 180px;"/>'+
                         '</td>'+
                         '<td style="    width: 200px;">'+
-                            '<input class="form-control" type="text" value="" name="vrComissao" id="vrComissao" style="width: 180px;"/>'+
+                            '<input class="form-control" type="text" value="" name="vrComissao'+indiceProdutos+'" id="vrComissao'+indiceProdutos+'" style="width: 180px;"/>'+
                         '</td>'+
                         '</tr>'
             );
-        });
 
-        
+            indiceProdutos++;
+        });        
     });
 </script>
