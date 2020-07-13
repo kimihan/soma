@@ -147,6 +147,14 @@
                 </div>
             </div>
         </div>
+        <?php if(!empty($dadosCliente->flgLigacao)):?>
+            <div class="form-group row">
+                <label for="example-email-input" class="col-2 col-form-label">Realizar Ligação?</label>
+                <div class="col-2">
+                    <input class="form-control" type="checkbox" value="<?=!empty($dadosCliente->flgLigacao)?$dadosCliente->flgLigacao:NULL?>" name="flgLigacao" id="flgLigacao"/>
+                </div>
+            </div>
+        <?php endif?>
         <div class="card-footer">
             <div class="row">
                 <div class="col-2">

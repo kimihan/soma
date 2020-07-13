@@ -36,11 +36,9 @@ class Manupula_cliente_model  {
             $arrayWhere["idUsuario"] = $dadosCliente["idUsuario"];
             $this->CI->usuario_model->update($dadosCliente, $arrayWhere);
 
-            /*
             $arrayWhere = array();
             $arrayWhere["idCliente"] = $dadosCliente["idCliente"];
             $this->CI->cliente_model->update($dadosCliente, $arrayWhere);
-            */
         } else {
             unset($dadosCliente["idCliente"]);
 
