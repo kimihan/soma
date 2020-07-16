@@ -26,6 +26,8 @@ class Boletos extends MY_Controller {
         $param["deleteMethod"] = "";
         $param["searchMethod"] = "boletos/index";
         $param["referenceModel"] = "boletos";
+        $param["removeEdit"] = TRUE;
+        $param["removeSee"] = TRUE;
         $param["listName"] = "Boletos";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idBoleto"),

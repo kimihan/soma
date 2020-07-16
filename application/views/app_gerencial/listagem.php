@@ -48,11 +48,21 @@
             <?php foreach($values as $key => $valueRow):?>
                 <tr>
                     <?php foreach($fields as $key => $value):?>
-                        <td><?=$valueRow[$value["field"]]?></td>
+                        <td>
+                            <?php if(strpos($value["field"], "data") !== FALSE):?>
+                                <?=formataData($valueRow[$value["field"]])?>
+                            <?php else:?>
+                                <?=$valueRow[$value["field"]]?>
+                            <?php endif?>
+                        </td>
                     <?php endforeach;?>
                     <td>
-                        <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
-                        <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
+                        <?php if(empty($removeSee)):?>
+                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
+                        <?php endif;?>
+                        <?php if(empty($removeEdit)):?>
+                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
+                        <?php endif;?>
                         <?php if(!empty($deleteMethod)):?>
                             <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
                         <?php endif;?>

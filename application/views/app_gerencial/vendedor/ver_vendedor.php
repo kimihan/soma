@@ -159,30 +159,30 @@
                     </h3>
                 </div>
                 <div style="padding: 0 0 0 25px;">
-                        <table  id="listaProdutos">
-                            <tr>
-                                <th>Produto</th>
-                                <th>Preço de venda</th>
-                                <th>% comissão</th>
-                            </tr>
-                            <?php foreach($dadosProdutosVendedor as $key => $produto):?>
-                                <tr style="margin-top: 10px">
-                                <td style="width: 200px;">
-                                    <select style="height: 40px; width: 180px;" name="idProduto<?=$key?>" id="idProduto<?=$key?>">
-                                        <?php foreach($dadosProdutos as $key => $produtoBD):?>
-                                            <option value="<?=$produtoBD->idProduto?>" <?=$produtoBD->idProduto == $produto->idProduto?"selected":NULL?>><?=$produtoBD->descNome?></option>
-                                        <?php endforeach?>
-                                    </select>
-                                </td>
-                                <td style="    width: 200px;">
-                                    <input class="form-control" type="text" value="<?=$produto->precoVenda?>" name="vrPreco<?=$key?>" id="vrPreco<?=$key?>" style="width: 180px;"/>
-                                </td>
-                                <td style="    width: 200px;">
-                                    <input class="form-control" type="text" value="<?=$produto->vrComissao?>" name="vrComissao<?=$key?>" id="vrComissao<?=$key?>" style="width: 180px;"/>
-                                </td>
-                            </tr>
-                            <?php endforeach?>
-                        </table>
+                    <table  id="listaProdutos">
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço de venda</th>
+                            <th>% comissão</th>
+                        </tr>
+                        <?php foreach($dadosProdutosVendedor as $key => $produto):?>
+                            <tr style="margin-top: 10px">
+                            <td style="width: 200px;">
+                                <select style="height: 40px; width: 180px;" name="idProduto<?=$key?>" id="idProduto<?=$key?>">
+                                    <?php foreach($dadosProdutos as $key => $produtoBD):?>
+                                        <option value="<?=$produtoBD->idProduto?>" <?=$produtoBD->idProduto == $produto->idProduto?"selected":NULL?>><?=$produtoBD->descNome?></option>
+                                    <?php endforeach?>
+                                </select>
+                            </td>
+                            <td style="    width: 200px;">
+                                <input class="form-control" type="number" value="<?=$produto->precoVenda?>" name="vrPreco<?=$key?>" id="vrPreco<?=$key?>" style="width: 180px;"/>
+                            </td>
+                            <td style="    width: 200px;">
+                                <input class="form-control" type="number" value="<?=$produto->vrComissao?>" name="vrComissao<?=$key?>" id="vrComissao<?=$key?>" style="width: 180px;"/>
+                            </td>
+                        </tr>
+                        <?php endforeach?>
+                    </table>
                     <div style="width: 600px; margin-top: 20px">
                         <button type="button" class="btn btn-primary btn-lg btn-block" id="botaoAdicionar">Adicionar</button>
                     </div>
@@ -253,10 +253,10 @@
                             '</select>'+
                         '</td>'+
                         '<td style="    width: 200px;">'+
-                            '<input class="form-control" type="text" value="" name="vrPreco'+indiceProdutos+'" id="vrPreco'+indiceProdutos+'" style="width: 180px;"/>'+
+                            '<input class="form-control" type="number" value="" name="vrPreco'+indiceProdutos+'" id="vrPreco'+indiceProdutos+'" style="width: 180px;"/>'+
                         '</td>'+
                         '<td style="    width: 200px;">'+
-                            '<input class="form-control" type="text" value="" name="vrComissao'+indiceProdutos+'" id="vrComissao'+indiceProdutos+'" style="width: 180px;"/>'+
+                            '<input class="form-control" type="number" value="" name="vrComissao'+indiceProdutos+'" id="vrComissao'+indiceProdutos+'" style="width: 180px;"/>'+
                         '</td>'+
                         '</tr>'
             );

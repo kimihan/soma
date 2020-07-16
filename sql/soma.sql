@@ -279,8 +279,10 @@ ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do v
 
 
 ALTER TABLE Usuario
-ADD CONSTRAINT uc_Email UNIQUE (descEmail)
+ADD CONSTRAINT uc_Email UNIQUE (descEmail);
 
+ALTER TABLE `produtovendedor`
+  DROP PRIMARY KEY;
 ALTER TABLE `ProdutoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 /*
 tabela "ProdutoVendedor" removi a chave primaria da coluna "Produto_idProduto"*/
@@ -289,3 +291,9 @@ ALTER TABLE `Cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagame
 ALTER TABLE `Cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
 ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
 /*luan*/
+
+
+/*troca de todos os precos para double por causa da limitacao do float*/
+ALTER TABLE `cobranca` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL;
+ALTER TABLE `produtovendedor` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Preço de venda do produto para o vendedor';
+ALTER TABLE `servico` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Valor da venda';
