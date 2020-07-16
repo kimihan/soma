@@ -30,7 +30,7 @@ class Boletos extends MY_Controller {
         $param["removeSee"] = TRUE;
         $param["listName"] = "Boletos";
         $param["fields"] = array(
-            array("name" => "ID", "field" => "idBoleto"),
+            array("name" => "ID", "field" => "idBoleto", "removeFilter" => TRUE),
             array("name" => "Data gerado", "field" => "dataGerado"),
             array("name" => "Data vencimento", "field" => "dataVencimento"),
             array("name" => "Valor", "field" => "vrPreco", "removeFilter" => TRUE),

@@ -11,15 +11,36 @@
     <div class="listagemGeral">
         <div class="controllers row">
             <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial/".$searchMethod?>" style="width: 100%;">
+                <?php 
+                $contadorCampos = 0;
+                foreach($fields as $key => $value) 
+                {
+                    if(empty($value["removeFilter"]))
+                    {
+                        $contadorCampos++;
+                    }
+                }?>
                 <?php foreach($fields as $key => $value):?>
                     <?php if(empty($value["removeFilter"])):?>
-                        <div class="col-2">
-                            <div class="col-4"><label class="col-form-label"><?=$value["name"]?></label></div>
-                            <div class="col-8">
-                                <input class="form-control" type="text" value="<?=!empty($value["search"])?$value["search"]:NULL?>" name="<?=$value["field"]?>" id="<?=$value["field"]?>"/>
+                        <div class="col-<?=floor(10/$contadorCampos)?>">
+                            <div class="col-12"><label class="col-form-label"><?=$value["name"]?></label></div>
+                            <div class="col-12">
+                                <?php if(strpos($value["field"], "data") !== FALSE):?>
+                                    <div class="input-daterange input-group" id="kt_datepicker_<?=$key?>">
+                                        <input type="text" class="form-control" name="<?=$value["field"]?>_start">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-ellipsis-h"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="<?=$value["field"]?>_end">
+                                    </div>
+                                <?php else:?>
+                                    <input class="form-control" type="text" value="<?=!empty($value["search"])?$value["search"]:NULL?>" name="<?=$value["field"]?>" id="<?=$value["field"]?>"/>
+                                <?php endif?>
                             </div>
                         </div>
-                        <?php endif?>
+                    <?php endif?>
                 <?php endforeach;?>
                 <div class="col-1">
                     <div class="col-4"><label class="col-form-label"></label></div>
@@ -27,7 +48,7 @@
                         <button type="submit" class="btn btn-success mr-2">Buscar</button>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     <div class="col-4"><label class="col-form-label"></label></div>
                     <div class="col-8">                
                         <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
