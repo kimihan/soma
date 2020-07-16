@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label  class="col-2 col-form-label">Nome</label>
+            <label  class="col-2 col-form-label">Cliente</label>
             <div class="col-10 col-form-label">
                 <?=!empty($dadosVenda->descNome)?$dadosVenda->descNome:NULL?>
             </div>
@@ -35,7 +35,7 @@
                     <tr>
                         <?php foreach($dadosVenda->vendedores as $key => $vendedor):?>
                             <td><?=$vendedor->descNome?></td>
-                            <td><?=$vendedor->numComissao?></td>
+                            <td><?=$vendedor->numComissao?>%</td>
                         <?php endforeach?>
                     </tr>
                 </table>

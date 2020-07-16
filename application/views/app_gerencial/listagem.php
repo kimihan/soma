@@ -51,6 +51,10 @@
                         <td>
                             <?php if(strpos($value["field"], "data") !== FALSE):?>
                                 <?=formataData($valueRow[$value["field"]])?>
+                            <?php elseif(strpos($value["field"], "flg") !== FALSE):?>
+                                <?=!empty($valueRow[$value["field"]])?"Sim":"Não"?>
+                            <?php elseif(strpos($value["field"], "vr") !== FALSE):?>
+                                R$ <?=number_format($valueRow[$value["field"]], 2, ",", ".")?>
                             <?php else:?>
                                 <?=$valueRow[$value["field"]]?>
                             <?php endif?>

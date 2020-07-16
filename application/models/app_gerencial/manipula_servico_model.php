@@ -139,6 +139,7 @@ class Manipula_servico_model  {
                     $dadosComissao = array();
                     $dadosComissao["vrComissao"] = ($dadosVenda["vrComissao$x"] * 0.01) * $dadosServico["vrPreco"] ;
                     $dadosComissao["flgPago"] = 0;
+                    $dadosComissao["flgTipoComissao"] = 1;
                     $dadosComissao["dataGerado"] = $dadosServico["dataVenda"];
                     $dadosComissao["Vendedor_idVendedor"] = $dadosVenda["idVendedor$x"];
                     $dadosComissao["Servico_idServico"] = $idServico;

@@ -279,7 +279,7 @@ ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do v
 
 
 ALTER TABLE Usuario
-ADD CONSTRAINT uc_Email UNIQUE (descEmail);
+	ADD CONSTRAINT uc_Email UNIQUE (descEmail);
 
 ALTER TABLE `produtovendedor`
   DROP PRIMARY KEY;
@@ -297,3 +297,6 @@ ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11)
 ALTER TABLE `cobranca` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL;
 ALTER TABLE `produtovendedor` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Preço de venda do produto para o vendedor';
 ALTER TABLE `servico` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Valor da venda';
+
+ALTER TABLE `comissao` ADD `flgTipoComissao` INT NOT NULL DEFAULT '1' COMMENT '0 - Comissao Recorrente /n 1 - Primeira Comissao' AFTER `flgPago`;
+
