@@ -26,6 +26,11 @@ class Comissoes extends MY_Controller {
         $param["searchMethod"] = "comissoes/index";
         $param["referenceModel"] = "comissoes";
         $param["listName"] = "Comissoes à pagar";
+        $param["customButton"] = array(
+            "name" => "Marcar como pago",
+            "class" => "botaoMarcarComissaoPaga"
+        );
+
         $param["fields"] = array(
             array("name" => "ID", "field" => "idVendedor"),
             array("name" => "Nome do vendedor", "field" => "descNome"),
@@ -57,6 +62,15 @@ class Comissoes extends MY_Controller {
 
         $param["view"] = $this->load->view("app_gerencial/comissao/ver_comissao", array("dadosComissao" => $dados), TRUE);
         $this->load->view("app_gerencial/index", $param);
+    }
+
+    function ajax_marcar_pago()
+    {
+        $dadosPost = $this->post_all();
+
+        $idVendedor = $dadosPost["idRegistro"];
+
+        $this->manipula_comissao_model->marcaComissoesPagas($idVendedor);
     }
 
 }

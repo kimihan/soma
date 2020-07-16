@@ -70,6 +70,11 @@
                         <?php if(!empty($deleteMethod)):?>
                             <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
                         <?php endif;?>
+                        <?php if(!empty($customButton)):?>
+                            <button type="button" class="btn btn-info <?=$customButton["class"]?>" data-toggle="modal" data-id="<?=$valueRow[$fields[0]["field"]]?>"  data-target="#modalMarcarPago">
+                               <?=$customButton["name"]?>
+                            </button>
+                        <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach;?>
@@ -101,6 +106,27 @@
     </div>
 </div>
 
+<!-- Modal marcar Pago-->
+<div class="modal fade" id="modalMarcarPago" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exclusão de registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja marcar esta comissão como paga?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-danger btnExecutaMarcarComoPago" data-dismiss="modal">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .listagemGeral
     {
@@ -121,6 +147,7 @@
                 }
             });
         }
+
         jQuery(function() {
             $(".btnExcluir").click(function(event){
                 idRegistroExcluir = $(this).attr("data-id");
@@ -132,3 +159,25 @@
         });
     </script>
 <?php endif;?>
+<script>
+    function marcarComissaoPaga(){
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>app_gerencial/comissoes/ajax_marcar_pago",
+            data: {idRegistro: idRegistroExcluir},
+            success : function(text){
+                location.reload();
+            }
+        });
+    }
+
+    jQuery(function() {
+        $(".botaoMarcarComissaoPaga").click(function(event){
+            idRegistroExcluir = $(this).attr("data-id");
+        });
+
+        $(".btnExecutaMarcarComoPago").on("click", function(event){
+            marcarComissaoPaga(idRegistroExcluir);
+        });
+    });
+</script>

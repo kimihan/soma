@@ -137,4 +137,12 @@ class Manipula_comissao_model  {
 
         $this->CI->boleto_model->excluir($arrayExclusao);
     }
+
+    function marcaComissoesPagas($idVendedor)
+    {
+        $arrayUpdate["flgPago"] = 1;
+        $arrayWhere["Vendedor_idVendedor"] = $idVendedor;
+
+        $this->CI->comissao_model->update($arrayUpdate, $arrayWhere);
+    }
 }
