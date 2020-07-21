@@ -25,3 +25,19 @@
 <link href="<?=base_url()?>public/metronic/plugins/custom/datatables/datatables.bundle.css?v=7.0.3" rel="stylesheet" type="text/css" />
 
 <script src="<?=base_url()?>public/js/jquery-3.4.1.min.js"></script>
+
+<style>
+    .required.error
+    {
+        border-color: #F64E60;
+        padding-right: calc(1.5em + 1.3rem);
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.325rem) center;
+        background-size: calc(0.75em + 0.65rem) calc(0.75em + 0.65rem);
+    }
+
+    label.error
+    {
+        color: #F64E60;
+    }
+</style>
