@@ -28,14 +28,48 @@ class Boletos extends MY_Controller {
         $param["referenceModel"] = "boletos";
         $param["removeEdit"] = TRUE;
         $param["removeSee"] = TRUE;
+        $param["removeInsert"] = TRUE;
         $param["listName"] = "Boletos";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idBoleto", "removeFilter" => TRUE),
+            array("name" => "Nome", "field" => "descNome"),
             array("name" => "Data gerado", "field" => "dataGerado"),
             array("name" => "Data vencimento", "field" => "dataVencimento"),
             array("name" => "Valor", "field" => "vrPreco", "removeFilter" => TRUE),
-            array("name" => "Cancelado?", "field" => "flgCancelado")
+            array("name" => "Cancelado?", "field" => "flgCancelado", "removeFilter" => TRUE)
         );
+        
+        if(!empty($dadosBusca["dataGerado_start"])) {
+            $dadosBusca["dataGerado_start"] = formataDataMysql($dadosBusca["dataGerado_start"]);
+            $dadosBusca["b.dataGerado >="] = $dadosBusca["dataGerado_start"];
+            unset($dadosBusca["dataGerado_start"]);
+        } else if(isset($dadosBusca["dataGerado_start"])) {
+            unset($dadosBusca["dataGerado_start"]);
+        }
+
+        if(!empty($dadosBusca["dataGerado_end"])) {
+            $dadosBusca["dataGerado_end"] = formataDataMysql($dadosBusca["dataGerado_end"]);
+            $dadosBusca["b.dataGerado <="] = $dadosBusca["dataGerado_end"];
+            unset($dadosBusca["dataGerado_end"]);
+        } else if(isset($dadosBusca["dataGerado_end"])) {
+            unset($dadosBusca["dataGerado_end"]);
+        }
+
+        if(!empty($dadosBusca["dataVencimento_start"])) {
+            $dadosBusca["dataVencimento_start"] = formataDataMysql($dadosBusca["dataVencimento_start"]);
+            $dadosBusca["b.dataVencimento >="] = $dadosBusca["dataVencimento_start"];
+            unset($dadosBusca["dataVencimento_start"]);
+        } else if(isset($dadosBusca["dataVencimento_start"])) {
+            unset($dadosBusca["dataVencimento_start"]);
+        }
+
+        if(!empty($dadosBusca["dataVencimento_end"])) {
+            $dadosBusca["dataVencimento_end"] = formataDataMysql($dadosBusca["dataVencimento_end"]);
+            $dadosBusca["b.dataVencimento <="] = $dadosBusca["dataVencimento_end"];
+            unset($dadosBusca["dataVencimento_end"]);
+        } else if(isset($dadosBusca["dataVencimento_end"])) {
+            unset($dadosBusca["dataVencimento_end"]);
+        }
 
         foreach($param["fields"] as $key => $value) {
             if(!empty($dadosBusca[$value["field"]])) {
