@@ -24,8 +24,20 @@ class Vendavendedor_model extends MY_Model {
     protected $validators = array(
                                 array("field"=>"numComissao",
                     "label"=>"Numcomissao",
+                    "rules"=>"required|integer"),
+                    array("field"=>"Venda_idVenda",
+                    "label"=>"Venda_idVenda",
+                    "rules"=>"required|integer"),
+                    array("field"=>"Vendedor_idVendedor",
+                    "label"=>"Vendedor_idVendedor",
                     "rules"=>"required|integer")
 
     );
+
+    function __construct()
+    {
+        parent::__construct(array($this->name));
+    }
+
 }
                

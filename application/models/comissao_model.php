@@ -30,14 +30,16 @@ class Comissao_model extends MY_Model {
                     "rules"=>"required|numeric"),
                     array("field"=>"flgPago",
                     "label"=>"Flgpago",
-                    "rules"=>"required|integer"),
+                    "rules"=>"integer"),
                     array("field"=>"Vendedor_idVendedor",
                     "label"=>"Vendedor idvendedor",
                     "rules"=>"required|integer"),
                     array("field"=>"Servico_idServico",
                     "label"=>"Servico idservico",
-                    "rules"=>"required|integer")
-
+                    "rules"=>"required|integer"),
+                    array("field"=>"flgTipoComissao",
+                    "label"=>"flgTipoComissao",
+                    "rules"=>"integer")
     );
 
     function __construct()

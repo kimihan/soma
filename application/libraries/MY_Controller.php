@@ -8,6 +8,7 @@ class MY_Controller extends CI_Controller
         parent::__construct();
 
         $this->load->helper("url_helper");
+        $this->load->helper("geral_helper");
 
         $this->load->library("MY_Input");
     }
@@ -48,12 +49,11 @@ class MY_Controller extends CI_Controller
         
         return (count($this->session->userdata("sVendedor")) > 0) ? false : true;
     }
-
+    
     function verificarLoginCliente() {
         $this->load->library('session');
         
         return (count($this->session->userdata("sCliente")) > 0) ? false : true;
     }
-
 }
 ?>

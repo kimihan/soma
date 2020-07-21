@@ -28,13 +28,13 @@ class Cobrancas extends MY_Controller {
         $param["referenceModel"] = "cobrancas";
         $param["listName"] = "Cobranças";
         $param["fields"] = array(
-            array("name" => "ID", "field" => "idCobranca"),
+            array("name" => "ID", "field" => "idCobranca", "removeFilter" => TRUE),
             array("name" => "Nome", "field" => "descNome"),
             array("name" => "Data gerado", "field" => "dataGerado"),
             array("name" => "Data pagamento", "field" => "dataPagamento"),
             array("name" => "Data vencimento", "field" => "dataVencimento"),
             array("name" => "Valor", "field" => "vrPreco", "removeFilter" => TRUE),
-            array("name" => "Pago?", "field" => "flgPago")
+            array("name" => "Pago?", "field" => "flgPago", "removeFilter" => TRUE)
         );
 
         foreach($param["fields"] as $key => $value) {
