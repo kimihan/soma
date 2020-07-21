@@ -59,7 +59,7 @@ class Manupula_cliente_model  {
         $query = $this->CI->db->select("c.*, u.*, e.*")
             ->from("{$this->CI->cliente_model} c")
             ->join("{$this->CI->usuario_model} u", "c.Usuario_idUsuario = u.idUsuario")
-            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco");
+            ->join("{$this->CI->endereco_model} e", "u.Endereco_idEndereco = e.idEndereco", 'left');
 
         if(!empty($arrayWhere)) {
             foreach ($arrayWhere as $key => $value) {

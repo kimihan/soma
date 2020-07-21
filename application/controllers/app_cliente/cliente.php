@@ -11,6 +11,13 @@ class Cliente extends MY_Controller {
     function __construct() 
     {
         parent::__construct();
+
+        if(parent::verificarLoginCliente()) {
+            $this->load->helper('url');
+            redirect('app_cliente/login', 'refresh');
+        }
+
+        $this->load->model("app_gerencial/manupula_cliente_model");
     }
 
     /**
@@ -43,23 +50,16 @@ class Cliente extends MY_Controller {
 
     }
 
-    function buscarCliente() 
+    function buscar_cliente() 
     {
         $dados = $this->input->post();
 
         if(!empty($dados["id"])) {
-            $this->CI = &get_instance();
-            $this->CI->load->model("cliente_model");
+            $dadosCliente = $this->manupula_cliente_model->retornaDadosCliente($dados["id"]);
 
-            $query = $this->CI->db->select("*")
-            ->from("{$this->CI->cliente_model} c")
-            ->where(array("c.idCliente" => $dados["id"]));
+            echo (!empty($dadosCliente) && count($dadosCliente) > 0) ? json_encode($dadosCliente) : json_encode(["erro" => "Cliente não encontrado"]);
 
-            $result = $this->CI->db->get()->row();
-
-            echo (count($result) > 0) ? json_encode($result) : json_encode(["erro" => "Cliente não encontrado"]);
-
-            return $result;
+            return $dadosCliente;
         } else {
             echo json_encode(["erro" => "Cliente não encontrado"]);
             return false;

@@ -8,18 +8,22 @@ $(() => {
     $("#fmrIdCliente").submit((e) => {
         let dados = $(e.currentTarget).serialize();
 
-        $.post("cliente/buscarCliente", dados, function (resp) {
+        $.post("cliente/buscar_cliente", dados, function(resp) {
             let retorno = JSON.parse(resp);
 
             console.log(retorno);
 
             if (retorno.erro) {
-                $("#msgErroModal").text(retorno.erro);
-
-                $("#erroModal").modal("show");
+                showModalErro(retorno.erro);
             }
         });
 
         return false;
     });
 });
+
+function showModalErro(msg) {
+    $("#msgErroModal").text(msg);
+
+    $("#erroModal").modal("show");
+}

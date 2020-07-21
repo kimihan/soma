@@ -31,4 +31,6 @@
         </footer>
     </body>
 
+    <?php $this->load->view('errors/modals/erro_modal'); ?>
+
 </html>

@@ -49,5 +49,11 @@ class MY_Controller extends CI_Controller
         return (count($this->session->userdata("sVendedor")) > 0) ? false : true;
     }
 
+    function verificarLoginCliente() {
+        $this->load->library('session');
+        
+        return (count($this->session->userdata("sCliente")) > 0) ? false : true;
+    }
+
 }
 ?>
