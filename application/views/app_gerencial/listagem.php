@@ -48,12 +48,14 @@
                         <button type="submit" class="btn btn-success mr-2">Buscar</button>
                     </div>
                 </div>
-                <div class="col-1">
-                    <div class="col-4"><label class="col-form-label"></label></div>
-                    <div class="col-8">                
-                        <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                <?php if(empty($removeInsert)):?>
+                    <div class="col-1">
+                        <div class="col-4"><label class="col-form-label"></label></div>
+                        <div class="col-8">                
+                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                        </div>
                     </div>
-                </div>
+                <?php endif?>
             </form>
         </div>
         <table class="table">

@@ -19,7 +19,7 @@
                         </select>
                         <div class="dropdown-menu" style="max-height: 344px; overflow: hidden;">
                             <div class="bs-searchbox">
-                                <input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-5" aria-autocomplete="list" aria-activedescendant="bs-select-5-215">
+                                <input type="search" class="form-control required" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-5" aria-autocomplete="list" aria-activedescendant="bs-select-5-215">
                             </div>
                             <div class="inner show" role="listbox" id="bs-select-5" tabindex="-1" style="max-height: 273px; overflow-y: auto;">
                                 <ul class="dropdown-menu inner show" role="presentation" style="margin-top: 0px; margin-bottom: 0px;">
@@ -33,13 +33,13 @@
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Data da Venda</label>
                 <div class="col-8">
-                    <input class="form-control" type="date" value="<?=!empty($dadosVenda->dataVenda)?$dadosVenda->dataVenda:NULL?>" name="dataVenda" id="dataVenda"/>
+                    <input class="form-control required" type="date" value="<?=!empty($dadosVenda->dataVenda)?$dadosVenda->dataVenda:NULL?>" name="dataVenda" id="dataVenda"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Preço</label>
                 <div class="col-8">
-                    <input class="form-control" type="number" value="<?=!empty($dadosVenda->vrPreco)?$dadosVenda->vrPreco:NULL?>" name="vrPreco" id="vrPreco"/>
+                    <input class="form-control required" type="number" value="<?=!empty($dadosVenda->vrPreco)?$dadosVenda->vrPreco:NULL?>" name="vrPreco" id="vrPreco"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -185,7 +185,9 @@
     jQuery(function() {
         $("#form").submit(function(event){
             event.preventDefault();
-            submitForm();
+            if($(this).valid()) {
+                submitForm();
+            }
         });
     });
 </script>

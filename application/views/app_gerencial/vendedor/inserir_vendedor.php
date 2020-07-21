@@ -13,37 +13,37 @@
                     <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idCliente)?$dadosCliente->idCliente:NULL?>" name="idCliente" id="idCliente"/>
                     <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idUsuario)?$dadosCliente->idUsuario:NULL?>" name="idUsuario" id="idUsuario"/>
                     <input class="form-control" type="hidden" value="<?=!empty($dadosCliente->idEndereco)?$dadosCliente->idEndereco:NULL?>" name="idEndereco" id="idEndereco"/>
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descNome)?$dadosCliente->descNome:NULL?>" name="descNome" id="descNome"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descNome)?$dadosCliente->descNome:NULL?>" name="descNome" id="descNome"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-email-input" class="col-2 col-form-label">Email</label>
                 <div class="col-10">
-                    <input class="form-control" type="email" value="<?=!empty($dadosCliente->descEmail)?$dadosCliente->descEmail:NULL?>" name="descEmail" id="descEmail"/>
+                    <input class="form-control required" type="email" value="<?=!empty($dadosCliente->descEmail)?$dadosCliente->descEmail:NULL?>" name="descEmail" id="descEmail"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-email-input" class="col-2 col-form-label">Senha</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descSenha)?$dadosCliente->descSenha:NULL?>" name="descSenha" id="descSenha"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descSenha)?$dadosCliente->descSenha:NULL?>" name="descSenha" id="descSenha"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">CPF</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->numCpf)?$dadosCliente->numCpf:NULL?>" name="numCpf" id="numCpf"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->numCpf)?$dadosCliente->numCpf:NULL?>" name="numCpf" id="numCpf"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">RG</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descRg)?$dadosCliente->descRg:NULL?>" name="descRg" id="descRg"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descRg)?$dadosCliente->descRg:NULL?>" name="descRg" id="descRg"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-date-input" class="col-2 col-form-label">Data de nascimento</label>
                 <div class="col-10">
-                    <input class="form-control" type="date" value="<?=!empty($dadosCliente->dataNascimento)?$dadosCliente->dataNascimento:NULL?>" name="dataNascimento" id="dataNascimento"/>
+                    <input class="form-control required" type="date" value="<?=!empty($dadosCliente->dataNascimento)?$dadosCliente->dataNascimento:NULL?>" name="dataNascimento" id="dataNascimento"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -67,7 +67,7 @@
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Telefone</label>
                 <div class="col-10">
-                    <input class="form-control" type="tel" value="<?=!empty($dadosCliente->numTelefone)?$dadosCliente->numTelefone:NULL?>" name="numTelefone" id="numTelefone"/>
+                    <input class="form-control required" type="tel" value="<?=!empty($dadosCliente->numTelefone)?$dadosCliente->numTelefone:NULL?>" name="numTelefone" id="numTelefone"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -79,19 +79,19 @@
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Cep</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->numCep)?$dadosCliente->numCep:NULL?>" name="numCep" id="numCep" />
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->numCep)?$dadosCliente->numCep:NULL?>" name="numCep" id="numCep" />
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Endereço</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descLogradouro)?$dadosCliente->descLogradouro:NULL?>" name="descLogradouro" id="descLogradouro"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descLogradouro)?$dadosCliente->descLogradouro:NULL?>" name="descLogradouro" id="descLogradouro"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Número</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->numLocal)?$dadosCliente->numLocal:NULL?>" name="numLocal" id="numLocal"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->numLocal)?$dadosCliente->numLocal:NULL?>" name="numLocal" id="numLocal"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -103,13 +103,13 @@
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Bairro</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descBairro)?$dadosCliente->descBairro:NULL?>" name="descBairro" id="descBairro"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descBairro)?$dadosCliente->descBairro:NULL?>" name="descBairro" id="descBairro"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label  class="col-2 col-form-label">Cidade</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" value="<?=!empty($dadosCliente->descCidade)?$dadosCliente->descCidade:NULL?>" name="descCidade" id="descCidade"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosCliente->descCidade)?$dadosCliente->descCidade:NULL?>" name="descCidade" id="descCidade"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -194,7 +194,9 @@
     jQuery(function() {
         $("#formCliente").submit(function(event){
             event.preventDefault();
-            submitForm();
+            if($(this).valid()) {
+                submitForm();
+            }
         });
         
         $("#numCep").blur(function(event){

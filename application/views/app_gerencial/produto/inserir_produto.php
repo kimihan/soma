@@ -11,7 +11,7 @@
                 <label  class="col-2 col-form-label">Nome</label>
                 <div class="col-10">
                     <input class="form-control" type="hidden" value="<?=!empty($dadosProduto->idProduto)?$dadosProduto->idProduto:NULL?>" name="idProduto" id="idProduto"/>
-                    <input class="form-control" type="text" value="<?=!empty($dadosProduto->descNome)?$dadosProduto->descNome:NULL?>" name="descNome" id="descNome"/>
+                    <input class="form-control required" type="text" value="<?=!empty($dadosProduto->descNome)?$dadosProduto->descNome:NULL?>" name="descNome" id="descNome"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -59,7 +59,9 @@
     jQuery(function() {
         $("#form").submit(function(event){
             event.preventDefault();
-            submitForm();
+            if($(this).valid()) {
+                submitForm();
+            }
         });
     });
 </script>
