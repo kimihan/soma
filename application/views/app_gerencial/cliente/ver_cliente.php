@@ -73,7 +73,7 @@
                 <div class="form-group row">
                     <label for="example-date-input" class="col-2 col-form-label">Data de nascimento</label>
                     <div class="col-10">
-                        <?=!empty($dadosCliente->dataNascimento)?$dadosCliente->dataNascimento:NULL?>
+                        <?=!empty($dadosCliente->dataNascimento)?formataData($dadosCliente->dataNascimento):NULL?>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -172,13 +172,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <?php foreach($produtosCliente as $key => $produto):?>
+                        <?php foreach($produtosCliente as $key => $produto):?>
+                            <tr>
                                 <td><?=$produto->descNome?></td>
-                                <td><?=$produto->dataVenda?></td>
+                                <td><?=formataData($produto->dataVenda)?></td>
                                 <td>R$ <?=number_format($produto->vrPreco, 2, ",", ".")?></td>
-                            <?php endforeach?>
-                        </tr>
+                            </tr>
+                        <?php endforeach?>
                     </tbody>
                 </table>
             </div>
@@ -204,7 +204,7 @@
                         <tr>
                             <?php foreach($pagamentosCliente as $key => $pagamento):?>
                                 <td><?=$pagamento->descNome?></td>
-                                <td><?=$pagamento->dataPagamento?></td>
+                                <td><?=formataData($pagamento->dataPagamento)?></td>
                                 <td>R$ <?=number_format($pagamento->vrPreco, 2, ",", ".")?></td>
                             <?php endforeach?>
                         </tr>

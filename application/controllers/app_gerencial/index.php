@@ -28,11 +28,15 @@ class Index extends MY_Controller {
         $dataInicial = NULL;
         if(!empty($dadosBusca["data_inicial"])) {
             $dataInicial = $dadosBusca["data_inicial"];
+        } else {
+            $dataInicial = date("Y-m-d");
         }
 
         $dataFinal = NULL;
         if(!empty($dadosBusca["data_final"])) {
             $dataFinal = $dadosBusca["data_final"];
+        } else {
+            $dataFinal = date("Y-m-d", strtotime('+1 week'));
         }
 
         //clientes

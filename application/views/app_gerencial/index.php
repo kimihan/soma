@@ -84,6 +84,7 @@
 		<!--end::Global Config-->
 		<script src="<?=base_url()?>public/metronic/js/bootstrap-datepicker.js?v=7.0.6"></script>
 		<script src="<?=base_url()?>public/js/jquery.validate.js"></script>
+		<script src="<?=base_url()?>public/js/jquery.mask.js"></script>
 	</body>
 	<!--end::Body-->
 </html>
