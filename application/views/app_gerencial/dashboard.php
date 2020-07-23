@@ -14,13 +14,13 @@
                 <div class="col-4">
                     <div class="col-4"><label class="col-form-label">Data inicial</label></div>
                     <div class="col-8">
-                        <input class="form-control" type="date" value="2011-08-19" id="example-date-input" name="data_inicial">
+                        <input class="form-control" type="date" value="<?=date("Y-m-d");?>" id="example-date-input" name="data_inicial">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="col-4"><label class="col-form-label">Data final</label></div>
                     <div class="col-8">
-                        <input class="form-control" type="date" value="2011-08-19" id="example-date-input" name="data_final">
+                        <input class="form-control" type="date" value="<?=date("Y-m-d", strtotime('+1 week'))?>" id="example-date-input" name="data_final">
                     </div>
                 </div>
                 <div class="col-4">

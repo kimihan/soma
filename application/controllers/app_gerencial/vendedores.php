@@ -51,7 +51,6 @@ class Vendedores extends MY_Controller {
 
     function ver($idVendedor)
     {
-        
         $this->load->model("app_gerencial/manipula_produto_model");
 
         $dadosVendedor = $this->manupula_vendedor_model->retornaDadosVendedor($idVendedor);

@@ -30,7 +30,8 @@ class Vendas extends MY_Controller {
         $param["fields"] = array(
             array("name" => "ID", "field" => "idServico"),
             array("name" => "Data venda", "field" => "dataVenda"),
-            array("name" => "Nome", "field" => "descNome")
+            array("name" => "Nome", "field" => "descNome"),
+            array("name" => "Valor", "field" => "vrPreco")
         );
 
         foreach($param["fields"] as $key => $value) {

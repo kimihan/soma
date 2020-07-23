@@ -50,8 +50,8 @@
                 <label for="example-date-input" class="col-2 col-form-label">Tipo pessoa</label>
                 <div class="col-10">
                     <select class="form-control form-control-lg" name="flgTipoPessoa" id="flgTipoPessoa">
-                        <option value="M" <?=empty($dadosCliente->flgTipoPessoa) || $dadosCliente->flgTipoPessoa == "F"?"selected":NULL?>>Física</option>
-                        <option value="F"<?=!empty($dadosCliente->flgTipoPessoa) && $dadosCliente->flgTipoPessoa == "J"?"selected":NULL?>>Jurídica</option>
+                        <option value="F" <?=empty($dadosCliente->flgTipoPessoa) || $dadosCliente->flgTipoPessoa == "F"?"selected":NULL?>>Física</option>
+                        <option value="J"<?=!empty($dadosCliente->flgTipoPessoa) && $dadosCliente->flgTipoPessoa == "J"?"selected":NULL?>>Jurídica</option>
                     </select>
                 </div>
             </div>
@@ -175,7 +175,10 @@
             url: "<?=base_url()?>app_gerencial/clientes/ajax_salvar",
             data: $("#formCliente").serializeArray(),
             success : function(text){
-                alert("Registro salvo com sucesso!");
+                if(text == "success") {
+                    alert("Registro salvo com sucesso!");
+                    window.location.href = "<?=base_url()?>app_gerencial/clientes";
+                }
             }
         });
     }
@@ -210,5 +213,9 @@
         $("#numCep").blur(function(event){
             retornaCEP($(this).val());
         });
+
+        jQuery("#numCpf").mask("999.999.999-99");
+        jQuery("#numTelefone").mask("(99)99999-9999");
+        jQuery("#numWhatsapp").mask("(99)99999-9999");
     });
 </script>

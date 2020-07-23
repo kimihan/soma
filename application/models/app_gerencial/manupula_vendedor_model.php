@@ -34,7 +34,6 @@ class Manupula_vendedor_model  {
             $arrayWhere = array();
             $arrayWhere["idUsuario"] = $dadosVendedor["idUsuario"];
             $this->CI->usuario_model->update($dadosVendedor, $arrayWhere);
-
         } else {
             unset($dadosVendedor["idVendedor"]);
 
