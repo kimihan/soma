@@ -127,10 +127,11 @@ class Manupula_vendedor_model  {
         $this->CI->produtovendedor_model->excluir($arrayExclusao);
 
         foreach($arrayProdutos as $key => $value) {
+            $value = (array) $value;
             $arrayInserir["Vendedor_idVendedor"] = $idVendedor;
             $arrayInserir["Produto_idProduto"] = $value["idProduto"];
-            $arrayInserir["vrComissao"] = $value["vrComissao"];
-            $arrayInserir["vrPreco"] = $value["vrPreco"];
+            $arrayInserir["vrComissao"] = (empty($value["vrComissao"])) ? null : $value["vrComissao"];
+            $arrayInserir["vrPreco"] = (empty($value["vrPreco"])) ? PRECO_PRODUTO_APLICATIVO : $value["vrPreco"];
             $this->CI->produtovendedor_model->inserir($arrayInserir);
 
             $arrayInserir = array();

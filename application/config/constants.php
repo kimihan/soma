@@ -88,3 +88,4 @@ define('NOME_APP_CLIENTE', "APP Cliente");
 define('NOME_APP_VENDEDOR', "APP Vendedor");
 define('FLG_APLICATIVO', "1");
 define('PATH_UPLOAD', "./uploads");
+define('PRECO_PRODUTO_APLICATIVO', "39.99");

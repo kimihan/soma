@@ -20,6 +20,8 @@ class Cadastro extends MY_Controller {
         $this->load->model("usuario_model");
         $this->load->model("endereco_model");
         $this->load->model("vendedor_model");
+        $this->load->model("app_gerencial/manipula_produto_model");
+        $this->load->model("app_gerencial/manupula_vendedor_model");
     }
 
     /**
@@ -61,6 +63,11 @@ class Cadastro extends MY_Controller {
                 if($idUsuario) {
                     $dadosVendedor["Usuario_idUsuario"] = $idUsuario;
                     $idVendedor = $this->vendedor_model->insert($dadosVendedor);
+                }
+
+                if(!empty($idVendedor)) {
+                    $dadosProduto = $this->manipula_produto_model->retornaDados(null, ["flgAplicativo" => FLG_APLICATIVO]);
+                    $insert = $this->manupula_vendedor_model->insereEditaProdutosVendedor($idVendedor, $dadosProduto);
                 }
             }
         

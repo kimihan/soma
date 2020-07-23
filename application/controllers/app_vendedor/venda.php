@@ -72,10 +72,11 @@ class Venda extends MY_Controller {
             $idCliente = $this->cliente_model->insert($dadosCliente);
 
             if($idCliente) {
+                $dataVencimento = date("Y-m-d H:i:s", +strtotime("+1 month"));
                 $produto = explode("-", $dadosVenda["produto"]);
                 $vrPreco = str_replace(".", "", $produto[1]);
                 $dadosServico = ["dataVenda" => $now, "vrPreco" => str_replace(",", ".", $vrPreco), "Produto_idProduto" => $produto[0],
-                                    "Cliente_idCliente" => $idCliente];
+                                    "Cliente_idCliente" => $idCliente, "dataVencimento" => $dataVencimento];
 
                 $idServico = $this->servico_model->insert($dadosServico);
             }

@@ -60,12 +60,12 @@
                 <?php 
                     if((count($this->session->userdata("sVendedor")) > 0)) {
                         echo '
-                                <a class="navbar-brand" href="#">' . NOME_APP_VENDEDOR . '</a>"
+                                <a class="navbar-brand" href="/soma/app_vendedor/login">' . NOME_APP_VENDEDOR . '</a>"
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarLogin" aria-controls="navBarLogin" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                                 </button>';
                     } else {
-                        echo "<a class='navbar-brand col-12 text-center' href='#'>" . NOME_APP_VENDEDOR . "</a>";
+                        echo "<a class='navbar-brand col-12 text-center' href='/soma/app_vendedor/login'>" . NOME_APP_VENDEDOR . "</a>";
                     }
                 ?>
             </nav>
