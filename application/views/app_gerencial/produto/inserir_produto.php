@@ -47,7 +47,10 @@
             url: "<?=base_url()?>app_gerencial/produtos/ajax_salvar",
             data: $("#form").serializeArray(),
             success : function(text){
-                alert("Registro salvo com sucesso!");
+                if(text == "success") {
+                    alert("Registro salvo com sucesso!");
+                    window.location.href = "<?=base_url()?>app_gerencial/produtos";
+                }
             }
         });
     }
