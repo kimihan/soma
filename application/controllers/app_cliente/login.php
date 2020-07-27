@@ -20,11 +20,6 @@ class Login extends MY_Controller {
      */
     function index()
     {
-        if(!parent::verificarLoginCliente()) {
-            $this->load->helper('url');
-            redirect('app_cliente/venda', 'refresh');
-        }
-
 		return $this->template->load("app_cliente/template", "app_cliente/index");
     }
 }

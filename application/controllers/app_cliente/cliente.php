@@ -12,11 +12,6 @@ class Cliente extends MY_Controller {
     {
         parent::__construct();
 
-        if(parent::verificarLoginCliente()) {
-            $this->load->helper('url');
-            redirect('app_cliente/login', 'refresh');
-        }
-
         $this->load->model("app_gerencial/manupula_cliente_model");
     }
 

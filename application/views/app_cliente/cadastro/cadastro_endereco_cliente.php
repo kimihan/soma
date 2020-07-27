@@ -14,7 +14,7 @@
                 </h1>
             </div>
         </div>
-        <form action="cadastro_pagamento" method="POST">
+        <form action="cadastro_pagamento" method="POST" id="fmrCadastroClienteDadosEndereco">
             <?php $this->load->view('app_cliente/cadastro/campos_cadastro_endereco_cliente'); ?>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-6">
