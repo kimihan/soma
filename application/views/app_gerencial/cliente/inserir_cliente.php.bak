@@ -43,15 +43,15 @@
             <div class="form-group row">
                 <label for="example-date-input" class="col-2 col-form-label">Data de nascimento</label>
                 <div class="col-10">
-                    <input class="form-control required" type="date" value="<?=!empty($dadosCliente->dataNascimento)?$dadosCliente->dataNascimento:NULL?>" name="dataNascimento" id="dataNascimento"/>
+                    <input class="form-control required " type="date" value="<?=!empty($dadosCliente->dataNascimento)?$dadosCliente->dataNascimento:NULL?>" name="dataNascimento" id="dataNascimento"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-date-input" class="col-2 col-form-label">Tipo pessoa</label>
                 <div class="col-10">
                     <select class="form-control form-control-lg" name="flgTipoPessoa" id="flgTipoPessoa">
-                        <option value="F" <?=empty($dadosCliente->flgTipoPessoa) || $dadosCliente->flgTipoPessoa == "F"?"selected":NULL?>>Física</option>
-                        <option value="J"<?=!empty($dadosCliente->flgTipoPessoa) && $dadosCliente->flgTipoPessoa == "J"?"selected":NULL?>>Jurídica</option>
+                        <option value="M" <?=empty($dadosCliente->flgTipoPessoa) || $dadosCliente->flgTipoPessoa == "F"?"selected":NULL?>>Física</option>
+                        <option value="F"<?=!empty($dadosCliente->flgTipoPessoa) && $dadosCliente->flgTipoPessoa == "J"?"selected":NULL?>>Jurídica</option>
                     </select>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="col-10">
                     <button type="submit" class="btn btn-success mr-2">Salvar</button>
-                    <a href="<?=base_url()?>app_gerencial_clientes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                    <a href="<?=base_url()?>app_gerencial/clientes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                 </div>
             </div>
         </div>
@@ -172,13 +172,10 @@
     function submitForm(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial_clientes/ajax_salvar",
+            url: "<?=base_url()?>app_gerencial/clientes/ajax_salvar",
             data: $("#formCliente").serializeArray(),
             success : function(text){
-                if(text == "success") {
-                    alert("Registro salvo com sucesso!");
-                    window.location.href = "<?=base_url()?>app_gerencial_clientes";
-                }
+                alert("Registro salvo com sucesso!");
             }
         });
     }
@@ -186,7 +183,7 @@
     function retornaCEP(cep){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial_geral/consulta_cep/"+cep,
+            url: "<?=base_url()?>app_gerencial/geral/consulta_cep/"+cep,
             data: $("#formCliente").serializeArray(),
             dataType: "json",
             success : function(resp){
@@ -213,9 +210,5 @@
         $("#numCep").blur(function(event){
             retornaCEP($(this).val());
         });
-
-        jQuery("#numCpf").mask("999.999.999-99");
-        jQuery("#numTelefone").mask("(99)99999-9999");
-        jQuery("#numWhatsapp").mask("(99)99999-9999");
     });
 </script>

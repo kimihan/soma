@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Index extends MY_Controller {
+class App_gerencial_index extends MY_Controller {
 
     /**
      * Método construtor da classe

@@ -141,8 +141,8 @@
                         <div class="col-2">
                         </div>
                         <div class="col-10">
-                            <a href="<?=base_url()?>app_gerencial/vendedores/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
-                            <a href="<?=base_url()?>app_gerencial/vendedores/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                            <a href="<?=base_url()?>app_gerencial_vendedores/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                            <a href="<?=base_url()?>app_gerencial_vendedores/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
     function submitForm(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/vendedores/ajax_salvar",
+            url: "<?=base_url()?>app_gerencial_vendedores/ajax_salvar",
             data: $("#formVendedor").serializeArray(),
             success : function(text){
                 if (text == "success"){
@@ -236,7 +236,7 @@
     function submitFormProdutos(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/vendedores/ajax_salvar_produtos",
+            url: "<?=base_url()?>app_gerencial_vendedores/ajax_salvar_produtos",
             data: $("#formProdutosVendedor").serializeArray(),
             success : function(text){
                 if (text == "success"){

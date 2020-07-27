@@ -10,7 +10,7 @@
     </div>
     <div class="listagemGeral">
         <div class="controllers row">
-            <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial/".$searchMethod?>" style="width: 100%;">
+            <form id="formBusca" method="get" class="row" action="<?=base_url().$searchMethod?>" style="width: 100%;">
                 <?php 
                 $contadorCampos = 0;
                 foreach($fields as $key => $value) 
@@ -52,7 +52,7 @@
                     <div class="col-1">
                         <div class="col-4"><label class="col-form-label"></label></div>
                         <div class="col-8">                
-                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                            <a href="<?=base_url()?><?=$referenceModel?>/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
                         </div>
                     </div>
                 <?php endif?>
@@ -85,10 +85,10 @@
                     <?php endforeach;?>
                     <td>
                         <?php if(empty($removeSee)):?>
-                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
+                            <a href="<?=base_url()?><?=$referenceModel?>/ver/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-primary" style="margin: 0 5px;">Ver</button></a>
                         <?php endif;?>
                         <?php if(empty($removeEdit)):?>
-                            <a href="<?=base_url()?>app_gerencial/<?=$referenceModel?>/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
+                            <a href="<?=base_url()?><?=$referenceModel?>/editar/<?=$valueRow[$fields[0]["field"]]?>"><button type="button" class="btn btn-info" style="margin: 0 5px;">Editar</button></a>
                         <?php endif;?>
                         <?php if(!empty($deleteMethod)):?>
                             <button type="button" class="btn btn-danger btnExcluir" style="margin: 0 5px;" data-toggle="modal" data-target="#modalConfirmacaoExclusao" data-id="<?=$valueRow[$fields[0]["field"]]?>">Excluir</button>
@@ -163,7 +163,7 @@
         function excluiRegistro(){
             $.ajax({
                 type: "POST",
-                url: "<?=base_url()?>app_gerencial/<?=$deleteMethod?>",
+                url: "<?=base_url()?><?=$deleteMethod?>",
                 data: {idRegistro: idRegistroExcluir},
                 success : function(text){
                     location.reload();
@@ -186,7 +186,7 @@
     function marcarComissaoPaga(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/comissoes/ajax_marcar_pago",
+            url: "<?=base_url()?>app_gerencial_comissoes/ajax_marcar_pago",
             data: {idRegistro: idRegistroExcluir},
             success : function(text){
                 location.reload();

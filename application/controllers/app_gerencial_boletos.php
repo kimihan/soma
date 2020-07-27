@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Boletos extends MY_Controller {
+class App_gerencial_boletos extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -24,7 +24,7 @@ class Boletos extends MY_Controller {
     {
         $dadosBusca = $_GET;
         $param["deleteMethod"] = "";
-        $param["searchMethod"] = "boletos/index";
+        $param["searchMethod"] = "app_gerencial_boletos/index";
         $param["referenceModel"] = "boletos";
         $param["removeEdit"] = TRUE;
         $param["removeSee"] = TRUE;

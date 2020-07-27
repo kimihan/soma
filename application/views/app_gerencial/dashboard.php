@@ -10,7 +10,7 @@
     </div>
     <div class="listagemGeral">
         <div class="controllers row">
-            <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial/index"?>" style="width: 100%;">
+            <form id="formBusca" method="get" class="row" action="<?=base_url()."app_gerencial_index"?>" style="width: 100%;">
                 <div class="col-4">
                     <div class="col-4"><label class="col-form-label">Data inicial</label></div>
                     <div class="col-8">

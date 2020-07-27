@@ -148,8 +148,8 @@
                     <div class="col-2">
                     </div>
                     <div class="col-10">
-                        <a href="<?=base_url()?>app_gerencial/clientes/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
-                        <a href="<?=base_url()?>app_gerencial/clientes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                        <a href="<?=base_url()?>app_gerencial_clientes/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                        <a href="<?=base_url()?>app_gerencial_clientes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                     </div>
                 </div>
             </div>
@@ -218,7 +218,7 @@
     function submitForm(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/clientes/ajax_salvar",
+            url: "<?=base_url()?>app_gerencial_clientes/ajax_salvar",
             data: $("#formCliente").serializeArray(),
             success : function(text){
                 if (text == "success"){

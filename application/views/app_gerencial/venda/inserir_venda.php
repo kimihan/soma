@@ -158,7 +158,7 @@
                 </div>
                 <div class="col-10">
                     <button type="submit" class="btn btn-success mr-2">Salvar</button>
-                    <a href="<?=base_url()?>app_gerencial/vendas/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                    <a href="<?=base_url()?>app_gerencial_vendas/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                 </div>
             </div>
         </div>
@@ -169,12 +169,12 @@
     function submitForm(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/vendas/ajax_salvar",
+            url: "<?=base_url()?>app_gerencial_vendas/ajax_salvar",
             data: $("#form").serializeArray(),
             success : function(text){
                 if(text == "success") {
                     alert("Registro salvo com sucesso!");
-                    window.location.href = "<?=base_url()?>app_gerencial/vendas";
+                    window.location.href = "<?=base_url()?>app_gerencial_vendas";
                 }
             }
         });

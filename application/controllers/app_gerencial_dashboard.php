@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Dashboard extends MY_Controller {
+class App_gerencial_dashboard extends MY_Controller {
 
     /**
      * Método construtor da classe

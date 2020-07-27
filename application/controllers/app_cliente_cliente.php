@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Cliente extends MY_Controller {
+class App_cliente_cliente extends MY_Controller {
 
     /**
      * Método construtor da classe

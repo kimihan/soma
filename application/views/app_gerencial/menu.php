@@ -4,52 +4,52 @@
         <!--begin::Menu Nav-->
         <ul class="menu-nav">
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/index" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_index" class="menu-link">
                     <span class="menu-text">Dashboard</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/clientes" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_clientes" class="menu-link">
                     <span class="menu-text">Clientes</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/clientes/listagem_ligar" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_clientes/listagem_ligar" class="menu-link">
                     <span class="menu-text">Clientes a ligar</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/vendedores" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_vendedores" class="menu-link">
                     <span class="menu-text">Vendedores</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/produtos" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_produtos" class="menu-link">
                     <span class="menu-text">Produtos</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/financeiro" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_financeiro" class="menu-link">
                     <span class="menu-text">Financeiro</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/boletos" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_boletos" class="menu-link">
                     <span class="menu-text">Boletos</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/cobrancas" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_cobrancas" class="menu-link">
                     <span class="menu-text">Cobranças</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/vendas" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_vendas" class="menu-link">
                     <span class="menu-text">Vendas</span>
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="<?=base_url()?>app_gerencial/comissoes" class="menu-link">
+                <a href="<?=base_url()?>app_gerencial_comissoes" class="menu-link">
                     <span class="menu-text">Comissões</span>
                 </a>
             </li>

@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Clientes extends MY_Controller {
+class App_gerencial_clientes extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -23,9 +23,9 @@ class Clientes extends MY_Controller {
     function index($flgInserido = NULL)
     {
         $dadosBusca = $_GET;
-        $param["deleteMethod"] = "clientes/ajax_excluir";
-        $param["searchMethod"] = "clientes/index";
-        $param["referenceModel"] = "clientes";
+        $param["deleteMethod"] = "app_gerencial_clientes/ajax_excluir";
+        $param["searchMethod"] = "app_gerencial_clientes/index";
+        $param["referenceModel"] = "app_gerencial_clientes";
         $param["listName"] = "Clientes";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idCliente"),

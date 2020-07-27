@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Comissoes extends MY_Controller {
+class App_gerencial_comissoes extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -23,8 +23,8 @@ class Comissoes extends MY_Controller {
     function index($flgInserido = NULL)
     {
         $dadosBusca = $_GET;
-        $param["searchMethod"] = "comissoes/index";
-        $param["referenceModel"] = "comissoes";
+        $param["searchMethod"] = "app_gerencial_comissoes/index";
+        $param["referenceModel"] = "app_gerencial_comissoes";
         $param["listName"] = "Comissoes à pagar";
         $param["customButton"] = array(
             "name" => "Marcar como pago",

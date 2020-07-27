@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-10">
                     <button type="submit" class="btn btn-success mr-2">Salvar</button>
-                    <a href="<?=base_url()?>app_gerencial/vendedores/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                    <a href="<?=base_url()?>app_gerencial_vendedores/"><button type="button" class="btn btn-secondary">Voltar</button></a>
                 </div>
             </div>
         </div>
@@ -164,12 +164,12 @@
     function submitForm(){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/vendedores/ajax_salvar",
+            url: "<?=base_url()?>app_gerencial_vendedores/ajax_salvar",
             data: $("#formCliente").serializeArray(),
             success : function(text){
                 if(text == "success") {
                     alert("Registro salvo com sucesso!");
-                    window.location.href = "<?=base_url()?>app_gerencial/vendedores";
+                    window.location.href = "<?=base_url()?>app_gerencial_vendedores";
                 }
             }
         });
@@ -178,7 +178,7 @@
     function retornaCEP(cep){
         $.ajax({
             type: "POST",
-            url: "<?=base_url()?>app_gerencial/geral/consulta_cep/"+cep,
+            url: "<?=base_url()?>app_gerencial_geral/consulta_cep/"+cep,
             data: $("#formCliente").serializeArray(),
             dataType: "json",
             success : function(resp){

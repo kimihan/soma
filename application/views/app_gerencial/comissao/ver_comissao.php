@@ -38,7 +38,7 @@
             <div class="col-2">
             </div>
             <div class="col-10">
-                <a href="<?=base_url()?>app_gerencial/comissoes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
+                <a href="<?=base_url()?>app_gerencial_comissoes/"><button type="button" class="btn btn-secondary">Voltar</button></a>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <?php
 
 require_once(APPPATH.'libraries/MY_Controller.php');
-class Cobrancas extends MY_Controller {
+class App_gerencial_cobrancas extends MY_Controller {
 
     /**
      * Método construtor da classe
@@ -23,9 +23,9 @@ class Cobrancas extends MY_Controller {
     function index($flgInserido = NULL)
     {
         $dadosBusca = $_GET;
-        $param["deleteMethod"] = "cobrancas/ajax_excluir";
-        $param["searchMethod"] = "cobrancas/index";
-        $param["referenceModel"] = "cobrancas";
+        $param["deleteMethod"] = "app_gerencial_cobrancas/ajax_excluir";
+        $param["searchMethod"] = "app_gerencial_cobrancas/index";
+        $param["referenceModel"] = "app_gerencial_cobrancas";
         $param["listName"] = "Cobranças";
         $param["fields"] = array(
             array("name" => "ID", "field" => "idCobranca", "removeFilter" => TRUE),
