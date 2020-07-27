@@ -23,7 +23,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '/soma/';
+$whitelist = array(
+    '127.0.0.1',
+    '::1'
+);
+
+if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
+    $config['base_url'] = 'http://www.somaassistencia.com.br/';
+} else {
+    $config['base_url'] = '/soma/';
+}
+
 
 /*
 |--------------------------------------------------------------------------
