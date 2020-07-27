@@ -57,7 +57,7 @@
                     </div>
                 <?php endif?>
             </form>
-        </div>
+        </div> 
         <table class="table">
             <thead>
             <tr>
