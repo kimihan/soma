@@ -10,7 +10,7 @@
                 <div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading text-center" id="msgErroModal"></h4>
                 </div>
-                <div class="text-center">
+                <div class="text-center" id="divBtnErroModal">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>

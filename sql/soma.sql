@@ -290,6 +290,8 @@ tabela "ProdutoVendedor" removi a chave primaria da coluna "Produto_idProduto"*/
 ALTER TABLE `Cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagamento` TINYINT(1) NULL DEFAULT '1' COMMENT '1 - Mensal2 - Anual';
 ALTER TABLE `Cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
 ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
+
+CREATE TABLE `soma`.`formasPagamento` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` VARCHAR(200) NOT NULL , `operadora` VARCHAR(200) NULL DEFAULT NULL , `email` VARCHAR(200) NULL DEFAULT NULL , `token` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
 /*luan*/
 
 

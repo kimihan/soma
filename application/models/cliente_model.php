@@ -47,5 +47,19 @@ class Cliente_model extends MY_Model {
     {
         parent::__construct(array($this->name));
     }
+
+    function buscar_cliente($dados) 
+    {
+        $CI =& get_instance();
+        $CI->load->model("app_gerencial/manupula_cliente_model");
+
+        if(!empty($dados["id"])) {
+            $dadosCliente = $CI->manupula_cliente_model->retornaDadosCliente($dados["id"]);
+
+            return (!empty($dadosCliente) && count($dadosCliente) > 0) ? $dadosCliente : ["erro" => "Cliente não encontrado"];
+        } else {
+            return ["erro" => "Cliente não encontrado"];
+        }
+    }
 }
                
