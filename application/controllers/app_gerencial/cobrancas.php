@@ -37,6 +37,54 @@ class Cobrancas extends MY_Controller {
             array("name" => "Pago?", "field" => "flgPago", "removeFilter" => TRUE)
         );
 
+        if(!empty($dadosBusca["dataGerado_start"])) {
+            $dadosBusca["dataGerado_start"] = formataDataMysql($dadosBusca["dataGerado_start"]);
+            $dadosBusca["co.dataGerado >="] = $dadosBusca["dataGerado_start"];
+            unset($dadosBusca["dataGerado_start"]);
+        } else if(isset($dadosBusca["dataGerado_start"])) {
+            unset($dadosBusca["dataGerado_start"]);
+        }
+
+        if(!empty($dadosBusca["dataGerado_end"])) {
+            $dadosBusca["dataGerado_end"] = formataDataMysql($dadosBusca["dataGerado_end"]);
+            $dadosBusca["co.dataGerado <="] = $dadosBusca["dataGerado_end"];
+            unset($dadosBusca["dataGerado_end"]);
+        } else if(isset($dadosBusca["dataGerado_end"])) {
+            unset($dadosBusca["dataGerado_end"]);
+        }
+
+        if(!empty($dadosBusca["dataPagamento_start"])) {
+            $dadosBusca["dataPagamento_start"] = formataDataMysql($dadosBusca["dataPagamento_start"]);
+            $dadosBusca["co.dataPagamento >="] = $dadosBusca["dataPagamento_start"];
+            unset($dadosBusca["dataPagamento_start"]);
+        } else if(isset($dadosBusca["dataPagamento_start"])) {
+            unset($dadosBusca["dataPagamento_start"]);
+        }
+
+        if(!empty($dadosBusca["dataPagamento_end"])) {
+            $dadosBusca["dataPagamento_end"] = formataDataMysql($dadosBusca["dataPagamento_end"]);
+            $dadosBusca["co.dataPagamento <="] = $dadosBusca["dataPagamento_end"];
+            unset($dadosBusca["dataPagamento_end"]);
+        } else if(isset($dadosBusca["dataPagamento_end"])) {
+            unset($dadosBusca["dataPagamento_end"]);
+        }
+
+        if(!empty($dadosBusca["dataVencimento_start"])) {
+            $dadosBusca["dataVencimento_start"] = formataDataMysql($dadosBusca["dataVencimento_start"]);
+            $dadosBusca["co.dataVencimento >="] = $dadosBusca["dataVencimento_start"];
+            unset($dadosBusca["dataVencimento_start"]);
+        } else if(isset($dadosBusca["dataVencimento_start"])) {
+            unset($dadosBusca["dataVencimento_start"]);
+        }
+
+        if(!empty($dadosBusca["dataVencimento_end"])) {
+            $dadosBusca["dataVencimento_end"] = formataDataMysql($dadosBusca["dataVencimento_end"]);
+            $dadosBusca["co.dataVencimento <="] = $dadosBusca["dataVencimento_end"];
+            unset($dadosBusca["dataVencimento_end"]);
+        } else if(isset($dadosBusca["dataVencimento_end"])) {
+            unset($dadosBusca["dataVencimento_end"]);
+        }
+
         foreach($param["fields"] as $key => $value) {
             if(!empty($dadosBusca[$value["field"]])) {
                 $param["fields"][$key]["search"] = $dadosBusca[$value["field"]];
@@ -56,7 +104,7 @@ class Cobrancas extends MY_Controller {
     {
         $dados = $this->manipula_cobranca_model->retornaDados($idCobranca);
 
-        $param["view"] = $this->load->view("app_gerencial/cobranca/ver_cobranca", array("dadosProduto" => $dados), TRUE);
+        $param["view"] = $this->load->view("app_gerencial/cobranca/ver_cobranca", array("dadosCobranca" => $dados), TRUE);
         $this->load->view("app_gerencial/index", $param);
     }
 
@@ -93,6 +141,15 @@ class Cobrancas extends MY_Controller {
         $idCobranca = $dadosPost["idRegistro"];
 
         $this->manipula_cobranca_model->excluiCliente($idCobranca);
+    }
+
+    function ajax_marcar_pago()
+    {
+        $dadosPost = $this->post_all();
+
+        $idCobranca = $dadosPost["idCobranca"];
+
+        $this->manipula_cobranca_model->marcarPaga($idCobranca);
     }
 
 }

@@ -39,7 +39,7 @@ class Manipula_cobranca_model  {
 
     function retornaDados($idCobranca = NULL, $arrayWhere = NULL)
     {
-        $query = $this->CI->db->select("co.*, cl.*, u.*, s.*")
+        $query = $this->CI->db->select("co.*, cl.*, u.*, s.idServico")
             ->from("{$this->CI->cobranca_model} co")
             ->join("{$this->CI->cliente_model} cl", "co.Cliente_idCliente = cl.idCliente")
             ->join("{$this->CI->usuario_model} u", "cl.Usuario_idUsuario = u.idUsuario")
@@ -47,7 +47,12 @@ class Manipula_cobranca_model  {
 
         if(!empty($arrayWhere)) {
             foreach ($arrayWhere as $key => $value) {
-                if(!empty($value)) {
+                if(strpos($key, ">")) {
+                    $this->CI->db->where($key, $value);
+                } else if(strpos($key, "<")) {
+                    $this->CI->db->where($key, $value);
+                }
+                else if(!empty($value)) {
                     $this->CI->db->like($key, $value);
                 }
             }
@@ -191,5 +196,14 @@ class Manipula_cobranca_model  {
             $this->CI->db->where("co.dataVencimento <=", $dataFinal);
         }
         return  $this->CI->db->get()->row()->valor;
+    }
+
+    function marcarPaga($dados)
+    {
+        $arrayUpdate = array();
+        $arrayWhere = array();
+        $arrayUpdate["flgPago"] = 1;
+        $arrayWhere["idCobranca"] = $dados["idCobranca"];
+        $this->CI->cobranca_model->update($arrayUpdate, $arrayWhere);
     }
 }
