@@ -10,7 +10,7 @@ class Vendedores extends MY_Controller {
      */
     function __construct()
     {
-        parent::__construct();
+        parent::__construct(TRUE);
 
         $this->load->model("app_gerencial/manupula_vendedor_model");
     }

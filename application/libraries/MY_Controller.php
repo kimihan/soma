@@ -3,14 +3,20 @@
 class MY_Controller extends CI_Controller
 {
 
-    function __construct()
+    function __construct($verificaLogado = FALSE)
     {
+        session_start();
         parent::__construct();
 
         $this->load->helper("url_helper");
         $this->load->helper("geral_helper");
-
         $this->load->library("MY_Input");
+
+        if(!empty($verificaLogado)) {
+            if(empty($_SESSION["usuarioLogado"])) {
+                header("Location: ".base_url()."app_gerencial/login");
+            }
+        }
     }
 
     function post_all($campos_permitidos = NULL, $filter = FALSE)

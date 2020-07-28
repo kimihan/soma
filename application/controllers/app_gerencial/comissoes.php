@@ -10,7 +10,7 @@ class Comissoes extends MY_Controller {
      */
     function __construct() 
     {
-        parent::__construct();
+        parent::__construct(TRUE);
 
         $this->load->model("app_gerencial/manipula_comissao_model");
     }
@@ -25,6 +25,7 @@ class Comissoes extends MY_Controller {
         $dadosBusca = $_GET;
         $param["searchMethod"] = "comissoes/index";
         $param["referenceModel"] = "comissoes";
+        $param["removeInsert"] = TRUE;
         $param["listName"] = "Comissoes à pagar";
         $param["customButton"] = array(
             "name" => "Marcar como pago",
@@ -37,7 +38,7 @@ class Comissoes extends MY_Controller {
             array("name" => "CPF", "field" => "numCpf", "removeFilter" => TRUE),
             array("name" => "Telefone", "field" => "numTelefone", "removeFilter" => TRUE),
             array("name" => "Valor a pagar", "field" => "vrComissaoPagar", "removeFilter" => TRUE),
-            array("name" => "1ª Comissão?", "field" => "flgPrimeiraComissao")
+            array("name" => "1ª Comissão?", "field" => "flgPrimeiraComissao", "removeFilter" => TRUE)
         );
 
         foreach($param["fields"] as $key => $value) {
