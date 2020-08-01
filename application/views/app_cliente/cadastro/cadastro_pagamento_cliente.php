@@ -17,6 +17,13 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h1 class="text-center font-italic">
+                    Pagamento
+                </h1>
+            </div>
+        </div>
         <form action="<?=base_url()?>app_cliente/cliente/salvar" method="POST" id="fmrCadastroClientePagamento">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
@@ -52,10 +59,10 @@
                 </div>
                 <div class="form-row justify-content-center align-self-center">
                     <div class="col-8 mb-2">
-                        <input type="text" class="form-control" value="" required placeholder="Vencimento">  
+                        <input type="text" class="form-control" value="" id="vencimento" required placeholder="Vencimento">  
                     </div>
                     <div class="col-4 mb-2">
-                        <input type="text" class="form-control" value="" required placeholder="CVV">
+                        <input type="text" class="form-control" value="" id="cvv" required placeholder="CVV">
                     </div>
                 </div>
                 <div class="form-row justify-content-center align-self-center">

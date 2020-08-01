@@ -1,5 +1,8 @@
 let brand = null;
+let hashReady = null;
 $(() => {
+    $("#vencimento").mask("99/9999");
+
     //https://dev.pagseguro.uol.com.br/reference/checkout-transparente
 
     PagSeguroDirectPayment.setSessionId(sessionIdPagSeguro);
@@ -43,6 +46,7 @@ $(() => {
 
         if (option == "Cartão de crédito") {
             $("#divCartaoCredito").show("fast");
+            onSenderHashReady();
         } else {
             $("#divCartaoCredito").hide("fast");
         }
@@ -52,10 +56,10 @@ $(() => {
 function onSenderHashReady() {
     PagSeguroDirectPayment.onSenderHashReady(function(response) {
         if (response.status == 'error') {
-            console.log(response.message);
+            showModalErro("Erro nas formas de pagamento, favor entrar em contato com o suporte!", "static", false);
             return false;
         }
-        var hash = response.senderHash; //Hash estará disponível nesta variável.
+        hashReady = response.senderHash;
     });
 }
 
@@ -79,20 +83,22 @@ function getBrand(cardNumber) {
 function createCardToken() {
     if (brand.error) return false;
 
+    let split = $("#vencimento").val().split("/");
+
     PagSeguroDirectPayment.createCardToken({
-        cardNumber: '4111111111111111', // Número do cartão de crédito
-        brand: 'visa', // Bandeira do cartão
-        cvv: '013', // CVV do cartão
-        expirationMonth: '12', // Mês da expiração do cartão
-        expirationYear: '2026', // Ano da expiração do cartão, é necessário os 4 dígitos.
+        cardNumber: $("#nCartao").val(), // Número do cartão de crédito
+        brand: brand.name, // Bandeira do cartão
+        cvv: $("#cvv").val(), // CVV do cartão
+        expirationMonth: split[0], // Mês da expiração do cartão
+        expirationYear: split[1], // Ano da expiração do cartão, é necessário os 4 dígitos.
         success: function(response) {
-            // Retorna o cartão tokenizado.
+            console.log(response);
         },
         error: function(response) {
-            // Callback para chamadas que falharam.
+            console.log(response);
         },
         complete: function(response) {
-            // Callback para todas chamadas.
+            console.log(response);
         }
     });
 }

@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller
 
     function __construct($verificaLogado = FALSE)
     {
-        session_start();
+        //session_start();
         parent::__construct();
 
         $this->load->helper("url_helper");
