@@ -46,8 +46,8 @@
                 <div class="col-12 mb-2">
                     <select class="form-control" name="periodo">
                         <option>Periodicidade de pagamento</option>
-                        <option value="1">Mensal</option>
-                        <option value="2">Anual</option>
+                        <option value="mensal">Mensal</option>
+                        <option value="anual">Anual</option>
                     </select>
                 </div>
             </div>
