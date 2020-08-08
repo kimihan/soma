@@ -53,7 +53,22 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+$base_url = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '')
+    .'://'.(!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '')
+    .str_replace('/sistema/lojavirtual/','',str_replace('//','/',dirname($_SERVER['SCRIPT_NAME'])).'/');
+
+
+if(((bool)strpos($base_url,'localhost') == TRUE) ||
+    (((bool)strpos($base_url,'192.168.'))== TRUE) ||
+    (((bool)strpos($base_url,'127.0.'))== TRUE))
+{
+    define('ENVIRONMENT', 'development');
+}
+else
+{
+    define('ENVIRONMENT', 'production');
+}
+
 
 /*
  *---------------------------------------------------------------
@@ -73,6 +88,7 @@ switch (ENVIRONMENT)
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
+        /*
 		if (version_compare(PHP_VERSION, '5.3', '>='))
 		{
 			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
@@ -81,6 +97,7 @@ switch (ENVIRONMENT)
 		{
 			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
 		}
+        */
 	break;
 
 	default:
