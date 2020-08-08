@@ -61,7 +61,9 @@
             <div class="col-2">
             </div>
             <div class="col-10">
-                <a href="<?=base_url()?>app_gerencial/cobrancas/editar"><button type="button" class="btn btn-primary  mr-2">Inserir</button></a>
+                <?php if(empty($dadosCobranca->flgCancelado)):?>
+                    <a href="<?=base_url()?>app_gerencial/cobrancas/cancelar/<?=!empty($dadosCobranca->idCobranca)?$dadosCobranca->idCobranca:NULL?>"><button type="button" class="btn btn-danger  mr-2">Cancelar</button></a>
+                <?php endif?>
                 <a href="<?=base_url()?>app_gerencial/cobrancas/"><button type="button" class="btn btn-secondary">Voltar</button></a>
             </div>
         </div>

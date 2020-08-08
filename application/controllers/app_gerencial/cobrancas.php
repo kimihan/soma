@@ -23,7 +23,8 @@ class Cobrancas extends MY_Controller {
     function index($flgInserido = NULL)
     {
         $dadosBusca = $_GET;
-        $param["deleteMethod"] = "cobrancas/ajax_excluir";
+        //$param["deleteMethod"] = "cobrancas/ajax_excluir";
+        $param["removeEdit"] = TRUE;
         $param["searchMethod"] = "cobrancas/index";
         $param["referenceModel"] = "cobrancas";
         $param["listName"] = "Cobranças";
@@ -34,7 +35,8 @@ class Cobrancas extends MY_Controller {
             array("name" => "Data pagamento", "field" => "dataPagamento"),
             array("name" => "Data vencimento", "field" => "dataVencimento"),
             array("name" => "Valor", "field" => "vrPreco", "removeFilter" => TRUE),
-            array("name" => "Pago?", "field" => "flgPago", "removeFilter" => TRUE)
+            array("name" => "Paga?", "field" => "flgPago", "removeFilter" => TRUE),
+            array("name" => "Cancelada?", "field" => "flgCancelado", "removeFilter" => TRUE)
         );
 
         if(!empty($dadosBusca["dataGerado_start"])) {
@@ -110,24 +112,67 @@ class Cobrancas extends MY_Controller {
 
     function editar($idCobranca = NULL)
     {
+        $this->load->model("app_gerencial/manupula_cliente_model");
+
         $dados = NULL;
         if(!empty($idCobranca)) {
             $dados = $this->manipula_cobranca_model->retornaDados($idCobranca);
         }
 
-        $param["view"] = $this->load->view("app_gerencial/cobranca/inserir_cobranca", array("dadosProduto" => $dados), TRUE);
+        $dadosClientes = $this->manupula_cliente_model->retornaDadosCliente(NULL, NULL);
+
+        $param["view"] = $this->load->view("app_gerencial/cobranca/inserir_cobranca", array("dadosClientes" => $dadosClientes), TRUE);
         $this->load->view("app_gerencial/index", $param);
+    }
+
+    function cancelar($idCobranca)
+    {
+        $param["view"] = $this->load->view("app_gerencial/cobranca/cancelar_cobranca", array("idCobranca" => $idCobranca), TRUE);
+        $this->load->view("app_gerencial/index", $param);
+    }
+
+    function ajax_cancela_cobranca($idCobranca)
+    {
+        $dadosPost = $this->post_all();
+        $dadosPost["idCobranca"] = $idCobranca;
+        $dadosPost["flgCancelado"] = 1;
+
+        $insert = $this->manipula_cobranca_model->insereEdita($dadosPost);
+    }
+
+    function ajax_servicos_cliente()
+    {
+        $this->load->model("app_gerencial/manipula_servico_model");
+        $this->load->model("produto_model");
+
+        $dadosPost = $this->post_all();
+        $idCliente = $dadosPost["idCliente"];
+
+        $this->db->select("pr.descNome as nomeProduto");
+        $this->db->join("{$this->produto_model} pr", "s.Produto_idProduto = pr.idProduto");
+        $servicosCliente = $this->manipula_servico_model->retornaDadosVendas(NULL, array("Cliente_idCliente" => $idCliente));
+
+        echo json_encode($servicosCliente);
+    }
+
+    function ajax_preco_servico()
+    {
+        $this->load->model("app_gerencial/manipula_servico_model");
+        $dadosPost = $this->post_all();
+        $idServico = $dadosPost["idServico"];
+
+        $servicosCliente = $this->manipula_servico_model->retornaDadosVendas($idServico);
+        $servicosCliente->vrPreco = number_format($servicosCliente->vrPreco, 2, ",", "");
+
+        echo json_encode($servicosCliente);
     }
 
     function ajax_salvar()
     {
         $dadosPost = $this->post_all();
 
-        if(isset($dadosPost["flgAplicativo"])) {
-            $dadosPost["flgAplicativo"] = 1;
-        } else {
-            $dadosPost["flgAplicativo"] = 0;
-        }
+        $dadosPost["vrPreco"] = str_replace(".", "", $dadosPost["vrPreco"]);
+        $dadosPost["vrPreco"] = str_replace(",", ".", $dadosPost["vrPreco"]);
 
         $insert = $this->manipula_cobranca_model->insereEdita($dadosPost);
 

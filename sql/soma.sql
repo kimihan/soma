@@ -300,3 +300,7 @@ ALTER TABLE `servico` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Valor 
 
 ALTER TABLE `comissao` ADD `flgTipoComissao` INT NOT NULL DEFAULT '1' COMMENT '0 - Comissao Recorrente /n 1 - Primeira Comissao' AFTER `flgPago`;
 
+
+ALTER TABLE `Cobranca` ADD `descRazaoCancelamento` TEXT NULL COMMENT 'Motivo do cancelamento da cobranca' AFTER `dataVencimento`;
+ALTER TABLE `Cobranca` ADD `flgCancelado` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 - Nao cancelada\n1 - Cancelada' AFTER `flgPago`;
+

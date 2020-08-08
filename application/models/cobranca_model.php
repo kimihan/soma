@@ -42,7 +42,14 @@ class Cobranca_model extends MY_Model {
                     "rules"=>"required|integer"),
                     array("field"=>"Servico_idServico",
                     "label"=>"Servico idservico",
-                    "rules"=>"required|integer")
+                    "rules"=>"required|integer"),
+                    array("field"=>"descRazaoCancelamento",
+                    "label"=>"desc Razao Cancelamento",
+                    "rules"=>""),
+                    array("field"=>"flgCancelado",
+                        "label"=>"flg Cancelado",
+                        "rules"=>"integer"),
+
 
     );
 
