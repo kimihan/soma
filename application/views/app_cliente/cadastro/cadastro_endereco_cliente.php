@@ -7,14 +7,7 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                    <?= NOME_APP_CLIENTE ?>
-                </h1>
-            </div>
-        </div>
-        <form action="cadastro_pagamento" method="POST">
+        <form action="<?=base_url()?>app_cliente/cliente/cadastro_pagamento" method="POST" id="fmrCadastroClienteDadosEndereco">
             <?php $this->load->view('app_cliente/cadastro/campos_cadastro_endereco_cliente'); ?>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-6">

@@ -38,5 +38,17 @@ class login_model extends MY_Model {
         return $CI->session->unset_userdata('sVendedor');
     }
 
+    public function logarCliente($dadosLogin) {
+        $CI =& get_instance();
+        return $CI->session->set_userdata('sCliente', $dadosLogin);
+    }
+
+    public function logoutCliente() {
+        $CI =& get_instance();
+        $CI->load->library('session');
+
+        return $CI->session->unset_userdata('sCliente');
+    }
+
 }
                

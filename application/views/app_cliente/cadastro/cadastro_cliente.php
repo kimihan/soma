@@ -7,15 +7,9 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                    <?= NOME_APP_CLIENTE ?>
-                </h1>
-            </div>
-        </div>
-        <form action="cadastro_endereco" method="POST">
+        <form action="<?=base_url()?>app_cliente/cliente/cadastro_endereco" method="POST" id="fmrCadastroClienteDados">
             <?php $this->load->view('app_cliente/cadastro/campos_cadastro_cliente'); ?>
+            <input type="hidden" value='<?=json_encode($dadosCliente)?>' id="dadosCliente"/>
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12">
                     <button class="btn btn-outline-secondary btn-block" type="submit">Proximo</button>

@@ -7,15 +7,7 @@
 
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h1 class="text-center font-italic">
-                <?=NOME_APP_CLIENTE?>
-                </h1>
-            </div>
-        </div>
-
-        <form action="cliente/cadastro" method="POST" id="fmrIdCliente">
+        <form action="<?=base_url()?>app_cliente/login/logar" method="POST" id="fmrIdCliente">
             <div class="form-row justify-content-center align-self-center">
                 <div class="col-12 mb-2">
                     <input type="number" class="form-control" id="id" name="id" value="" required placeholder="Preencher ID">

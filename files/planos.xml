@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<preApprovalRequest>
+<preApproval>
+<name>Plano - Teste</name>
+<reference>Teste Mensal</reference>
+<charge>AUTO</charge>
+<period>MONTHLY</period>
+<amountPerPayment>39.99</amountPerPayment>
+<cancelURL>http://sitedocliente.com</cancelURL>
+<membershipFee>0.00</membershipFee>
+<trialPeriodDuration>7</trialPeriodDuration>
+</preApproval>
+<maxUses>500000</maxUses>
+</preApprovalRequest>
+
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<preApprovalRequest>
+<preApproval>
+<name>Plano - Teste</name>
+<reference>Teste Anual</reference>
+<charge>AUTO</charge>
+<period>YEARLY</period>
+<amountPerPayment>479.88</amountPerPayment>
+<cancelURL>http://sitedocliente.com</cancelURL>
+<membershipFee>0.00</membershipFee>
+<trialPeriodDuration>7</trialPeriodDuration>
+</preApproval>
+<maxUses>500000</maxUses>
+</preApprovalRequest>
