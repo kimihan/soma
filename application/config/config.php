@@ -29,7 +29,7 @@ $whitelist = array(
 );
 
 if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-    $config['base_url'] = 'http://www.somaassistencia.com.br/';
+    $config['base_url'] = 'https://www.somaassistencia.com.br/';
 } else {
     $config['base_url'] = '/soma/';
 }
