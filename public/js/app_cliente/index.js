@@ -28,6 +28,101 @@ $(() => {
     }
 
     if ($("#fmrCadastroClientePagamento").length > 0) {
+        let url = "";
+        $("#vencimento").mask("99/9999");
+
+        $("#nCartao").bind("keyup change", (e) => {
+            let handler = $(e.currentTarget);
+            let cardNumber = handler.val();
+
+            if (cardNumber.length > 16) {
+                cardNumber = cardNumber.slice(0, 16);
+                handler.val(cardNumber);
+            }
+
+            if (cardNumber.length > 6) {
+                getBrand(cardNumber.substring(0, 6));
+            }
+
+            if (cardNumber.length <= 5) {
+                brand = null;
+            }
+        });
+
+        $("[name=formaPagamento]").change((e) => {
+            let handler = $(e.currentTarget);
+            let option = handler.find(":selected").text();
+
+            if (option == "Cartão de crédito") {
+                $("#divCartaoCredito").show("fast", () => {
+                    $("[name=periodo]").hide();
+                    $("[name=periodoPagseguro]").show();
+                    onSenderHashReady();
+                });
+
+                url = "pre_approvals_pagseguro";
+            } else {
+                $("#divCartaoCredito").hide("fast", () => {
+                    $("[name=periodoPagseguro]").hide();
+                    $("[name=periodo]").show();
+                });
+            }
+        });
+
+        $("#fmrCadastroClientePagamento").submit((e) => {
+            let handler = $(e.currentTarget);
+            let dados = handler.serialize();
+
+            /*handler.find("input").each((k, e) => $(e).attr('disabled', true));
+            handler.find("select").each((k, e) => $(e).attr('disabled', true));
+            handler.find("button").each((k, e) => $(e).attr('disabled', true));*/
+
+            $("#divCarregandoPagamento").show("fast", () => {
+                createCardToken();
+            });
+
+            var interval = setInterval(function() {
+                if (token !== null) {
+                    clearInterval(interval);
+                    $.ajax({
+                        type: "POST",
+                        url: `${handler.attr("action")}/${url}`,
+                        data: { "dados": dados, "hashReady": hashReady, "token": token, "sessionIdPagSeguro": sessionIdPagSeguro },
+                        success: function(resp) {
+                            let retorno = JSON.parse(resp);
+
+                            if (retorno.error) {
+                                showModalErro("Erro ao gerar pagamento!");
+                            } else {
+                                $("#modalPreAprovalPagSeguro").modal("show");
+                                codePreApproval = retorno.code;
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            showModalErro("Erro ao gerar pagamento!");
+                        }
+                    });
+                }
+            }, 3000);
+
+            return false;
+        });
+
+        $("#btnConfirmarPagSeguro").click((e) => {
+            $.ajax({
+                type: "POST",
+                url: `${$("#fmrCadastroClientePagamento").attr("action")}/payment_pagseguro`,
+                data: { "codePreApproval": codePreApproval, "hashReady": hashReady, "servico": $("[name=servico]").val(), "sessionIdPagSeguro": sessionIdPagSeguro },
+                success: function(resp) {
+                    //let retorno = JSON.parse(resp);
+                    console.log(resp);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showModalErro("Erro ao gerar cobrança!");
+                }
+            });
+        })
+
         applyMask();
     }
 });

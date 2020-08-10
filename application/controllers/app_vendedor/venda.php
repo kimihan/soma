@@ -17,10 +17,7 @@ class Venda extends MY_Controller {
             redirect('app_vendedor/login', 'refresh');
         }
 
-        $this->load->model("cliente_model");
-        $this->load->model("usuario_model");
-        $this->load->model("endereco_model");
-        $this->load->model("servico_model");
+        $this->load->model(["cliente_model", "usuario_model", "endereco_model", "comissao_model", "servico_model", "vendavendedor_model"]);
     }
 
     /**
@@ -48,6 +45,7 @@ class Venda extends MY_Controller {
     {   ignore_user_abort(true);
         $now = date("Y-m-d H:i:s");
 
+        $dadosVendedor = $this->session->userdata('sVendedor');
         $dadosVenda = [];
         $dadosVendaEndereco = [];
         parse_str($this->input->post()["dadosVenda"], $dadosVenda);
@@ -82,6 +80,19 @@ class Venda extends MY_Controller {
             }
 
             if($idServico) {
+                $dadosComissao = ["vrComissao" => 0, "flgPago" => 0, "flgTipoComissao" => 1, "dataGerado" => $now,
+                                    "Vendedor_idVendedor" => $dadosVendedor["idVendedor"], "Servico_idServico" => $idServico];
+
+                $idComissao = $this->comissao_model->insert($dadosComissao);     
+                
+                if($idComissao) {
+                    $dadosVendaVendedor = ["Venda_idVenda" => $idServico, "Vendedor_idVendedor" => $dadosVendedor["idVendedor"], 
+                                            "numComissao" => $idComissao];
+
+                    $idVendaVendedor = $this->vendavendedor_model->insert($dadosVendaVendedor);
+                }
+
+
                 $aux = 0;
                 if (!file_exists(PATH_UPLOAD . "/{$idServico}")) {
                     mkdir(PATH_UPLOAD . "/{$idServico}", 0777, true);

@@ -36,8 +36,11 @@ class Manipula_servico_model  {
 
     function retornaDados($idServico = NULL, $arrayWhere = NULL)
     {
-        $query = $this->CI->db->select("s.*")
-            ->from("{$this->CI->servico_model} s");
+        $this->CI->load->model("produto_model");
+
+        $query = $this->CI->db->select("s.*, p.*")
+            ->from("{$this->CI->servico_model} s")
+            ->join("{$this->CI->produto_model} p", "p.idProduto = s.Produto_idProduto", "LEFT");
 
         if(!empty($arrayWhere)) {
             foreach ($arrayWhere as $key => $value) {

@@ -31,7 +31,7 @@
                     <button class="btn btn-outline-secondary btn-block" type="submit">Logar</button>
                 </div>
                 <div class="col-12" id="divCarregandoLogin" style="display: none;">
-                    <button class="btn btn-primary btn-block" type="button" disabled>
+                    <button class="btn btn-primary btn-block btn-not-default" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Carregando...
                     </button>

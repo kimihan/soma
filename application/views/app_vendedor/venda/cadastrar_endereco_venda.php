@@ -36,7 +36,7 @@
                     <input type="file" style="display: none;" id="inpFoto" multiple />
                 </div>
                 <div class="col-12 mb-2" style="display: none;" id="divCarregandoFoto">
-                    <button class="btn btn-light btn-block" type="button" disabled>
+                    <button class="btn btn-primary btn-block btn-not-default" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Carregando...
                     </button>
@@ -56,7 +56,7 @@
                     <button class="btn btn-outline-secondary btn-block" type="submit">Cadastrar venda</button>
                 </div>
                 <div class="col-12" id="divCarregandoVenda" style="display: none;">
-                    <button class="btn btn-primary btn-block" type="button" disabled>
+                    <button class="btn btn-primary btn-block btn-not-default" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Carregando...
                     </button>
