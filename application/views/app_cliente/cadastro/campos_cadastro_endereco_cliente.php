@@ -5,7 +5,7 @@
             <input type="text" class="form-control" name="numCep" value="" required placeholder="CEP" id="cep" maxlength="10" autocomplete="nofill">
         </div>
         <div class="col-12 mb-2" style="display: none;" id="divCarregandoCep">
-            <button class="btn btn-light btn-block" type="button" disabled id="btnCarregando" >
+            <button class="btn btn-primary btn-block btn-not-default" type="button" disabled id="btnCarregando" >
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Carregando...
             </button>

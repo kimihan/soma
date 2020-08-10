@@ -79,11 +79,6 @@ class Cliente extends MY_Controller {
         return $this->template->load("app_cliente/template", "app_cliente/cadastro/cadastro_pagamento_cliente", $dadosView);        
     }
 
-    function salvar()
-    {
-
-    }
-
     function buscar_cliente() 
     {
         $dados = $this->input->post();
