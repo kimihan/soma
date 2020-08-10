@@ -5,8 +5,12 @@ class MY_Controller extends CI_Controller
 
     function __construct($verificaLogado = FALSE)
     {
-        session_start();
         parent::__construct();
+        $sistema = $this->uri->segment(1);
+
+        if($sistema == "app_gerencial") {
+            session_start();
+        }
 
         $this->load->helper("url_helper");
         $this->load->helper("geral_helper");
