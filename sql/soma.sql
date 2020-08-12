@@ -306,3 +306,4 @@ ALTER TABLE `comissao` ADD `flgTipoComissao` INT NOT NULL DEFAULT '1' COMMENT '0
 ALTER TABLE `Cobranca` ADD `descRazaoCancelamento` TEXT NULL COMMENT 'Motivo do cancelamento da cobranca' AFTER `dataVencimento`;
 ALTER TABLE `Cobranca` ADD `flgCancelado` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 - Nao cancelada\n1 - Cancelada' AFTER `flgPago`;
 
+ALTER TABLE `usuario` CHANGE `numTelefone` `numTelefone` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone fixo (sem formatação)', CHANGE `numWhatsapp` `numWhatsapp` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone Whatsapp (sem formatação)';

@@ -32,7 +32,6 @@ class Pagamento extends MY_Controller {
         $dados["numCpf"] = preg_replace('/[^0-9]/', '', $dados["numCpf"]);
         $dados["dataNascimento"] = $dateNascimento[2] . "/" . $dateNascimento[1] . "/" . $dateNascimento[0];
         $dados["token"] = $this->input->post()["token"];
-        
         if($dados["periodoPagseguro"] != "-1") {
             $pagSeguro = new pagseguro_model();
             $dataSender = $dadosCliente;
@@ -54,7 +53,14 @@ class Pagamento extends MY_Controller {
 
         $pagSeguro = new pagseguro_model();
         $retorno = $pagSeguro->setDataPayment($merge)->createPayment();
+    }
 
-        var_dump($retorno);
+    function cria_boletos_paghiper()
+    {
+        $this->load->model("paghiper_model");
+
+        $idCliente = 11;
+        $this->paghiper_model->geraBoletosMensais($idCliente);
+
     }
 }
