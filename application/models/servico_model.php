@@ -36,7 +36,13 @@ class Servico_model extends MY_Model {
                     "rules"=>"required|integer"),
                     array("field"=>"Cliente_idCliente",
                     "label"=>"Cliente idcliente",
-                    "rules"=>"required|integer")
+                    "rules"=>"required|integer"),
+                    array("field"=>"descBoletoPaghiper",
+                    "label"=>"desc Boleto Paghiper",
+                    "rules"=>""),
+                    array("field"=>"descPagseguro",
+                    "label"=>"desc Pagseguro",
+                    "rules"=>"")
 
     );
 

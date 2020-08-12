@@ -58,9 +58,17 @@ class Pagamento extends MY_Controller {
     function cria_boletos_paghiper()
     {
         $this->load->model("paghiper_model");
+        $this->load->model("servico_model");
+        $this->load->model("app_gerencial/manupula_cliente_model");
 
-        $idCliente = 11;
-        $this->paghiper_model->geraBoletosMensais($idCliente);
+        $dadosCliente = $this->session->userdata("sCliente");
+        $idCliente = $dadosCliente["idCliente"];
+        $dadosProduto = $this->manupula_cliente_model->retornaProdutosCliente($idCliente);
+        $dadosServico = current($dadosProduto);
+        $idServico = $dadosServico->idServico;
 
+        $boleto = $this->paghiper_model->geraBoletosMensais($idCliente, number_format($dadosServico->vrPreco, 2, ".", ""));
+
+        $this->servico_model->update(array("descBoletoPaghiper" => json_decode($boleto)->status_request->bank_slip_group), array("idServico" => $idServico));
     }
 }

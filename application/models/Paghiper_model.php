@@ -15,7 +15,7 @@ class Paghiper_model {
         $this->apiKey = PAGHIPER_APIKEY;
     }
 
-    function geraBoletosMensais($idCliente)
+    function geraBoletosMensais($idCliente, $vrPreco)
     {
         $this->CI->load->model("app_gerencial/manupula_cliente_model");
         $this->CI->load->library("Paghiper_pagamento_library");
@@ -38,7 +38,7 @@ class Paghiper_model {
                 array ("description" => "Pagamento mensalidade seguro-".$x,
                     "quantity" => "1",
                     "item_id" => $x,
-                    "price_cents" => "3999"));
+                    "price_cents" => str_replace(".","",$vrPreco)));
 
             $arrayBoletos[] = $this->CI->paghiper_pagamento_library->emiteBoleto($params);
         }
@@ -53,6 +53,7 @@ class Paghiper_model {
         $dadosCarne["type_bank_slip"] = "boletoA4";
         $dadosCarne["transactions"] = $arrayIds;
         $carneBoletos = $this->CI->paghiper_pagamento_library->multiple_bank($dadosCarne);
+
         return $carneBoletos;
     }
 

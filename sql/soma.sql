@@ -307,3 +307,7 @@ ALTER TABLE `Cobranca` ADD `descRazaoCancelamento` TEXT NULL COMMENT 'Motivo do 
 ALTER TABLE `Cobranca` ADD `flgCancelado` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 - Nao cancelada\n1 - Cancelada' AFTER `flgPago`;
 
 ALTER TABLE `usuario` CHANGE `numTelefone` `numTelefone` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone fixo (sem formatação)', CHANGE `numWhatsapp` `numWhatsapp` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone Whatsapp (sem formatação)';
+
+
+ALTER TABLE `servico` ADD `descBoletoPaghiper` TEXT NULL AFTER `dataVencimento`;
+ALTER TABLE `servico` ADD `descPagseguro` TEXT NULL AFTER `descBoletoPaghiper`;
