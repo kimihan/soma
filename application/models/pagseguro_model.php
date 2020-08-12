@@ -64,7 +64,9 @@ class Pagseguro_model {
             "Accept: application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1"
         ];
 
-        $fields = "<payment>\r\n\t<items>\r\n\t\t<item>\r\n\t\t\t<id>{$dataPayment['idServico']}</id>\r\n\t\t\t<description>{$dataPayment['descNome']}</description>\r\n\t\t\t<amount>{$dataPayment['vrPreco']}</amount>\r\n\t\t\t<quantity>1</quantity>\r\n\t\t</item>\r\n\t</items>\r\n\t<reference>{$dataPayment['idServico']}</reference>\r\n\t<hash>{$dataPayment['hashReady']}</hash>\r\n\t<preApprovalCode>{$dataPayment['codePreApproval']}</preApprovalCode>\r\n</payment>";
+        $price = number_format($dataPayment['vrPreco'], 2);
+
+        $fields = "<payment>\r\n\t<items>\r\n\t\t<item>\r\n\t\t\t<id>{$dataPayment['idServico']}</id>\r\n\t\t\t<description>{$dataPayment['descNome']}</description>\r\n\t\t\t<amount>{$price}</amount>\r\n\t\t\t<quantity>1</quantity>\r\n\t\t</item>\r\n\t</items>\r\n\t<reference>{$dataPayment['idServico']}</reference>\r\n\t<hash>{$dataPayment['hashReady']}</hash>\r\n\t<preApprovalCode>{$dataPayment['codePreApproval']}</preApprovalCode>\r\n</payment>";
 
         $retorno = $this->sendCurl("pre-approvals/payment?email={$this->getEmail()}&token={$this->getToken()}", $fields, $headers);
 
