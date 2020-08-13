@@ -24,7 +24,7 @@
         </div>
         <div class="form-row justify-content-center align-self-center">
             <div class="col-12 mb-2">
-                <input type="text" class="form-control" name="descComplemento" value="" placeholder="Complemento" readonly autocomplete="off" required>
+                <input type="text" class="form-control" name="descComplemento" value="" placeholder="Complemento" readonly autocomplete="off">
             </div>
         </div>
         <div class="form-row justify-content-center align-self-center">

@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `soma` DEFAULT CHARACTER SET utf8 ;
 USE `soma` ;
 
 -- -----------------------------------------------------
--- Table `soma`.`Endereco`
+-- Table `Endereco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Endereco` (
+CREATE TABLE IF NOT EXISTS `endereco` (
   `idEndereco` INT NOT NULL AUTO_INCREMENT,
   `numCep` INT(11) NOT NULL,
   `descLogradouro` VARCHAR(45) NOT NULL,
@@ -34,9 +34,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Usuario`
+-- Table `Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
   `descNome` VARCHAR(100) NOT NULL COMMENT 'Nome completo',
   `descEmail` VARCHAR(80) NOT NULL COMMENT 'Email de contato',
@@ -52,18 +52,18 @@ CREATE TABLE IF NOT EXISTS `soma`.`Usuario` (
   PRIMARY KEY (`idUsuario`),
   CONSTRAINT `fk_Usuario_Endereco`
     FOREIGN KEY (`Endereco_idEndereco`)
-    REFERENCES `soma`.`Endereco` (`idEndereco`)
+    REFERENCES `endereco` (`idEndereco`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Usuario_Endereco_idx` ON `soma`.`Usuario` (`Endereco_idEndereco` ASC);
+CREATE INDEX `fk_Usuario_Endereco_idx` ON `usuario` (`Endereco_idEndereco` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Vendedor`
+-- Table `Vendedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Vendedor` (
+CREATE TABLE IF NOT EXISTS `vendedor` (
   `idVendedor` INT NOT NULL AUTO_INCREMENT,
   `dataCadastro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `flgBanca` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0 - Não é banca\n1 - É banca',
@@ -71,18 +71,18 @@ CREATE TABLE IF NOT EXISTS `soma`.`Vendedor` (
   PRIMARY KEY (`idVendedor`),
   CONSTRAINT `fk_Cliente_Usuario1`
     FOREIGN KEY (`Usuario_idUsuario`)
-    REFERENCES `soma`.`Usuario` (`idUsuario`)
+    REFERENCES `Usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Cliente_Usuario1_idx` ON `soma`.`Vendedor` (`Usuario_idUsuario` ASC);
+CREATE INDEX `fk_Cliente_Usuario1_idx` ON `vendedor` (`Usuario_idUsuario` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Cliente`
+-- Table `Cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Cliente` (
+CREATE TABLE IF NOT EXISTS `Cliente` (
   `idCliente` INT NOT NULL AUTO_INCREMENT,
   `dataCadastro` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `flgLigacao` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0 - Sem ligação\n1 - Realizar ligação',
@@ -93,18 +93,18 @@ CREATE TABLE IF NOT EXISTS `soma`.`Cliente` (
   PRIMARY KEY (`idCliente`),
   CONSTRAINT `fk_Cliente_Usuario10`
     FOREIGN KEY (`Usuario_idUsuario`)
-    REFERENCES `soma`.`Usuario` (`idUsuario`)
+    REFERENCES `Usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Cliente_Usuario1_idx` ON `soma`.`Cliente` (`Usuario_idUsuario` ASC);
+CREATE INDEX `fk_Cliente_Usuario1_idx` ON `Cliente` (`Usuario_idUsuario` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Produto`
+-- Table `Produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Produto` (
+CREATE TABLE IF NOT EXISTS `Produto` (
   `idProduto` INT NOT NULL AUTO_INCREMENT,
   `descNome` VARCHAR(60) NOT NULL COMMENT 'Nome do produto',
   `descCoberturas` TEXT NULL COMMENT 'Coberturas do produto',
@@ -114,34 +114,34 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `soma`.`ProdutoVendedor`
+-- Table `ProdutoVendedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`ProdutoVendedor` (
+CREATE TABLE IF NOT EXISTS `ProdutoVendedor` (
   `Produto_idProduto` INT NOT NULL,
   `Vendedor_idVendedor` INT NOT NULL,
   `vrPreco` FLOAT NOT NULL COMMENT 'Preço de venda do produto para o vendedor',
   PRIMARY KEY (`Produto_idProduto`, `Vendedor_idVendedor`),
   CONSTRAINT `fk_Produto_has_Vendedor_Produto1`
     FOREIGN KEY (`Produto_idProduto`)
-    REFERENCES `soma`.`Produto` (`idProduto`)
+    REFERENCES `Produto` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Produto_has_Vendedor_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `soma`.`Vendedor` (`idVendedor`)
+    REFERENCES `Vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Produto_has_Vendedor_Vendedor1_idx` ON `soma`.`ProdutoVendedor` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Produto_has_Vendedor_Vendedor1_idx` ON `ProdutoVendedor` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Produto_has_Vendedor_Produto1_idx` ON `soma`.`ProdutoVendedor` (`Produto_idProduto` ASC);
+CREATE INDEX `fk_Produto_has_Vendedor_Produto1_idx` ON `ProdutoVendedor` (`Produto_idProduto` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Servico`
+-- Table `Servico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Servico` (
+CREATE TABLE IF NOT EXISTS `Servico` (
   `idServico` INT NOT NULL AUTO_INCREMENT,
   `dataVenda` DATE NULL,
   `dataVencimento` DATE NULL,
@@ -151,50 +151,50 @@ CREATE TABLE IF NOT EXISTS `soma`.`Servico` (
   PRIMARY KEY (`idServico`),
   CONSTRAINT `fk_Venda_Produto1`
     FOREIGN KEY (`Produto_idProduto`)
-    REFERENCES `soma`.`Produto` (`idProduto`)
+    REFERENCES `Produto` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_Cliente1`
     FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `soma`.`Cliente` (`idCliente`)
+    REFERENCES `Cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Venda_Produto1_idx` ON `soma`.`Servico` (`Produto_idProduto` ASC);
+CREATE INDEX `fk_Venda_Produto1_idx` ON `Servico` (`Produto_idProduto` ASC);
 
-CREATE INDEX `fk_Venda_Cliente1_idx` ON `soma`.`Servico` (`Cliente_idCliente` ASC);
+CREATE INDEX `fk_Venda_Cliente1_idx` ON `Servico` (`Cliente_idCliente` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`VendaVendedor`
+-- Table `VendaVendedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`VendaVendedor` (
+CREATE TABLE IF NOT EXISTS `VendaVendedor` (
   `Venda_idVenda` INT NOT NULL,
   `Vendedor_idVendedor` INT NOT NULL,
   `numComissao` INT NOT NULL DEFAULT '0' COMMENT 'Comissao da venda em %',
   PRIMARY KEY (`Venda_idVenda`, `Vendedor_idVendedor`),
   CONSTRAINT `fk_Venda_has_Vendedor_Venda1`
     FOREIGN KEY (`Venda_idVenda`)
-    REFERENCES `soma`.`Servico` (`idServico`)
+    REFERENCES `Servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_has_Vendedor_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `soma`.`Vendedor` (`idVendedor`)
+    REFERENCES `Vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Venda_has_Vendedor_Vendedor1_idx` ON `soma`.`VendaVendedor` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Venda_has_Vendedor_Vendedor1_idx` ON `VendaVendedor` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Venda_has_Vendedor_Venda1_idx` ON `soma`.`VendaVendedor` (`Venda_idVenda` ASC);
+CREATE INDEX `fk_Venda_has_Vendedor_Venda1_idx` ON `VendaVendedor` (`Venda_idVenda` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Cobranca`
+-- Table `Cobranca`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Cobranca` (
+CREATE TABLE IF NOT EXISTS `Cobranca` (
   `idCobranca` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dataPagamento` DATE NULL,
@@ -206,25 +206,25 @@ CREATE TABLE IF NOT EXISTS `soma`.`Cobranca` (
   PRIMARY KEY (`idCobranca`),
   CONSTRAINT `fk_Cobranca_Cliente1`
     FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `soma`.`Cliente` (`idCliente`)
+    REFERENCES `Cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cobranca_Servico1`
     FOREIGN KEY (`Servico_idServico`)
-    REFERENCES `soma`.`Servico` (`idServico`)
+    REFERENCES `Servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Cobranca_Cliente1_idx` ON `soma`.`Cobranca` (`Cliente_idCliente` ASC);
+CREATE INDEX `fk_Cobranca_Cliente1_idx` ON `Cobranca` (`Cliente_idCliente` ASC);
 
-CREATE INDEX `fk_Cobranca_Servico1_idx` ON `soma`.`Cobranca` (`Servico_idServico` ASC);
+CREATE INDEX `fk_Cobranca_Servico1_idx` ON `Cobranca` (`Servico_idServico` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Comissao`
+-- Table `Comissao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Comissao` (
+CREATE TABLE IF NOT EXISTS `Comissao` (
   `idComissao` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `vrComissao` FLOAT NOT NULL COMMENT 'Valor da comissão',
@@ -234,25 +234,25 @@ CREATE TABLE IF NOT EXISTS `soma`.`Comissao` (
   PRIMARY KEY (`idComissao`),
   CONSTRAINT `fk_Comissao_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `soma`.`Vendedor` (`idVendedor`)
+    REFERENCES `Vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comissao_Servico1`
     FOREIGN KEY (`Servico_idServico`)
-    REFERENCES `soma`.`Servico` (`idServico`)
+    REFERENCES `Servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Comissao_Vendedor1_idx` ON `soma`.`Comissao` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Comissao_Vendedor1_idx` ON `Comissao` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Comissao_Servico1_idx` ON `soma`.`Comissao` (`Servico_idServico` ASC);
+CREATE INDEX `fk_Comissao_Servico1_idx` ON `Comissao` (`Servico_idServico` ASC);
 
 
 -- -----------------------------------------------------
--- Table `soma`.`Boleto`
+-- Table `Boleto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soma`.`Boleto` (
+CREATE TABLE IF NOT EXISTS `Boleto` (
   `idBoleto` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dataVencimento` DATE NOT NULL,
@@ -261,12 +261,12 @@ CREATE TABLE IF NOT EXISTS `soma`.`Boleto` (
   PRIMARY KEY (`idBoleto`),
   CONSTRAINT `fk_Boleto_Cobranca1`
     FOREIGN KEY (`Cobranca_idCobranca`)
-    REFERENCES `soma`.`Cobranca` (`idCobranca`)
+    REFERENCES `Cobranca` (`idCobranca`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Boleto_Cobranca1_idx` ON `soma`.`Boleto` (`Cobranca_idCobranca` ASC);
+CREATE INDEX `fk_Boleto_Cobranca1_idx` ON `Boleto` (`Cobranca_idCobranca` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -281,7 +281,7 @@ ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do v
 ALTER TABLE Usuario
 	ADD CONSTRAINT uc_Email UNIQUE (descEmail);
 
-ALTER TABLE `produtovendedor`
+ALTER TABLE `ProdutoVendedor`
   DROP PRIMARY KEY;
 ALTER TABLE `ProdutoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 /*
@@ -291,7 +291,7 @@ ALTER TABLE `Cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagame
 ALTER TABLE `Cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
 ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
 
-CREATE TABLE `soma`.`formasPagamento` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` VARCHAR(200) NOT NULL , `operadora` VARCHAR(200) NULL DEFAULT NULL , `email` VARCHAR(200) NULL DEFAULT NULL , `token` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
+CREATE TABLE `formasPagamento` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` VARCHAR(200) NOT NULL , `operadora` VARCHAR(200) NULL DEFAULT NULL , `email` VARCHAR(200) NULL DEFAULT NULL , `token` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
 /*luan*/
 
 
