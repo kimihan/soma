@@ -67,7 +67,9 @@ class Cadastro extends MY_Controller {
 
                 if(!empty($idVendedor)) {
                     $dadosProduto = $this->manipula_produto_model->retornaDados(null, ["flgAplicativo" => FLG_APLICATIVO]);
-                    $insert = $this->manupula_vendedor_model->insereEditaProdutosVendedor($idVendedor, $dadosProduto);
+                    if(count($dadosProduto) > 0) {
+                        $insert = $this->manupula_vendedor_model->insereEditaProdutosVendedor($idVendedor, $dadosProduto);
+                    }
                 }
             }
         
