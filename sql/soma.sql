@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `vendedor` (
   PRIMARY KEY (`idVendedor`),
   CONSTRAINT `fk_Cliente_Usuario1`
     FOREIGN KEY (`Usuario_idUsuario`)
-    REFERENCES `Usuario` (`idUsuario`)
+    REFERENCES `usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -82,7 +82,7 @@ CREATE INDEX `fk_Cliente_Usuario1_idx` ON `vendedor` (`Usuario_idUsuario` ASC);
 -- -----------------------------------------------------
 -- Table `Cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Cliente` (
+CREATE TABLE IF NOT EXISTS `cliente` (
   `idCliente` INT NOT NULL AUTO_INCREMENT,
   `dataCadastro` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `flgLigacao` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0 - Sem ligação\n1 - Realizar ligação',
@@ -93,18 +93,18 @@ CREATE TABLE IF NOT EXISTS `Cliente` (
   PRIMARY KEY (`idCliente`),
   CONSTRAINT `fk_Cliente_Usuario10`
     FOREIGN KEY (`Usuario_idUsuario`)
-    REFERENCES `Usuario` (`idUsuario`)
+    REFERENCES `usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Cliente_Usuario1_idx` ON `Cliente` (`Usuario_idUsuario` ASC);
+CREATE INDEX `fk_Cliente_Usuario1_idx` ON `cliente` (`Usuario_idUsuario` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Produto` (
+CREATE TABLE IF NOT EXISTS `produto` (
   `idProduto` INT NOT NULL AUTO_INCREMENT,
   `descNome` VARCHAR(60) NOT NULL COMMENT 'Nome do produto',
   `descCoberturas` TEXT NULL COMMENT 'Coberturas do produto',
@@ -116,32 +116,32 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ProdutoVendedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ProdutoVendedor` (
+CREATE TABLE IF NOT EXISTS `produtoVendedor` (
   `Produto_idProduto` INT NOT NULL,
   `Vendedor_idVendedor` INT NOT NULL,
   `vrPreco` FLOAT NOT NULL COMMENT 'Preço de venda do produto para o vendedor',
   PRIMARY KEY (`Produto_idProduto`, `Vendedor_idVendedor`),
   CONSTRAINT `fk_Produto_has_Vendedor_Produto1`
     FOREIGN KEY (`Produto_idProduto`)
-    REFERENCES `Produto` (`idProduto`)
+    REFERENCES `produto` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Produto_has_Vendedor_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `Vendedor` (`idVendedor`)
+    REFERENCES `vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Produto_has_Vendedor_Vendedor1_idx` ON `ProdutoVendedor` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Produto_has_Vendedor_Vendedor1_idx` ON `produtoVendedor` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Produto_has_Vendedor_Produto1_idx` ON `ProdutoVendedor` (`Produto_idProduto` ASC);
+CREATE INDEX `fk_Produto_has_Vendedor_Produto1_idx` ON `produtoVendedor` (`Produto_idProduto` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Servico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Servico` (
+CREATE TABLE IF NOT EXISTS `servico` (
   `idServico` INT NOT NULL AUTO_INCREMENT,
   `dataVenda` DATE NULL,
   `dataVencimento` DATE NULL,
@@ -151,50 +151,50 @@ CREATE TABLE IF NOT EXISTS `Servico` (
   PRIMARY KEY (`idServico`),
   CONSTRAINT `fk_Venda_Produto1`
     FOREIGN KEY (`Produto_idProduto`)
-    REFERENCES `Produto` (`idProduto`)
+    REFERENCES `produto` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_Cliente1`
     FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `Cliente` (`idCliente`)
+    REFERENCES `cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Venda_Produto1_idx` ON `Servico` (`Produto_idProduto` ASC);
+CREATE INDEX `fk_Venda_Produto1_idx` ON `servico` (`Produto_idProduto` ASC);
 
-CREATE INDEX `fk_Venda_Cliente1_idx` ON `Servico` (`Cliente_idCliente` ASC);
+CREATE INDEX `fk_Venda_Cliente1_idx` ON `servico` (`Cliente_idCliente` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `VendaVendedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `VendaVendedor` (
+CREATE TABLE IF NOT EXISTS `vendaVendedor` (
   `Venda_idVenda` INT NOT NULL,
   `Vendedor_idVendedor` INT NOT NULL,
   `numComissao` INT NOT NULL DEFAULT '0' COMMENT 'Comissao da venda em %',
   PRIMARY KEY (`Venda_idVenda`, `Vendedor_idVendedor`),
   CONSTRAINT `fk_Venda_has_Vendedor_Venda1`
     FOREIGN KEY (`Venda_idVenda`)
-    REFERENCES `Servico` (`idServico`)
+    REFERENCES `servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_has_Vendedor_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `Vendedor` (`idVendedor`)
+    REFERENCES `vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Venda_has_Vendedor_Vendedor1_idx` ON `VendaVendedor` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Venda_has_Vendedor_Vendedor1_idx` ON `vendaVendedor` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Venda_has_Vendedor_Venda1_idx` ON `VendaVendedor` (`Venda_idVenda` ASC);
+CREATE INDEX `fk_Venda_has_Vendedor_Venda1_idx` ON `vendaVendedor` (`Venda_idVenda` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Cobranca`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Cobranca` (
+CREATE TABLE IF NOT EXISTS `cobranca` (
   `idCobranca` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dataPagamento` DATE NULL,
@@ -206,25 +206,25 @@ CREATE TABLE IF NOT EXISTS `Cobranca` (
   PRIMARY KEY (`idCobranca`),
   CONSTRAINT `fk_Cobranca_Cliente1`
     FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `Cliente` (`idCliente`)
+    REFERENCES `cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cobranca_Servico1`
     FOREIGN KEY (`Servico_idServico`)
-    REFERENCES `Servico` (`idServico`)
+    REFERENCES `servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Cobranca_Cliente1_idx` ON `Cobranca` (`Cliente_idCliente` ASC);
+CREATE INDEX `fk_Cobranca_Cliente1_idx` ON `cobranca` (`Cliente_idCliente` ASC);
 
-CREATE INDEX `fk_Cobranca_Servico1_idx` ON `Cobranca` (`Servico_idServico` ASC);
+CREATE INDEX `fk_Cobranca_Servico1_idx` ON `cobranca` (`Servico_idServico` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Comissao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Comissao` (
+CREATE TABLE IF NOT EXISTS `comissao` (
   `idComissao` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `vrComissao` FLOAT NOT NULL COMMENT 'Valor da comissão',
@@ -234,25 +234,25 @@ CREATE TABLE IF NOT EXISTS `Comissao` (
   PRIMARY KEY (`idComissao`),
   CONSTRAINT `fk_Comissao_Vendedor1`
     FOREIGN KEY (`Vendedor_idVendedor`)
-    REFERENCES `Vendedor` (`idVendedor`)
+    REFERENCES `vendedor` (`idVendedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comissao_Servico1`
     FOREIGN KEY (`Servico_idServico`)
-    REFERENCES `Servico` (`idServico`)
+    REFERENCES `servico` (`idServico`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Comissao_Vendedor1_idx` ON `Comissao` (`Vendedor_idVendedor` ASC);
+CREATE INDEX `fk_Comissao_Vendedor1_idx` ON `comissao` (`Vendedor_idVendedor` ASC);
 
-CREATE INDEX `fk_Comissao_Servico1_idx` ON `Comissao` (`Servico_idServico` ASC);
+CREATE INDEX `fk_Comissao_Servico1_idx` ON `comissao` (`Servico_idServico` ASC);
 
 
 -- -----------------------------------------------------
 -- Table `Boleto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Boleto` (
+CREATE TABLE IF NOT EXISTS `boleto` (
   `idBoleto` INT NOT NULL AUTO_INCREMENT,
   `dataGerado` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dataVencimento` DATE NOT NULL,
@@ -261,12 +261,12 @@ CREATE TABLE IF NOT EXISTS `Boleto` (
   PRIMARY KEY (`idBoleto`),
   CONSTRAINT `fk_Boleto_Cobranca1`
     FOREIGN KEY (`Cobranca_idCobranca`)
-    REFERENCES `Cobranca` (`idCobranca`)
+    REFERENCES `cobranca` (`idCobranca`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Boleto_Cobranca1_idx` ON `Boleto` (`Cobranca_idCobranca` ASC);
+CREATE INDEX `fk_Boleto_Cobranca1_idx` ON `boleto` (`Cobranca_idCobranca` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -275,21 +275,21 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 /*luan*/
-ALTER TABLE `ProdutoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do vendedor ao vender o produto';
+ALTER TABLE `produtoVendedor` ADD `vrComissao` FLOAT NULL COMMENT 'Comissao do vendedor ao vender o produto';
 
 
-ALTER TABLE Usuario
+ALTER TABLE usuario
 	ADD CONSTRAINT uc_Email UNIQUE (descEmail);
 
-ALTER TABLE `ProdutoVendedor`
+ALTER TABLE `produtoVendedor`
   DROP PRIMARY KEY;
-ALTER TABLE `ProdutoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
+ALTER TABLE `produtoVendedor` ADD `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 /*
 tabela "ProdutoVendedor" removi a chave primaria da coluna "Produto_idProduto"*/
 
-ALTER TABLE `Cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagamento` TINYINT(1) NULL DEFAULT '1' COMMENT '1 - Mensal2 - Anual';
-ALTER TABLE `Cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
-ALTER TABLE `Usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
+ALTER TABLE `cliente` CHANGE `flgPeriodicidadePagamento` `flgPeriodicidadePagamento` TINYINT(1) NULL DEFAULT '1' COMMENT '1 - Mensal2 - Anual';
+ALTER TABLE `cliente` CHANGE `flgFormaPagamento` `flgFormaPagamento` TINYINT(1) NULL DEFAULT '2' COMMENT '1 - Pagseguro2 - Boleto Paghiper';
+ALTER TABLE `usuario` CHANGE `Endereco_idEndereco` `Endereco_idEndereco` INT(11) NULL;
 
 CREATE TABLE `formasPagamento` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` VARCHAR(200) NOT NULL , `operadora` VARCHAR(200) NULL DEFAULT NULL , `email` VARCHAR(200) NULL DEFAULT NULL , `token` VARCHAR(200) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;
 /*luan*/
@@ -297,14 +297,14 @@ CREATE TABLE `formasPagamento` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` VARCH
 
 /*troca de todos os precos para double por causa da limitacao do float*/
 ALTER TABLE `cobranca` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL;
-ALTER TABLE `produtovendedor` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Preço de venda do produto para o vendedor';
+ALTER TABLE `produtoVendedor` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Preço de venda do produto para o vendedor';
 ALTER TABLE `servico` CHANGE `vrPreco` `vrPreco` DOUBLE NOT NULL COMMENT 'Valor da venda';
 
 ALTER TABLE `comissao` ADD `flgTipoComissao` INT NOT NULL DEFAULT '1' COMMENT '0 - Comissao Recorrente /n 1 - Primeira Comissao' AFTER `flgPago`;
 
 
-ALTER TABLE `Cobranca` ADD `descRazaoCancelamento` TEXT NULL COMMENT 'Motivo do cancelamento da cobranca' AFTER `dataVencimento`;
-ALTER TABLE `Cobranca` ADD `flgCancelado` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 - Nao cancelada\n1 - Cancelada' AFTER `flgPago`;
+ALTER TABLE `cobranca` ADD `descRazaoCancelamento` TEXT NULL COMMENT 'Motivo do cancelamento da cobranca' AFTER `dataVencimento`;
+ALTER TABLE `cobranca` ADD `flgCancelado` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 - Nao cancelada\n1 - Cancelada' AFTER `flgPago`;
 
 ALTER TABLE `usuario` CHANGE `numTelefone` `numTelefone` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone fixo (sem formatação)', CHANGE `numWhatsapp` `numWhatsapp` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Telefone Whatsapp (sem formatação)';
 
