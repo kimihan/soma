@@ -311,3 +311,20 @@ ALTER TABLE `usuario` CHANGE `numTelefone` `numTelefone` VARCHAR(45) NULL DEFAUL
 
 ALTER TABLE `servico` ADD `descBoletoPaghiper` TEXT NULL AFTER `dataVencimento`;
 ALTER TABLE `servico` ADD `descPagseguro` TEXT NULL AFTER `descBoletoPaghiper`;
+
+CREATE TABLE `soma`.`planosPagseguro` ( `id` INT NOT NULL AUTO_INCREMENT , `nome` TEXT NOT NULL , `code` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `soma`.`periodicidade` ( `id` INT NOT NULL AUTO_INCREMENT , `periodo` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+INSERT INTO `periodicidade` (`id`, `periodo`) VALUES (NULL, 'Mensal');
+INSERT INTO `periodicidade` (`id`, `periodo`) VALUES (NULL, 'Anual');
+
+ALTER TABLE `planosPagseguro` ADD `idPeriodicidade` INT NOT NULL AFTER `code`;
+ALTER TABLE planosPagseguro
+    ADD CONSTRAINT fk_foreign_id_periodicidade
+    FOREIGN KEY (idPeriodicidade)
+    REFERENCES periodicidade(id);
+ALTER TABLE `Produto` ADD `idPlanoPagseguro` INT NULL AFTER `flgAplicativo`;
+ALTER TABLE Produto
+    ADD CONSTRAINT fk_foreign_id_planoPagseguro
+    FOREIGN KEY (idPlanoPagseguro)
+    REFERENCES planosPagseguro(id);
