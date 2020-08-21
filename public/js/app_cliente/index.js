@@ -8,7 +8,7 @@ $(() => {
     $("#fmrIdCliente").submit((e) => {
         let dados = $(e.currentTarget).serialize();
 
-        $.post(`${baseUrl}app_cliente/cliente/buscar_cliente`, dados, function(resp) {
+        $.post(`${baseUrl}app_cliente/cliente/buscar_cliente`, dados, function (resp) {
             let retorno = JSON.parse(resp);
 
             if (retorno.erro) {
@@ -28,6 +28,7 @@ $(() => {
     }
 
     if ($("#fmrCadastroClientePagamento").length > 0) {
+        let formaPagamento;
         let url = "";
         $("#vencimento").mask("99/9999");
 
@@ -51,21 +52,29 @@ $(() => {
 
         $("[name=formaPagamento]").change((e) => {
             let handler = $(e.currentTarget);
-            let option = handler.find(":selected").text();
+            let aInputs = ["nCartao", "vencimento", "cvv", "nomeCartao"];
+            formaPagamento = removeAcento(handler.find(":selected").text().toLowerCase());
 
-            if (option == "Cartão de crédito") {
+            if (formaPagamento == "cartao de credito") {
                 $("#divCartaoCredito").show("fast", () => {
-                    $("[name=periodo]").hide();
-                    $("[name=periodoPagseguro]").show();
+                    aInputs.forEach((value) => {
+                       $(`[name=${value}]`).attr("required", true);
+                    });
+                    $("[name=divPeriodo]").show();
                     onSenderHashReady();
                 });
 
                 url = "pre_approvals_pagseguro";
             } else {
                 $("#divCartaoCredito").hide("fast", () => {
-                    $("[name=periodoPagseguro]").hide();
-                    $("[name=periodo]").show();
+                    aInputs.forEach((value) => {
+                       $(`[name=${value}]`).attr("required", false);
+                    });
+                    
+                    $("[name=divPeriodo]").hide();
                 });
+
+                url = "cria_boletos_paghiper";
             }
         });
 
@@ -73,32 +82,34 @@ $(() => {
             let handler = $(e.currentTarget);
             let dados = handler.serialize();
 
-            /*handler.find("input").each((k, e) => $(e).attr('disabled', true));
+            handler.find("input").each((k, e) => $(e).attr('disabled', true));
             handler.find("select").each((k, e) => $(e).attr('disabled', true));
-            handler.find("button").each((k, e) => $(e).attr('disabled', true));*/
+            handler.find("button").each((k, e) => $(e).attr('disabled', true));
 
             $("#divCarregandoPagamento").show("fast", () => {
                 createCardToken();
             });
 
-            var interval = setInterval(function() {
-                if (token !== null) {
+            var interval = setInterval(function () {
+                if (token !== null || formaPagamento != "cartao de credito") {
                     clearInterval(interval);
                     $.ajax({
                         type: "POST",
                         url: `${handler.attr("action")}/${url}`,
-                        data: { "dados": dados, "hashReady": hashReady, "token": token, "sessionIdPagSeguro": sessionIdPagSeguro },
-                        success: function(resp) {
+                        data: {"dados": dados, "hashReady": hashReady, "token": token, "sessionIdPagSeguro": sessionIdPagSeguro},
+                        success: function (resp) {
                             let retorno = JSON.parse(resp);
 
                             if (retorno.error) {
                                 showModalErro("Erro ao gerar pagamento!");
                             } else {
-                                $("#modalPreAprovalPagSeguro").modal("show");
-                                codePreApproval = retorno.code;
+                                if(formaPagamento != "cartao de credito") {
+                                    document.location = `${baseUrl}app_cliente/pagamento/baixarBoleto`;
+                                }
+                                $("#modalPagamentoSucesso").modal("show");
                             }
                         },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
                             showModalErro("Erro ao gerar pagamento!");
                         }
                     });
@@ -107,21 +118,6 @@ $(() => {
 
             return false;
         });
-
-        $("#btnConfirmarPagSeguro").click((e) => {
-            $.ajax({
-                type: "POST",
-                url: `${$("#fmrCadastroClientePagamento").attr("action")}/payment_pagseguro`,
-                data: { "codePreApproval": codePreApproval, "hashReady": hashReady, "servico": $("[name=servico]").val(), "sessionIdPagSeguro": sessionIdPagSeguro },
-                success: function(resp) {
-                    //let retorno = JSON.parse(resp);
-                    console.log(resp);
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    showModalErro("Erro ao gerar cobrança!");
-                }
-            });
-        })
 
         applyMask();
     }
@@ -132,7 +128,7 @@ function showModalErro(msg, backdrop, keyboard) {
 
     if (backdrop) {
         $("#divBtnErroModal").hide();
-        $("#erroModal").modal({ backdrop: backdrop, keyboard: keyboard, show: true });
+        $("#erroModal").modal({backdrop: backdrop, keyboard: keyboard, show: true});
         return false;
     }
 
@@ -165,7 +161,7 @@ function preencherFormCadastroCliente() {
 
 function applyMask() {
     let options = {
-        onKeyPress: function(cpf, ev, el, op) {
+        onKeyPress: function (cpf, ev, el, op) {
             var masks = ['000.000.000-000', '00.000.000/0000-00'];
             $('#cpfOuCnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
         }
@@ -188,7 +184,7 @@ function findCep() {
             $("#divCarregandoCep").show("fast");
 
             //Consulta o webservice viacep.com.br/
-            $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+            $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
                 if (!("erro" in dados)) {
                     //Atualiza os campos com os valores da consulta.
                     $("#logradouro").val(dados.logradouro);
@@ -217,4 +213,16 @@ function findCep() {
             $("#uf").val("");
         }
     });
+}
+
+function removeAcento(text)
+{
+    text = text.toLowerCase();
+    text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+    text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
+    return text;
 }

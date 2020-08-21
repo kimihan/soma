@@ -213,6 +213,8 @@ $(() => {
         let files = handler.get(0).files;
         let ui = $("#listUploadFotos");
         let size = 0;
+        let types = ["gif", "jpg", "jpge", "png", "txt", "pdf"];
+        let type = false;
 
         if (files.length > 3) {
             showModalErro("Máximo de três fotos por proposta");
@@ -232,7 +234,20 @@ $(() => {
             FileList[key] = value;
 
             size = value.size + size;
+
+            let tipo = value.name.split(".");
+            if(types.indexOf(tipo[tipo.length -1]) == -1) {
+                type = true;
+            }
         });
+
+        if(type) {
+            showModalErro("Extensão do arquivo invalida!");
+            ui.empty();
+
+            handler.val("");
+            $("#divArquivosUpload").hide("fast");
+        }
 
         if ((size / 1024 / 1024) > 15) {
             showModalErro("A soma das fotos devem ter no maximo 15 MB");

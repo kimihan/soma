@@ -1,6 +1,7 @@
 <?php
 
-require_once(APPPATH."libraries/MY_Model.php");
+require_once(APPPATH . "libraries/MY_Model.php");
+
 class Pagseguro_model {
 
     private $CI;
@@ -14,8 +15,7 @@ class Pagseguro_model {
     private $dataPaymentMethod;
     private $dataPayment;
 
-    function __construct()
-    {
+    function __construct() {
         $this->CI = &get_instance();
         $this->CI->load->model(["formas_pagamento_model"]);
 
@@ -26,14 +26,18 @@ class Pagseguro_model {
         $formasPagamento = (array) $this->CI->formas_pagamento_model->retornaDados(null, ["operadora" => "PagSeguro"]);
         $formasPagamento = array_shift($formasPagamento);
 
-        $this->setEmail($formasPagamento->email)->setToken($formasPagamento->token);
+        if (!empty($formasPagamento->email)) {
+            $this->setEmail($formasPagamento->email)->setToken($formasPagamento->token);
+        }
 
         return $formasPagamento;
     }
 
     public function createSessionId() {
-        $retorno = $this->sendCurl("v2/sessions?email={$this->getEmail()}&token={$this->getToken()}", 
-                                    "email={$this->getEmail()}&token={$this->getToken()}");
+        $retorno = $this->sendCurl("v2/sessions?email={$this->getEmail()}&token={$this->getToken()}", "email={$this->getEmail()}&token={$this->getToken()}");
+        if ($retorno == "Unauthorized") {
+            return false;
+        }
 
         $parseXml = simplexml_load_string($retorno);
         $sessionId = $parseXml->id[0]->__toString();
@@ -71,19 +75,18 @@ class Pagseguro_model {
         $retorno = $this->sendCurl("pre-approvals/payment?email={$this->getEmail()}&token={$this->getToken()}", $fields, $headers);
 
         return $retorno;
-       
     }
 
     private function createSender() {
         $dataSender = $this->getDatasender();
 
-        $phone = ["areaCode" => substr($dataSender["numTelefone"], 0, 2), 
-                    "number" => substr($dataSender["numTelefone"], 2, strlen($dataSender["numTelefone"]) -1 )];
-        $address = ["street" => $dataSender["descLogradouro"], "number" => $dataSender["numLocal"], "complement" => $dataSender["descComplemento"], 
-                    "district" => $dataSender["descBairro"], "city" => $dataSender["descCidade"], "state" => $dataSender["siglaUf"], 
-                    "country" => "BRA", "postalCode" => $dataSender["numCep"]];
+        $phone = ["areaCode" => substr($dataSender["numTelefone"], 0, 2),
+            "number" => substr($dataSender["numTelefone"], 2, strlen($dataSender["numTelefone"]) - 1)];
+        $address = ["street" => $dataSender["descLogradouro"], "number" => $dataSender["numLocal"], "complement" => $dataSender["descComplemento"],
+            "district" => $dataSender["descBairro"], "city" => $dataSender["descCidade"], "state" => $dataSender["siglaUf"],
+            "country" => "BRA", "postalCode" => $dataSender["numCep"]];
         $documents = ["type" => "CPF", "value" => $dataSender["numCpf"]];
-        
+
         $sender = "\r\n\t\"sender\": {\r\n\t\t\"name\": \"{$dataSender['descNome']}\",\r\n\t\t\"email\": \"{$dataSender['descEmail']}\",
             \r\n\t\t\"hash\": \"{$dataSender['hashReady']}\",
             \r\n\t\t\"phone\": {\r\n\t\t\t\"areaCode\": \"{$phone['areaCode']}\",\r\n\t\t\t\"number\": \"{$phone['number']}\"\r\n\t\t},
@@ -98,14 +101,14 @@ class Pagseguro_model {
         $dataSender = $this->getDatasender();
         $dataPaymentMethod = $this->getDataPaymentMethod();
 
-        $phone = ["areaCode" => substr($dataSender["numTelefone"], 0, 2), 
-                    "number" => substr($dataSender["numTelefone"], 2, strlen($dataSender["numTelefone"]) -1 )];
+        $phone = ["areaCode" => substr($dataSender["numTelefone"], 0, 2),
+            "number" => substr($dataSender["numTelefone"], 2, strlen($dataSender["numTelefone"]) - 1)];
         $documents = ["type" => "CPF", "value" => $dataSender["numCpf"]];
-        $holder = ["name" => $dataPaymentMethod["nomeCartao"], "birthDate" => $dataPaymentMethod["dataNascimento"], 
-                    "documents" => $documents, "phone" => $phone];
-        $billingAddress = ["street" => $dataSender["descLogradouro"], "number" => $dataSender["numLocal"], "complement" => $dataSender["descComplemento"], 
-        "district" => $dataSender["descBairro"], "city" => $dataSender["descCidade"], "state" => $dataSender["siglaUf"], 
-        "country" => "BRA", "postalCode" => $dataSender["numCep"]];
+        $holder = ["name" => $dataPaymentMethod["nomeCartao"], "birthDate" => $dataPaymentMethod["dataNascimento"],
+            "documents" => $documents, "phone" => $phone];
+        $billingAddress = ["street" => $dataSender["descLogradouro"], "number" => $dataSender["numLocal"], "complement" => $dataSender["descComplemento"],
+            "district" => $dataSender["descBairro"], "city" => $dataSender["descCidade"], "state" => $dataSender["siglaUf"],
+            "country" => "BRA", "postalCode" => $dataSender["numCep"]];
 
         $paymentMethod = "\r\n\t\"paymentMethod\": {\r\n\t\t\"type\": \"CREDITCARD\",\r\n\t\t\"creditCard\": {\r\n\t\t\t\"token\": \"{$dataPaymentMethod['token']}\",
             \r\n\t\t\t\"holder\": {\r\n\t\t\t\t\"name\": \"{$holder['name']}\",\r\n\t\t\t\t\"birthDate\": \"{$holder['birthDate']}\",
@@ -116,7 +119,7 @@ class Pagseguro_model {
             \r\n\t\t\t\t\t\"country\": \"BRA\",\r\n\t\t\t\t\t\"postalCode\": \"{$billingAddress['postalCode']}\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}";
 
         //var_dump($paymentMethod);
-        
+
         return $paymentMethod;
     }
 
@@ -125,25 +128,24 @@ class Pagseguro_model {
         $url = (AMBIENTE_DEV != "1") ? "https://ws.pagseguro.uol.com.br/" : "https://ws.sandbox.pagseguro.uol.com.br/";
 
         curl_setopt($ch, CURLOPT_URL, $url . $path);
-        
+
         //definindo a url de busca 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
+
         //definino que o método de envio, será POST
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
-        if(!empty($headers)) {
+        if (!empty($headers)) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
-        
+
         //definindo uma variável para receber o conteúdo da página...
         $retorno = curl_exec($ch);
-        
+
         //fechando-o para liberação do sistema.
         curl_close($ch); //fechamos o recurso e liberamos o sistema...
-        
         //mostrando o conteúdo...
         return $retorno;
     }
@@ -179,7 +181,7 @@ class Pagseguro_model {
     public function getDataPaymentMethod() {
         return $this->dataPaymentMethod;
     }
-    
+
     public function getDataPayment() {
         return $this->dataPayment;
     }
@@ -231,12 +233,11 @@ class Pagseguro_model {
 
         return $this;
     }
-    
+
     public function setDataPayment($dataPayment) {
         $this->dataPayment = $dataPayment;
 
         return $this;
     }
-    
+
 }
-               

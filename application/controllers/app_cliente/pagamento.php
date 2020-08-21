@@ -1,6 +1,7 @@
 <?php
 
-require_once(APPPATH.'libraries/MY_Controller.php');
+require_once(APPPATH . 'libraries/MY_Controller.php');
+
 class Pagamento extends MY_Controller {
 
     /**
@@ -8,67 +9,88 @@ class Pagamento extends MY_Controller {
      *
      * @access public
      */
-    function __construct() 
-    {
+    function __construct() {
         parent::__construct();
 
-        if(parent::verificarLoginCliente()) {
+        if (parent::verificarLoginCliente()) {
             $this->load->helper('url');
             redirect('app_cliente/login', 'refresh');
         }
 
-        $this->load->model(["pagseguro_model", "app_gerencial/manipula_servico_model"]);
+        $this->load->model(["pagseguro_model", "app_gerencial/manipula_servico_model", "pagamento_model",
+            "app_gerencial/manupula_cliente_model"]);
+
+        ini_set('max_execution_time', 300);
     }
 
-    function pre_approvals_pagseguro()
-    {
+    function pre_approvals_pagseguro() {
         $dadosCliente = $this->session->userdata("sCliente");
+        $dadosProduto = current($this->manupula_cliente_model->retornaProdutosCliente($dadosCliente["idCliente"]));
         $dados = [];
-        $dadosVendedorEndereco = [];
         parse_str($this->input->post()["dados"], $dados);
 
-        $dateNascimento = explode("-", $dadosCliente["dataNascimento"]);
-
-        $dados["numCpf"] = preg_replace('/[^0-9]/', '', $dados["numCpf"]);
-        $dados["dataNascimento"] = $dateNascimento[2] . "/" . $dateNascimento[1] . "/" . $dateNascimento[0];
-        $dados["token"] = $this->input->post()["token"];
-        if($dados["periodoPagseguro"] != "-1") {
-            $pagSeguro = new pagseguro_model();
-            $dataSender = $dadosCliente;
-            $dataSender["hashReady"] = $this->input->post()["hashReady"];
-
-            $retorno = $pagSeguro->setSessionId($this->input->post()["sessionIdPagSeguro"])->setPlain($dados["periodoPagseguro"])->setIdServico($dados["servico"])
-                        ->setDatasender($dataSender)->setDataPaymentMethod($dados)->createPreApprovals();
-
-            echo $retorno;
+        if (!empty($dadosProduto->descBoletoPaghiper) || !empty($dadosProduto->descPagseguro)) {
+            echo json_encode(["error" => true]);
+            return false;
         }
 
+        $pagamento = new pagamento_model();
+        $retorno = $pagamento->setIdPeriodicidade($dados["periodo"])
+                ->setIdFormaPagamento($dados["formaPagamento"])
+                ->setIdProduto($dadosProduto->idProduto)
+                ->init();
+
+        if (!empty($retorno)) {
+            $edita = ["idServico" => $dados["servico"], "descPagseguro" => $retorno];
+            $this->manipula_servico_model->insereEdita($edita);
+        }
+
+        echo json_encode($retorno);
         return false;
     }
 
-    function payment_pagseguro() {
-        $dados = $this->input->post();
-        $dadosServico = (array) $this->manipula_servico_model->retornaDados($dados["servico"]);
-        $merge = array_merge($dadosServico, $dados);
-
-        $pagSeguro = new pagseguro_model();
-        $retorno = $pagSeguro->setDataPayment($merge)->createPayment();
-    }
-
-    function cria_boletos_paghiper()
-    {
+    function cria_boletos_paghiper() {
         $this->load->model("paghiper_model");
         $this->load->model("servico_model");
         $this->load->model("app_gerencial/manupula_cliente_model");
 
         $dadosCliente = $this->session->userdata("sCliente");
         $idCliente = $dadosCliente["idCliente"];
-        $dadosProduto = $this->manupula_cliente_model->retornaProdutosCliente($idCliente);
-        $dadosServico = current($dadosProduto);
+        $dadosProduto = current($this->manupula_cliente_model->retornaProdutosCliente($idCliente));
+        $dadosServico = $dadosProduto;
         $idServico = $dadosServico->idServico;
+
+        if (!empty($dadosProduto->descBoletoPaghiper) || !empty($dadosProduto->descPagseguro)) {
+            echo json_encode(["error" => true]);
+            return false;
+        }
 
         $boleto = $this->paghiper_model->geraBoletosMensais($idCliente, number_format($dadosServico->vrPreco, 2, ".", ""));
 
-        $this->servico_model->update(array("descBoletoPaghiper" => json_decode($boleto)->status_request->bank_slip_group), array("idServico" => $idServico));
+        if (!empty($boleto)) {
+            $boleto = json_decode($boleto);
+            if (!empty($boleto->status_request->bank_slip_group)) {
+                $link = $boleto->status_request->bank_slip_group;
+                $this->servico_model->update(array("descBoletoPaghiper" => $link), array("idServico" => $idServico));
+
+                echo json_encode(["link" => $link]);
+                return json_encode(["link" => $link]);
+            }
+        }
+
+        echo json_encode(["error" => true]);
+        return json_encode(["error" => true]);
     }
+
+    function baixarBoleto() {
+        $pagamento = new Pagamento_model();
+        $link = $pagamento->linkBoleto();   
+
+        header('Content-type: application/pdf');
+        header('Content-Disposition: attachment; filename="downloaded.pdf"');
+        readfile($link);
+
+        return json_encode($link);
+    }
+
 }

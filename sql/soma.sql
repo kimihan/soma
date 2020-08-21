@@ -323,8 +323,17 @@ ALTER TABLE planosPagseguro
     ADD CONSTRAINT fk_foreign_id_periodicidade
     FOREIGN KEY (idPeriodicidade)
     REFERENCES periodicidade(id);
-ALTER TABLE `Produto` ADD `idPlanoPagseguro` INT NULL AFTER `flgAplicativo`;
-ALTER TABLE Produto
+
+CREATE TABLE `soma`.`produtoplano` ( `id` INT NOT NULL AUTO_INCREMENT , `idPlanoPagseguro` INT NOT NULL , `idProduto` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `produtoplano` CHANGE `idPlanoPagseguro` `idPlanoPagseguro` INT(11) NULL;
+
+ALTER TABLE produtoplano	
     ADD CONSTRAINT fk_foreign_id_planoPagseguro
     FOREIGN KEY (idPlanoPagseguro)
-    REFERENCES planosPagseguro(id);
+    REFERENCES planospagseguro(id);
+ALTER TABLE produtoplano	
+    ADD CONSTRAINT fk_foreign_id_produto
+    FOREIGN KEY (idProduto)
+    REFERENCES produto(idProduto);
+
+ALTER TABLE `usuario` CHANGE `numCpf` `numCpf` BIGINT(13) NOT NULL COMMENT 'CPF (sem formatação)';

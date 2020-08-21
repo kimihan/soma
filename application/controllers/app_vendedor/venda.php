@@ -98,7 +98,7 @@ class Venda extends MY_Controller {
                     mkdir(PATH_UPLOAD . "/{$idServico}", 0777, true);
                 }
                 $config['upload_path']          = PATH_UPLOAD . "/{$idServico}";
-                $config['allowed_types'] = 'gif|jpg|png|txt|pdf';
+                $config['allowed_types'] = '*';
                 $config['max_size'] = 1024 * 15;
                 $this->load->library('upload', $config);
             

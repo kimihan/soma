@@ -71,8 +71,13 @@ class Cliente extends MY_Controller {
         $sessionIdPagSeguro = $this->pagseguro_model->createSessionId();
         $formasPagamento = $this->formas_pagamento_model->retornaDados();
         $dadosProduto = $this->manupula_cliente_model->retornaProdutosCliente($dadosCliente["idCliente"]);
+        
+        $this->db->select("*")->from("periodicidade");
+
+        $periodicidade = $this->db->get()->result();
+
         $dadosView = ["sessionIdPagSeguro" => $sessionIdPagSeguro, "formasPagamento" => $formasPagamento, 
-                        "dadosCliente" => $dadosCliente, "dadosProduto" => array_shift($dadosProduto)];
+                        "dadosCliente" => $dadosCliente, "dadosProduto" => array_shift($dadosProduto), "periodicidade" => $periodicidade];
 
         //var_dump(array_shift($dadosProduto));exit();
         
