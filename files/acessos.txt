@@ -15,3 +15,9 @@ somaas38
 
 administrador@somaassistencia.com.br
 S.9lJ*Pud^xz
+
+
+BD
+banco: somaas38_soma
+user: somaas38_admin
+pass: 8u&{iE=d10OW
