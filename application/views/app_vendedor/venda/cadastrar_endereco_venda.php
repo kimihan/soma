@@ -27,7 +27,7 @@
                         <input type="checkbox" class="custom-control-input" id="isCall" name="flgLigacao">
                         <label class="custom-control-label" for="isCall">Ligar para completar os dados</label>
                     </div>
-                    <hr style="background-color: #DEDE1F !important;" class="my-2">
+                    <hr style="background-color: #003446 !important;" class="my-2">
                 </div>
             </div>
             <div class="form-row justify-content-center align-self-center">
