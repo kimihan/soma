@@ -13,6 +13,10 @@
         <script src="<?=base_url()?>public/js/popper.min.js" type="text/javascript"></script>
         <script src="<?=base_url()?>public/js/bootstrap.min.js" type="text/javascript"></script>
 
+        <script>
+            var baseUrl = <?=base_url()?>;
+        </script>
+
 
     <style>
         .jumbotron {
