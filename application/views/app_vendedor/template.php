@@ -14,7 +14,7 @@
         <script src="<?=base_url()?>public/js/bootstrap.min.js" type="text/javascript"></script>
 
         <script>
-            var baseUrl = <?=base_url()?>;
+            var baseUrl = "<?=base_url()?>";
         </script>
 
 
@@ -66,7 +66,7 @@
                         echo '
                                 <a class="navbar-brand" href="' . base_url() .'app_vendedor/login">
                                 <img src="' . base_url() .'public/img/logo-app.jpg" width="100" height="48" alt="" loading="lazy">
-                                </a>
+                                </a>"
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarLogin" aria-controls="navBarLogin" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                                 </button>';

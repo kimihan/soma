@@ -1,11 +1,6 @@
 <!-- CSS -->
 <link href="<?=base_url()?>public/css/index.css" rel="stylesheet" type="text/css"/>
 
-<!--JS -->
-<script>
-    var base_url = <?=base_url()?>;
-</script>
-
 <script src="<?=base_url()?>public/js/app_vendedor/index.js" type="text/javascript"></script>
 <script src="<?=base_url()?>public/js/crypto-js.min.js" type="text/javascript"></script>
 <script src="<?=base_url()?>public/js/app_vendedor/login.js" type="text/javascript"></script>

@@ -50,7 +50,7 @@
         <script src="<?=base_url()?>public/js/crypto-js.min.js" type="text/javascript"></script>
 
         <script>
-            var baseUrl = <?=base_url()?>;
+            var baseUrl = "<?=base_url()?>";
         </script>
 
 
