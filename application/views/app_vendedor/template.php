@@ -61,14 +61,14 @@
                     if((count($this->session->userdata("sVendedor")) > 0)) {
                         echo '
                                 <a class="navbar-brand" href="' . base_url() .'app_vendedor/login">
-                                <img src="' . base_url() .'public/img/logo-app.jpg" width="135" height="45" alt="" loading="lazy">
+                                <img src="' . base_url() .'public/img/logo-app.jpg" width="100" height="48" alt="" loading="lazy">
                                 </a>"
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarLogin" aria-controls="navBarLogin" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                                 </button>';
                     } else {
                         echo "<a class='navbar-brand col-12 text-center' href='". base_url() ."app_vendedor/login'>
-                        <img src='" . base_url() . "public/img/logo-app.jpg' width='135' height='45' alt='' loading='lazy'>
+                        <img src='" . base_url() . "public/img/logo-app.jpg' width='100' height='48' alt='' loading='lazy'>
                         </a>";
                     }
                 ?>
