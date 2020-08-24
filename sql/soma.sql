@@ -337,3 +337,5 @@ ALTER TABLE produtoplano
     REFERENCES produto(idProduto);
 
 ALTER TABLE `usuario` CHANGE `numCpf` `numCpf` BIGINT(13) NOT NULL COMMENT 'CPF (sem formatação)';
+
+ALTER TABLE `Vendedor` ADD `descNomeBanca` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Coluna para guardar o nome da banca' AFTER `flgBanca`;
